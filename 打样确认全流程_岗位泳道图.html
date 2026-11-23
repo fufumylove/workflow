@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="bDRqPBr7yxWbawKgeq3ZZ6">
+<head data-page-node-id="y9oKHXoDYjG45dyzDHe47i">
+<meta charset="utf-8" data-page-node-id="Ji8IAXFBiZdoONn5grJpXO">
+<meta name="viewport" content="width=device-width,initial-scale=1" data-page-node-id="9dUawDPjh6CkO0asEYW4Gk">
+<title>打样确认全流程 · 按岗位泳道阅读</title>
+<style>
+:root{--ink:#19334a;--muted:#607283;--teal:#107c80;--pale:#eaf6f4;--line:#dce5eb;--amber:#a46610;--warm:#fff5e5}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:14px;line-height:1.6}
+.site-head{background:#fff;border-bottom:1px solid var(--line);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:700;font-size:15px}
+.version{font-size:12px;color:#718391}
+.hero{max-width:1500px;margin:auto;padding:30px 28px 18px}
+.kicker{color:var(--teal);font-weight:700;font-size:11px;letter-spacing:1.5px}
+.hero h1{font-size:30px;line-height:1.3;margin:8px 0 10px}
+.hero p{max-width:860px;color:var(--muted);margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.facts span{background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:7px;font-size:12px}
+.workspace{max-width:1500px;margin:0 auto 40px;padding:0 28px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bar{padding:16px 18px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h2{font-size:18px;margin:0 0 3px}
+.bar p{font-size:12px;color:var(--muted);margin:0}
+.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+button{background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 11px;color:var(--ink);font-size:12px;cursor:pointer;font-family:inherit}
+button:hover{border-color:var(--teal);color:var(--teal)}
+button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+button.danger:hover{border-color:#b76544;color:#b76544}
+.tools span{font-size:11px;color:var(--muted);min-width:38px;text-align:center}
+.scroll{overflow:auto;padding:8px 16px 16px;overscroll-behavior-x:contain}
+svg{width:100%;min-width:1200px;height:auto;display:block}
+.node{cursor:grab;outline:none}
+.node:active{cursor:grabbing}
+.node:hover rect.box,.node.selected rect.box,.node:hover polygon.box,.node.selected polygon.box{stroke:var(--teal);stroke-width:2.5;fill:#e2f4ef}
+.node text{font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:13px;font-weight:600;fill:var(--ink);pointer-events:none}
+.node.decision text{font-size:12px}
+.node text.sub{font-size:10px;font-weight:400;fill:var(--muted)}
+.node.decision text.sub{font-size:10px;font-weight:400;fill:var(--muted)}
+.edge{fill:none;stroke:#597b8d;stroke-width:1.6;marker-end:url(#arr);pointer-events:none}
+.edge.return{stroke:#b76544;stroke-dasharray:5 3;marker-end:url(#arrRet)}
+.edge.accent{stroke:#107c80;stroke-width:2.2;marker-end:url(#arrAcc)}
+.edge-label{font-size:10px;fill:#597b8d;pointer-events:none;font-family:inherit}
+.edge-label.ret{fill:#b76544}
+.lane-name{font-size:15px;font-weight:650;fill:#fff;font-family:inherit}
+.legend{border-top:1px solid #edf0f2;padding:10px 18px;color:var(--muted);font-size:12px;display:flex;gap:20px;flex-wrap:wrap}
+.legend i{display:inline-block;width:22px;height:0;border-top:2px solid #597b8d;vertical-align:middle;margin-right:6px}
+.legend i.ret{border-top:2px dashed #b76544}
+.legend i.acc{border-top:2px solid #107c80}
+.panel{padding:0;max-height:calc(100vh - 60px);overflow:auto;position:sticky;top:14px}
+.sec{padding:14px 16px;border-bottom:1px solid #edf0f2}
+.sec:last-child{border-bottom:0}
+.sec h3{font-size:13px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.sec h3 button{padding:4px 8px;font-size:11px}
+.row{display:flex;align-items:center;gap:7px;padding:6px 0;font-size:12px;border-bottom:1px dashed #eef2f4}
+.row:last-child{border-bottom:0}
+.row .nm{flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .nm:hover{color:var(--teal)}
+.tag{font-size:10px;color:var(--muted);background:#f3f6f8;padding:2px 6px;border-radius:5px;white-space:nowrap}
+.empty{font-size:12px;color:#9aa8b3;padding:6px 0}
+label{display:block;font-size:11px;color:var(--muted);margin:9px 0 4px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:7px 8px;font-size:12px;font-family:inherit;color:var(--ink);background:#fff}
+textarea{min-height:64px;resize:vertical}
+.actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+details summary{cursor:pointer;font-size:12px;color:var(--teal)}
+details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-size:11px;margin-top:8px}
+.status{font-size:11px;color:var(--amber);margin-top:8px;min-height:16px}
+@media(max-width:1050px){.workspace{grid-template-columns:1fr}.panel{position:static;max-height:none}}
+</style>
+</head>
+<body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
+<header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
+  <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V2.0</div>
+</header>
+
+<div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
+  <div class="kicker" data-page-node-id="ziklBd8i2PEMKExFdGGiUM">SAMPLING WORKFLOW</div>
+  <h1 data-page-node-id="LdqpgClZ5c0xALqlP39S54">打样确认全流程 · 按岗位泳道阅读</h1>
+  <p data-page-node-id="cMSCiSYgIeiUeJWkTm4144">沿泳道向下阅读各环节，跨泳道的连线表示岗位交接。当前仅放置节点，连线由你后续添加：可在右侧面板直接操作，也可在配置中填写。所有修改自动保存在本机浏览器。</p>
+  <div class="facts" data-page-node-id="LgBCJEDJgIXPoBrdtwDZFh">
+    <span data-page-node-id="p0f2igKj02vas2PaHgshFt">泳道：业务部门 / QA / 采购跟单员 / QC</span>
+    <span data-page-node-id="JBthvx6LE0Is6tIBOWSRsD">节点：打样通知、买手确认样、QA样、测试样、签样、QA报告</span>
+    <span data-page-node-id="8UNzte6QMLhrJJAPIG1NBW">连线：待添加（已预留位置）</span>
+  </div>
+</div>
+
+<main class="workspace" data-page-node-id="IJkKXQpWgZHMyYLNP6XGyk">
+  <section class="card" id="card" data-page-node-id="xKpcn0N0BHBH4EDthjSKEX">
+    <div class="bar" data-page-node-id="fXLM9XokCLv4Eh7SDWDTE8">
+      <div data-page-node-id="5BDOD9bwMo0NUxY6OAeZZa">
+        <h2 data-page-node-id="dDeyfzx79ZqXy9pfjG7Zkz">完整全流程 · 按岗位泳道阅读</h2>
+        <p id="subtitle" data-page-node-id="PQWDVKPMGGVT3wrtmHPCzL">点击节点查看说明；拖动节点可调整岗位与顺序。</p>
+      </div>
+      <div class="tools" data-page-node-id="xFXsZ0IYh2hiNXIIUu7PWO">
+        <button id="addEdge" title="依次点击两个节点建立连线" data-page-node-id="ayJqGUVbnnemP3QuozgMk4">＋ 添加连线</button>
+        <button id="reset" data-page-node-id="KuWQDB7rCKvv5ZcLZ4PaSm">恢复初始</button>
+        <button id="export" data-page-node-id="Hz4fMct6qDfmhn9DRJpFVs">导出配置</button>
+        <button id="importBtn" data-page-node-id="CvVfOjcj1HzF2mG9f972BG">导入配置</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden data-page-node-id="tcxqi4zbB4gVRNIUvRwQXi">
+        <button data-zoom="minus" data-page-node-id="Byc0SeHHVFakvD7xfGm7y0">−</button><span class="zoom-label" data-page-node-id="GE4EjgLOu0pLs9pIq5GEf0">100%</span><button data-zoom="plus" data-page-node-id="ep7BuZ7obRYCa3po4PYEJr">＋</button>
+        <button data-zoom="reset" data-page-node-id="X29e3WzCFg6k9rSI9M2tAx">适应</button>
+        <button data-fullscreen data-page-node-id="M1sy2gUR3rnFCAfCwCNmCq">全屏</button>
+      </div>
+    </div>
+    <div class="scroll" id="scroll" data-page-node-id="WqhJLFiDk6yfLUeIX2Q5wF">
+      <svg id="svg" viewBox="0 0 1120 1120" role="img" aria-label="打样确认全流程岗位泳道图" data-page-node-id="YnI0acSCaW4sk9b1ZUKbIg"></svg>
+    </div>
+    <div class="legend" data-page-node-id="Ml6VMCO7mUX0hGnW2Ic4oD">
+      <span data-page-node-id="XV6QIEiPB39J112ES4AOh4"><i data-page-node-id="YuFnoOKKQJVn1tCSKtokaX"></i>实线：正常流转</span>
+      <span data-page-node-id="GKpEchJjiKZasJ5t26EfU5"><i class="ret" data-page-node-id="hqRn0WvJAJBEW9kM6ZQxEL"></i>橙色虚线：退回 / 返工</span>
+      <span data-page-node-id="GSjrh5Cz1TaIifFzFeR3ge"><i class="acc" data-page-node-id="5IxXefyH8cjp9r7YEG5jFj"></i>青色：强调 / 完成</span>
+      <span><b style="display:inline-block;width:12px;height:12px;background:#fff5e5;border:1px dashed #b76544;transform:rotate(45deg);vertical-align:middle;margin-right:8px"></b>菱形：判断节点（是 / 否分支）</span>
+      <span data-page-node-id="hw03qyweiDjrYZiF0QpzaZ">提示：连线尚未添加，可在右侧「连线」区新增。</span>
+    </div>
+  </section>
+
+  <aside class="card panel" data-page-node-id="sJzHpiZuHCFNBet1gLvTld">
+    <div class="sec" data-page-node-id="jvb1Cf8nrZvIStudV9OO3C">
+      <h3 data-page-node-id="9UdWnJOvMb04Jt0fZ962zp">连线 <button id="addEdge2" data-page-node-id="GLz0YYVHqwkBni4y086G5r">＋ 添加</button></h3>
+      <div id="edgeList" data-page-node-id="cFgJHo8yCOLeGRALFH6WbU"></div>
+      <div class="status" id="status" data-page-node-id="34kTUUgLE1HWiDw2nJDi3J"></div>
+    </div>
+    <div class="sec" data-page-node-id="5KHet5HRNcLn5kXMSW3E4F">
+      <h3>节点 <span style="display:flex;gap:5px"><button id="addNode">＋ 新增步骤</button><button id="addDecision">＋ 判断框</button></span></h3>
+      <div id="nodeList" data-page-node-id="ZRjq72MDDB7DY0UVXcb1Fp"></div>
+    </div>
+    <div class="sec" id="editorSec" data-page-node-id="WtBilwhFVWGT50eSLaLhgD">
+      <h3 data-page-node-id="fTzi2XBdhhwO1NhXghdZLs">选中节点</h3>
+      <div id="nodeEditor" data-page-node-id="OtQx76Yt82SHCHFfOAUVu7"><div class="empty" data-page-node-id="LeSClx4EYH3EZnWeHoj3T8">点击图中节点或上方节点名称进行编辑。</div></div>
+    </div>
+    <div class="sec" data-page-node-id="M2ul1v5Ct8UoMfj7wWtSlh">
+      <details data-page-node-id="rHGMTYAXq2D9xFibg20TJa">
+        <summary data-page-node-id="cf6x1FXS6B05c5V9U4VCuA">直接编辑配置（JSON）</summary>
+        <textarea id="configText" spellcheck="false"></textarea>
+        <div class="actions" data-page-node-id="bCSncHgsqWkHAaynT7zVJa">
+          <button id="applyConfig" data-page-node-id="hvmB6ko0F3154L7rYioULH">应用到图</button>
+          <button id="fillConfig" data-page-node-id="xCzC6qZHzZJV35jYHXghcw">从图更新</button>
+        </div>
+      </details>
+    </div>
+  </aside>
+</main>
+
+<script>
+/* ============================================================
+   配置区：节点 / 泳道 / 连线都在这里。
+   连线目前为空，可用右侧面板添加，或按下面示例取消注释填写。
+   ============================================================ */
+const STORAGE_KEY = 'sampling-swimlane-v3';
+
+function defaultData(){
+  return {
+    lanes: [
+      {id:'business', name:'业务部门', color:'#f0f8f6'},
+      {id:'qa',       name:'QA',       color:'#f5f2fa'},
+      {id:'merch',    name:'采购跟单员', color:'#fff8ee'},
+      {id:'qc',       name:'QC',       color:'#f2f6fc'}
+    ],
+    nodes: [
+      {id:'n1', label:'打样通知',   lane:'merch',    x:585, y:110, sub:'设计稿·个数·交期', note:'采购跟单员发出打样通知，随附客户提供的打样设计稿及其他说明，明确打样个数与完成日期。'},
+      {id:'n2', label:'买手确认样', lane:'business', x:65,  y:210, sub:'款式/颜色/规格核对', note:'买手核对样衣款式、颜色、规格及辅料是否符合要求，确认后进入 QA 检验。'},
+      {id:'n3', label:'QA样',       lane:'qa',       x:325, y:310, sub:'spec·checklist·客户QA', note:'采购跟单员提供 spec，QA 提供 checklist。客户 QA 收到 QA样后若有反馈：①测试报告 ②样品修改意见（v1 版、v2 版），则返回 QA样重新开始；若通过测试，则成为测试样。'},
+      {id:'n4', label:'测试样',     lane:'qc',       x:845, y:530, sub:'测试并记录结果', note:'QC 对样衣进行测试并记录结果；通过测试的样衣转为测试样。'},
+      {id:'n5', label:'签样',       lane:'business', x:65,  y:510, sub:'样品/清单/包装/报告', note:'样衣签字封样，资料含样品个数、checklist、artwork（包装）及测试报告，作为生产与检验依据。'},
+      {id:'n6', label:'QA报告',     lane:'qa',       x:325, y:610, sub:'检验结果汇总归档', note:'QA 汇总检验与测试结果，出具 QA 报告并归档。'},
+      {id:'d1', label:'客户QA反馈？', lane:'qa',     x:325, y:430, type:'decision', sub:'有反馈/通过测试', note:'客户 QA 反馈判断：是（测试报告或 v1/v2 修改意见）→ 返回 QA样重做；否（通过测试）→ 转测试样。'},
+      {id:'d2', label:'签样收到后',  lane:'business', x:65,  y:810, sub:'签样有效期·测试有效期', note:'签样收到后登记并跟踪有效期：记录签样有效期与测试有效期，到期前提醒复检或重新签样。'}
+    ],
+    connections: [
+      {from:'d1', to:'n3', label:'是（v1/v2修改意见）', type:'return'},
+      {from:'d1', to:'n4', label:'否（通过测试）', type:'normal'}
+      /* 更多连线示例：
+      {from:'n1', to:'n2', label:'发出', type:'normal'},
+      {from:'n5', to:'d2', label:'签样完成', type:'normal'}
+      */
+    ]
+  };
+}
+/* 节点 type：不填 = 普通步骤（圆角方框）；'decision' = 判断节点（菱形，支持是/否分支）
+   连线 type：normal（实线） / return（橙色虚线） / accent（青色强调）；label 可填「是」「否」等分支文字 */
+
+let data = load();
+let selected = null;
+let connectMode = false;
+let pendingFrom = null;
+let zoom = 1;
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.lanes && d.nodes && d.connections) return d; }
+  }catch(e){}
+  return defaultData();
+}
+function save(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){} }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function laneOf(id){ return data.lanes.find(l=>l.id===id) || data.lanes[0]; }
+function nodeById(id){ return data.nodes.find(n=>n.id===id); }
+function ndH(n){ return n.type==='decision'?84:62; }
+function ndCx(n){ return n.x+100; }
+function ndTop(n){ return n.y; }
+function ndBottom(n){ return n.y+ndH(n); }
+function setStatus(t){ document.getElementById('status').textContent = t||''; }
+
+const svg = document.getElementById('svg');
+function pt(e){ const p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+
+function pathFor(c){
+  const a=nodeById(c.from), b=nodeById(c.to);
+  if(!a||!b) return '';
+  const sx=ndCx(a), sy=ndBottom(a), tx=ndCx(b), ty=ndTop(b);
+  if(c.type==='return' || ty<=sy){
+    const goLeft = tx<=sx;
+    const ox = goLeft?18:1102;
+    return `M ${sx} ${sy} L ${sx} ${sy+22} L ${ox} ${sy+22} L ${ox} ${ty-22} L ${tx} ${ty-22} L ${tx} ${ty}`;
+  }
+  const mid=(sy+ty)/2;
+  return `M ${sx} ${sy} L ${sx} ${mid} L ${tx} ${mid} L ${tx} ${ty}`;
+}
+function labelPos(c){
+  const a=nodeById(c.from), b=nodeById(c.to);
+  if(!a||!b) return {x:0,y:0};
+  const sx=ndCx(a), sy=ndBottom(a), tx=ndCx(b), ty=ndTop(b);
+  if(c.type==='return'||ty<=sy) return {x:(tx<=sx?58:1062), y:(sy+ty)/2-6};
+  return {x:(sx+tx)/2, y:(sy+ty)/2-6};
+}
+
+function render(){
+  let s = `<defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#597b8d"/></marker>
+    <marker id="arrRet" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#b76544"/></marker>
+    <marker id="arrAcc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#107c80"/></marker>
+  </defs>`;
+  data.lanes.forEach((l,i)=>{
+    const x=40+i*260;
+    s += `<rect x="${x}" y="10" width="250" height="1090" rx="10" fill="${esc(l.color)}" stroke="#dce5eb"/>`;
+    s += `<rect x="${x}" y="10" width="250" height="48" rx="9" fill="#19334a"/>`;
+    s += `<text class="lane-name" x="${x+125}" y="41" text-anchor="middle">${esc(l.name)}</text>`;
+  });
+  s += `<rect class="hint-box" x="60" y="880" width="1000" height="70" rx="10"/>`;
+  s += `<text class="hint-text" x="560" y="920" text-anchor="middle">预留区域：可继续添加节点与连线（右侧面板或配置 connections）</text>`;
+
+  data.connections.forEach((c,i)=>{
+    const p=pathFor(c); if(!p) return;
+    const cls = c.type==='return'?'return':(c.type==='accent'?'accent':'');
+    s += `<path class="edge ${cls}" d="${p}"/>`;
+    if(c.label){ const q=labelPos(c); s += `<text class="edge-label ${cls==='return'?'ret':''}" x="${q.x}" y="${q.y}" text-anchor="middle">${esc(c.label)}</text>`; }
+  });
+
+  data.nodes.forEach(n=>{
+    const sel = selected===n.id?' selected':'';
+    const pend = pendingFrom===n.id?' selected':'';
+    if(n.type==='decision'){
+      const h=84, cx=n.x+100, cy=n.y+h/2;
+      const pts=`${cx},${n.y} ${n.x+200},${cy} ${cx},${n.y+h} ${n.x},${cy}`;
+      s += `<g class="node decision${sel}${pend}" data-id="${esc(n.id)}" tabindex="0">
+        <polygon class="box" points="${pts}" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"/>
+        <text x="${cx}" y="${cy-2}" text-anchor="middle">${esc(n.label)}</text>
+        ${n.sub?`<text class="sub" x="${cx}" y="${cy+16}" text-anchor="middle">${esc(n.sub)}</text>`:''}
+      </g>`;
+    }else{
+      s += `<g class="node${sel}${pend}" data-id="${esc(n.id)}" tabindex="0">
+        <rect class="box" x="${n.x}" y="${n.y}" width="200" height="62" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"/>
+        <text x="${n.x+100}" y="${n.y+28}" text-anchor="middle">${esc(n.label)}</text>
+        ${n.sub?`<text class="sub" x="${n.x+100}" y="${n.y+46}" text-anchor="middle">${esc(n.sub)}</text>`:''}
+      </g>`;
+    }
+  });
+  svg.innerHTML = s;
+  document.getElementById('subtitle').textContent = connectMode
+    ? '添加连线中：请依次点击起点节点和终点节点。'
+    : '点击节点查看说明；拖动节点可调整岗位与顺序。';
+  renderPanels();
+}
+
+function renderPanels(){
+  const el=document.getElementById('edgeList');
+  if(!data.connections.length){ el.innerHTML='<div class="empty">尚无连线。点击上方「添加」，依次点击两个节点即可。</div>'; }
+  else{
+    el.innerHTML = data.connections.map((c,i)=>{
+      const a=nodeById(c.from), b=nodeById(c.to);
+      return `<div class="row"><span class="nm">${esc(a?a.label:c.from)} → ${esc(b?b.label:c.to)}</span>
+        <select data-ci="${i}" data-field="type" style="width:76px;padding:3px">
+          <option value="normal"${c.type==='normal'?' selected':''}>实线</option>
+          <option value="return"${c.type==='return'?' selected':''}>退回</option>
+          <option value="accent"${c.type==='accent'?' selected':''}>强调</option>
+        </select>
+        <button class="danger" data-del-edge="${i}" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="${i}" data-field="label" value="${esc(c.label||'')}" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="${i}" data-v="是" style="padding:3px 7px">是</button><button data-branch="${i}" data-v="否" style="padding:3px 7px">否</button></div>`;
+    }).join('');
+    el.querySelectorAll('[data-del-edge]').forEach(b=>b.onclick=()=>{ data.connections.splice(+b.dataset.delEdge,1); save(); render(); });
+    el.querySelectorAll('[data-branch]').forEach(b=>b.onclick=()=>{ data.connections[+b.dataset.branch].label=b.dataset.v; save(); render(); });
+    el.querySelectorAll('[data-ci]').forEach(x=>x.onchange=()=>{ const c=data.connections[+x.dataset.ci]; c[x.dataset.field]=x.value; save(); render(); });
+  }
+
+  const nl=document.getElementById('nodeList');
+  nl.innerHTML = data.nodes.map(n=>`<div class="row"><span class="nm" data-pick="${esc(n.id)}">${esc(n.label)}</span><span class="tag">${n.type==='decision'?'判断 · ':''}${esc(laneOf(n.lane).name)}</span><button class="danger" data-del-node="${esc(n.id)}" style="padding:3px 7px">删</button></div>`).join('');
+  nl.querySelectorAll('[data-pick]').forEach(x=>x.onclick=()=>{ selected=x.dataset.pick; render(); });
+  nl.querySelectorAll('[data-del-node]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.delNode;
+    data.nodes=data.nodes.filter(n=>n.id!==id);
+    data.connections=data.connections.filter(c=>c.from!==id&&c.to!==id);
+    if(selected===id) selected=null;
+    save(); render();
+  });
+
+  const ed=document.getElementById('nodeEditor');
+  const n=nodeById(selected);
+  if(!n){ ed.innerHTML='<div class="empty">点击图中节点或上方节点名称进行编辑。</div>'; return; }
+  ed.innerHTML = `<label>节点名称</label><input id="edLabel" value="${esc(n.label)}">
+    <label>节点类型</label><select id="edType"><option value="step"${n.type!=='decision'?' selected':''}>普通步骤（方框）</option><option value="decision"${n.type==='decision'?' selected':''}>判断节点（菱形 · 是/否）</option></select>
+    <label>所属岗位（泳道）</label><select id="edLane">${data.lanes.map(l=>`<option value="${esc(l.id)}"${l.id===n.lane?' selected':''}>${esc(l.name)}</option>`).join('')}</select>
+    <label>节点副标题（图中小字）</label><input id="edSub" value="${esc(n.sub||'')}" placeholder="例如：设计稿·个数·交期">
+    <label>节点说明</label><textarea id="edNote">${esc(n.note||'')}</textarea>
+    <div class="actions"><button id="edApply">保存修改</button></div>`;
+  document.getElementById('edApply').onclick=()=>{
+    n.label=document.getElementById('edLabel').value.trim()||n.label;
+    const t=document.getElementById('edType').value;
+    if(t==='decision') n.type='decision'; else delete n.type;
+    n.lane=document.getElementById('edLane').value;
+    const l=data.lanes.findIndex(x=>x.id===n.lane); n.x=40+l*260+25;
+    n.sub=document.getElementById('edSub').value.trim().slice(0,18);
+    n.note=document.getElementById('edNote').value;
+    save(); render();
+  };
+}
+
+/* 选中与拖动 */
+svg.addEventListener('mousedown', e=>{
+  const g=e.target.closest('.node'); if(!g) return;
+  const id=g.dataset.id;
+  if(connectMode){
+    if(!pendingFrom){ pendingFrom=id; setStatus('已选起点：'+nodeById(id).label+'，请点击终点节点。'); }
+    else if(pendingFrom===id){ pendingFrom=null; setStatus('请重新选择起点。'); }
+    else{
+      data.connections.push({from:pendingFrom,to:id,label:'',type:'normal'});
+      pendingFrom=null; setStatus('连线已添加，可在上方修改类型与说明。'); save();
+    }
+    render(); e.preventDefault(); return;
+  }
+  selected=id; render();
+  drag={id, moved:false}; e.preventDefault();
+});
+let drag=null;
+window.addEventListener('mousemove', e=>{
+  if(!drag) return;
+  const n=nodeById(drag.id); if(!n) return;
+  const p=pt(e); n.x=Math.max(45,Math.min(875,p.x-100)); n.y=Math.max(65,Math.min(970-ndH(n),p.y-ndH(n)/2)); drag.moved=true; render();
+});
+window.addEventListener('mouseup', ()=>{
+  if(!drag) return;
+  const n=nodeById(drag.id);
+  if(n){ const i=Math.max(0,Math.min(data.lanes.length-1, Math.round((n.x+100-165)/260))); n.x=40+i*260+25; n.lane=data.lanes[i].id; }
+  drag=null; save(); render();
+});
+svg.addEventListener('keydown', e=>{
+  const g=e.target.closest('.node'); if(!g) return;
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selected=g.dataset.id; render(); }
+});
+
+/* 工具栏 */
+function setConnect(v){ connectMode=v; pendingFrom=null; document.getElementById('addEdge').classList.toggle('on',v); document.getElementById('addEdge2').classList.toggle('on',v); setStatus(v?'请依次点击起点与终点节点。':''); render(); }
+document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
+document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
+document.getElementById('addNode').onclick=()=>{
+  const id='n'+(Date.now()%100000);
+  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:65, y:820, note:'请填写节点说明。'});
+  selected=id; save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
+};
+document.getElementById('addDecision').onclick=()=>{
+  const id='d'+(Date.now()%100000);
+  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:65, y:800, note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
+  selected=id; save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
+};
+document.getElementById('reset').onclick=()=>{
+  if(!confirm('恢复初始配置？当前修改将被清除。')) return;
+  data=defaultData(); selected=null; setConnect(false); save(); render();
+};
+document.getElementById('export').onclick=()=>{
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='打样确认流程配置.json'; a.click(); URL.revokeObjectURL(a.href);
+};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=d; selected=null; save(); render(); setStatus('配置已导入。'); }catch(err){ setStatus('导入失败：文件格式不正确。'); } }; r.readAsText(f); e.target.value='';
+};
+document.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{
+  if(b.dataset.zoom==='reset') zoom=1; else zoom=Math.max(.8,Math.min(2.2, zoom+(b.dataset.zoom==='plus'?.2:-.2)));
+  svg.style.width=(zoom*100)+'%'; document.querySelector('.zoom-label').textContent=Math.round(zoom*100)+'%';
+});
+document.querySelector('[data-fullscreen]').onclick=async()=>{
+  try{ if(document.fullscreenElement) await document.exitFullscreen(); else await document.getElementById('card').requestFullscreen(); }catch(e){}
+};
+
+/* JSON 直接编辑 */
+const ct=document.getElementById('configText');
+document.querySelector('details').addEventListener('toggle',e=>{ if(e.target.open) ct.value=JSON.stringify(data,null,2); });
+document.getElementById('fillConfig').onclick=()=>{ ct.value=JSON.stringify(data,null,2); };
+document.getElementById('applyConfig').onclick=()=>{
+  try{ const d=JSON.parse(ct.value); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=d; selected=null; save(); render(); setStatus('配置已应用。'); }
+  catch(e){ setStatus('应用失败：请检查 JSON 格式。'); }
+};
+
+render();
+</script>
+</body>
+</html>

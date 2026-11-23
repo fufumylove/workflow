@@ -1,0 +1,343 @@
+<mxfile host="app.diagrams.net" compressed="false" modified="2026-11-23T14:25:00.000Z" agent="WorkBuddy" version="24.7.17" type="device">
+  <diagram id="procurement-payment" name="采购合同审批与付款工作流程">
+    <mxGraphModel dx="1280" dy="2400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1280" pageHeight="2400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="L0" value="系统" style="swimlane;horizontal=0;startSize=48;fillColor=#19334a;swimlaneFillColor=#f0f6f8;strokeColor=#dce5eb;fontColor=#ffffff;fontSize=14;fontStyle=1;fontFamily=Microsoft YaHei;foldable=0;collapsible=0;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="240" height="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="L1" value="采购跟单员" style="swimlane;horizontal=0;startSize=48;fillColor=#19334a;swimlaneFillColor=#f0f8f6;strokeColor=#dce5eb;fontColor=#ffffff;fontSize=14;fontStyle=1;fontFamily=Microsoft YaHei;foldable=0;collapsible=0;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="0" width="240" height="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="L2" value="审批人" style="swimlane;horizontal=0;startSize=48;fillColor=#19334a;swimlaneFillColor=#f5f2fa;strokeColor=#dce5eb;fontColor=#ffffff;fontSize=14;fontStyle=1;fontFamily=Microsoft YaHei;foldable=0;collapsible=0;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="0" width="240" height="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="L3" value="供应商" style="swimlane;horizontal=0;startSize=48;fillColor=#19334a;swimlaneFillColor=#fff8ee;strokeColor=#dce5eb;fontColor=#ffffff;fontSize=14;fontStyle=1;fontFamily=Microsoft YaHei;foldable=0;collapsible=0;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="720" y="0" width="240" height="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="L4" value="财务" style="swimlane;horizontal=0;startSize=48;fillColor=#19334a;swimlaneFillColor=#f2f6fc;strokeColor=#dce5eb;fontColor=#ffffff;fontSize=14;fontStyle=1;fontFamily=Microsoft YaHei;foldable=0;collapsible=0;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="240" height="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="N01" value="接收专人上传的总表" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="由指定人员上传完整采购计划总表。系统接收本次更新；首次导入作为历史基线，需补办的历史计划可手动加入待办。">
+          <mxGeometry x="18" y="90" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N02" value="与原订单数据比对" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="比较本次总表与系统中已有订单，识别新增与变更内容。未发生变化的记录不重复产生待办。">
+          <mxGeometry x="18" y="180" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="D01" value="新增／有变更？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff5e5;strokeColor=#b76544;strokeWidth=1.5;fontColor=#19334a;fontSize=11;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L0" tooltip="有新增或变更时，按表内采购员及账号对应关系自动列入个人待办。无变化只结束本次更新处理，不终止已有合同的履行。">
+          <mxGeometry x="60" y="270" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="N03" value="本次结束" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#107c80;fontColor=#19334a;fontSize=10;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L0" tooltip="本次订单更新无需新增待办。此处不是合同付款流程的最终完成。">
+          <mxGeometry x="6" y="390" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="N04" value="自动列待办" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#107c80;fontColor=#19334a;fontSize=10;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L0" tooltip="新增、变更分别进入对应采购跟单员的个人待办，随后核对资料并处理合同。">
+          <mxGeometry x="134" y="390" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="N05" value="处理个人待办" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="采购跟单员核对采购计划，补齐供应商全称、地址、法人、代表及邮件收件信息。">
+          <mxGeometry x="18" y="390" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N06" value="按订单类型生成合同" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="新订单生成新采购合同；订单变更生成修改合同。按采购员和供应商分别处理，已关联历史合同的变更从原合同重做，并保留旧版本。">
+          <mxGeometry x="18" y="490" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N07" value="采购员核对并提交" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="核对合同全文、供应商、产品、数量、单价、金额、交期及条款。发现差异先核实，需说明的差异填写说明后送审。">
+          <mxGeometry x="18" y="490" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N08" value="一级合同审批（许总）" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L2" tooltip="由许总审批。通过后进入二级；退回则由采购员修改合同，并重新从许总一级审批开始。">
+          <mxGeometry x="18" y="490" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N09" value="二级合同审批（严总/张总任一通过）" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L2" tooltip="严总或张总任意一人审批通过即可。若退回，采购员修改后必须重新从许总一级审批开始。">
+          <mxGeometry x="18" y="590" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N10" value="采购员修改合同（保留旧版本）" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="任一级退回后由采购员修改合同；已关联历史合同的变更从原合同重做并保留旧版本，修改后从许总一级重新审批。">
+          <mxGeometry x="18" y="690" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N11" value="导出 PDF＋自动盖电子章" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="两级审批通过后，系统导出合同 PDF 并自动盖章。印章稍后提供和配置，此处 PDF 是对外合同文件格式。">
+          <mxGeometry x="18" y="700" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N12" value="自动打包并发送邮件" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="将盖章合同 PDF 与出运明细一起打包自动发送。收件人：供应商、对应业务员、严总、张总、许总及该合同采购员。出运明细制作方式暂不规定。">
+          <mxGeometry x="18" y="790" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N13" value="接收合同与出运明细" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L3" tooltip="供应商接收邮件及附件（盖章合同 PDF＋出运明细）。业务员仅收件，无操作节点。">
+          <mxGeometry x="18" y="790" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N14" value="办理合同签字盖章" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L3" tooltip="供应商完成合同签字盖章，随后以邮件回传扫描件。">
+          <mxGeometry x="18" y="880" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N15" value="邮件回传合同扫描件" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L3" tooltip="供应商以邮件回传签字盖章合同扫描件，供系统关联及采购员核对。">
+          <mxGeometry x="18" y="970" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N16" value="回传件绑定对应合同" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="系统将收到的回传件关联至对应合同，随后由采购员核对确认；收到文件本身不代表已经确认有效。">
+          <mxGeometry x="18" y="970" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N17" value="核对回签合同并留档" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="由对应采购跟单员核对回签合同并确认留档。完成这一环节后，才能申请订金。">
+          <mxGeometry x="18" y="970" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N18" value="回签完成，进入付款环节" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#107c80;fontColor=#19334a;fontSize=10;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L1" tooltip="采购员确认回签并留档后，沿图继续进入付款阶段。订金与后续货款均按次申请、审批及确认。">
+          <mxGeometry x="18" y="1060" width="204" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="N19" value="选取已回签留档的合同" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="采购跟单员选择对应合同，按约定判断本次申请的是订金还是其他货款。">
+          <mxGeometry x="18" y="1235" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N30" value="定金与货款的关系（说明）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbe6;strokeColor=#d6b67e;dashed=1;fontColor=#5a4630;fontSize=10;fontFamily=Microsoft YaHei;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="L0" tooltip="同一合同可以先付订金，再付后续货款。订金付款完成并不会提前结束整份合同流程。">
+          <mxGeometry x="18" y="1235" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="D02" value="需要申请定金？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff5e5;strokeColor=#b76544;strokeWidth=1.5;fontColor=#19334a;fontSize=11;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L1" tooltip="需要订金时，完成回签留档即可发起本次订金申请。无需订金或后续其他货款，须先确认已出货再申请。">
+          <mxGeometry x="60" y="1330" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="N20" value="提交定金申请" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="采购跟单员选取已回签留档的合同，发起本次订金申请。每次均单独申请，不沿用其他付款申请的审批结果。">
+          <mxGeometry x="18" y="1440" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N21" value="采购员确认已出货" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="由负责该合同的采购跟单员在系统确认“已出货”。订金以外的付款必须完成这一步才能申请。">
+          <mxGeometry x="18" y="1540" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N22" value="提交货款申请" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="确认已出货后，采购跟单员发起本次货款申请。同一合同可以分多次申请，但每次都须独立审批和财务确认。">
+          <mxGeometry x="18" y="1640" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N23" value="付款申请审批（严总/张总任一通过）" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L2" tooltip="严总或张总任意一人审批通过即可。付款申请不设置许总一级审批。">
+          <mxGeometry x="18" y="1640" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N24" value="修改本次付款申请（保留付款类型）" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="采购跟单员修改被退回的本次付款申请，再提交严总或张总重新审批，保留原付款类型。">
+          <mxGeometry x="18" y="1740" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="D03" value="审批通过？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff5e5;strokeColor=#b76544;strokeWidth=1.5;fontColor=#19334a;fontSize=11;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L2" tooltip="通过后，系统提醒财务付款。驳回后修改本次申请再提交，保留原付款类型，不返回合同审批或重新选择订金分支。">
+          <mxGeometry x="60" y="1740" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="N25" value="提醒财务付款" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L0" tooltip="付款申请通过后，系统提醒财务办理本次付款。合同和开票资料均可从系统查看、下载。">
+          <mxGeometry x="18" y="1850" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N26" value="查看系统资料并执行付款" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L4" tooltip="财务直接在系统查看、下载相关资料并办理付款，无需采购员另外打包提交资料。">
+          <mxGeometry x="18" y="1850" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N27" value="确认本次付款完成" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L4" tooltip="财务实际付款后，在系统点击“确认付款完成”即可，无需上传付款凭证。">
+          <mxGeometry x="18" y="1950" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="D04" value="全部付清并确认？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff5e5;strokeColor=#b76544;strokeWidth=1.5;fontColor=#19334a;fontSize=11;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L0" tooltip="检查是否已将合同所有应付款付清并确认；尚有应付款时继续后续申请。当次付款完成不等于整份合同完成。">
+          <mxGeometry x="60" y="2040" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="N28" value="继续后续付款申请" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#19334a;strokeWidth=1;fontColor=#19334a;fontSize=12;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;spacing=2;" vertex="1" parent="L1" tooltip="按剩余应付款继续发起下一次申请。若为订金以外的付款，先满足采购员确认已出货条件；每次重新审批、付款及确认。">
+          <mxGeometry x="18" y="2150" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="N29" value="全部付清并确认：已完成" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#107c80;fontColor=#19334a;fontSize=10;fontFamily=Microsoft YaHei;align=center;verticalAlign=middle;" vertex="1" parent="L0" tooltip="回签合同已留档、采购员已确认出货，且所有应付款付清并由财务确认后，整份合同流程完成。">
+          <mxGeometry x="18" y="2150" width="204" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="E01" value="接收完整总表" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N01" target="N02">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E02" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N02" target="D01">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E03" value="否：无变化" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D01" target="N03">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E04" value="是：新增／变更" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D01" target="N04">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="365" />
+              <mxPoint x="184" y="365" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E05" value="分配个人待办" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N04" target="N05">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E06" value="按类型生成" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N05" target="N06">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E07" value="生成合同" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N06" target="N07">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E08" value="核对后送审" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N07" target="N08">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E09" value="一级通过" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#107c80;strokeWidth=2.5;fontColor=#107c80;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N08" target="N09">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E10" value="两级通过" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#107c80;strokeWidth=2.5;fontColor=#107c80;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N09" target="N11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N11" target="N12">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E12" value="邮件发送" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N12" target="N13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N13" target="N14">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E14" value="签字盖章后回传" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N14" target="N15">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E15" value="回传扫描件" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N15" target="N16">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E16" value="绑定合同" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N16" target="N17">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E17" value="确认有效并留档" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N17" target="N18">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E18" value="进入付款环节" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N18" target="N19">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E19" value="一级退回：修改合同" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N08" target="N10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="520" />
+              <mxPoint x="460" y="715" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E20" value="二级退回：从一级重审" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=0;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N09" target="N10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="620" />
+              <mxPoint x="270" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E21" value="从许总一级重新审批" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" edge="1" parent="1" source="N10" target="N08">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="715" />
+              <mxPoint x="600" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N19" target="D02">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E23" value="是：有订金约定" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D02" target="N20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="1375" />
+              <mxPoint x="270" y="1435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E24" value="否：其他货款" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D02" target="N21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="1375" />
+              <mxPoint x="120" y="1535" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E25" value="提交定金申请" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N20" target="N23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="1472" />
+              <mxPoint x="480" y="1672" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E26" value="已出货" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N21" target="N22">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E27" value="提交货款申请" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N22" target="N23">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N23" target="D03">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E29" value="通过" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#107c80;strokeWidth=2.5;fontColor=#107c80;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D03" target="N25">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E30" value="驳回" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="D03" target="N24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="1785" />
+              <mxPoint x="500" y="1785" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E31" value="重提严总/张总（保留付款类型）" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" edge="1" parent="1" source="N24" target="N23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="1765" />
+              <mxPoint x="600" y="1730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E32" value="付款提醒" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N25" target="N26">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E33" value="执行付款" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="N26" target="N27">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E34" value="确认当次完成" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=0;exitY=0.5;exitPerimeter=1;entryX=1;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="N27" target="D04">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="1982" />
+              <mxPoint x="240" y="2085" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E35" value="是：全部付清并确认" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#107c80;strokeWidth=2.5;fontColor=#107c80;exitX=0.5;exitY=1;exitPerimeter=1;entryX=0.5;entryY=0;entryPerimeter=1;" edge="1" parent="1" source="D04" target="N29">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E36" value="否：仍有应付款" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#597b8d;strokeWidth=1.5;fontColor=#40576b;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.5;entryPerimeter=1;" edge="1" parent="1" source="D04" target="N28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="2085" />
+              <mxPoint x="260" y="2182" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E37" value="继续申请：先确认已出货" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b76544;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#b76544;exitX=0.5;exitY=0;exitPerimeter=1;entryX=0.5;entryY=1;entryPerimeter=1;" edge="1" parent="1" source="N28" target="N21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="2120" />
+              <mxPoint x="700" y="2120" />
+              <mxPoint x="700" y="1605" />
+              <mxPoint x="360" y="1605" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="T1" value="一、订单处理 · 合同审批 · 回签留档" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#19334a;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;fontFamily=Microsoft YaHei;align=left;verticalAlign=middle;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="52" width="1160" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="T2" value="二、付款与结清" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#19334a;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;fontFamily=Microsoft YaHei;align=left;verticalAlign=middle;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1170" width="1160" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="A1" value="图例&lt;br&gt;━━━━━━━━&lt;br&gt;实线：正常流转&lt;br&gt;橙色虚线：退回修改&lt;br&gt;青色线：审批通过&lt;br&gt;菱形：判断节点" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbe6;strokeColor=#d6b67e;dashed=1;fontColor=#5a4630;fontSize=10;fontFamily=Microsoft YaHei;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="980" y="250" width="196" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="A2" value="关键规则&lt;br&gt;1. 合同：许总一级 → 严总/张总二级，任一通过即可；任一级退回均从许总一级重审&lt;br&gt;2. 付款：严总/张总任一通过，不设许总一级；驳回仅重提严总/张总并保留付款类型&lt;br&gt;3. 订金前须回签留档；其他货款前须采购员确认已出货&lt;br&gt;4. 每次付款单独申请／审批／财务确认，无需上传凭证；一次付款完成不等于合同完成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbe6;strokeColor=#d6b67e;dashed=1;fontColor=#5a4630;fontSize=10;fontFamily=Microsoft YaHei;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="980" y="430" width="196" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="A3" value="待定项&lt;br&gt;· 电子印章稍后提供并配置&lt;br&gt;· 出运明细生成／上传方式未规定&lt;br&gt;· 本图描述目标流程，不代表工具已全部实现" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbe6;strokeColor=#d6b67e;dashed=1;fontColor=#5a4630;fontSize=10;fontFamily=Microsoft YaHei;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="980" y="670" width="196" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="A4" value="自动发送邮件&lt;br&gt;收件人：供应商、对应业务员、严总、张总、许总、该合同采购员&lt;br&gt;附件：盖章合同 PDF ＋ 出运明细" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbe6;strokeColor=#d6b67e;dashed=1;fontColor=#5a4630;fontSize=10;fontFamily=Microsoft YaHei;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="740" y="480" width="196" height="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
