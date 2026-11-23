@@ -219,7 +219,7 @@ function pathFor(c){
   const sx=ndCx(a), sy=ndBottom(a), tx=ndCx(b), ty=ndTop(b);
   if(c.type==='return' || ty<=sy){
     const goLeft = tx<=sx;
-    const ox = goLeft?18:1102;
+    const ox = goLeft?18:VIEW_W-18;
     return `M ${sx} ${sy} L ${sx} ${sy+22} L ${ox} ${sy+22} L ${ox} ${ty-22} L ${tx} ${ty-22} L ${tx} ${ty}`;
   }
   const mid=(sy+ty)/2;
@@ -229,7 +229,7 @@ function labelPos(c){
   const a=nodeById(c.from), b=nodeById(c.to);
   if(!a||!b) return {x:0,y:0};
   const sx=ndCx(a), sy=ndBottom(a), tx=ndCx(b), ty=ndTop(b);
-  if(c.type==='return'||ty<=sy) return {x:(tx<=sx?58:1062), y:(sy+ty)/2-6};
+  if(c.type==='return'||ty<=sy) return {x:(tx<=sx?58:VIEW_W-58), y:(sy+ty)/2-6};
   return {x:(sx+tx)/2, y:(sy+ty)/2-6};
 }
 
@@ -240,13 +240,11 @@ function render(){
     <marker id="arrAcc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#107c80"/></marker>
   </defs>`;
   data.lanes.forEach((l,i)=>{
-    const x=40+i*260;
-    s += `<rect x="${x}" y="10" width="250" height="1090" rx="10" fill="${esc(l.color)}" stroke="#dce5eb"/>`;
-    s += `<rect x="${x}" y="10" width="250" height="48" rx="9" fill="#19334a"/>`;
-    s += `<text class="lane-name" x="${x+125}" y="41" text-anchor="middle">${esc(l.name)}</text>`;
+    const x=laneX(i);
+    s += `<rect x="${x}" y="${RECT_Y}" width="${LANE_W}" height="${RECT_H}" rx="10" fill="${esc(l.color)}" stroke="#dce5eb"/>`;
+    s += `<rect x="${x}" y="${RECT_Y}" width="${LANE_W}" height="48" rx="9" fill="#19334a"/>`;
+    s += `<text class="lane-name" x="${x+LANE_W/2}" y="41" text-anchor="middle">${esc(l.name)}</text>`;
   });
-  s += `<rect class="hint-box" x="60" y="880" width="1000" height="70" rx="10"/>`;
-  s += `<text class="hint-text" x="560" y="920" text-anchor="middle">预留区域：可继续添加节点与连线（右侧面板或配置 connections）</text>`;
 
   data.connections.forEach((c,i)=>{
     const p=pathFor(c); if(!p) return;
@@ -353,7 +351,7 @@ let drag=null;
 window.addEventListener('mousemove', e=>{
   if(!drag) return;
   const n=nodeById(drag.id); if(!n) return;
-  const p=pt(e); n.x=Math.max(45,Math.min(875,p.x-100)); n.y=Math.max(65,Math.min(970-ndH(n),p.y-ndH(n)/2)); drag.moved=true; render();
+  const p=pt(e); n.x=Math.max(45,Math.min(VIEW_W-45-NODE_W,p.x-NODE_W/2)); n.y=Math.max(65,Math.min(RECT_Y+RECT_H-130-ndH(n),p.y-ndH(n)/2)); drag.moved=true; render();
 });
 window.addEventListener('mouseup', ()=>{
   if(!drag) return;
