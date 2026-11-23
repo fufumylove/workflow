@@ -324,7 +324,7 @@ function renderPanels(){
     const t=document.getElementById('edType').value;
     if(t==='decision') n.type='decision'; else delete n.type;
     n.lane=document.getElementById('edLane').value;
-    const l=data.lanes.findIndex(x=>x.id===n.lane); n.x=40+l*260+25;
+    const l=data.lanes.findIndex(x=>x.id===n.lane); n.x=laneX(l)+NODE_OFFSET;
     n.sub=document.getElementById('edSub').value.trim().slice(0,18);
     n.note=document.getElementById('edNote').value;
     save(); render();
@@ -356,7 +356,7 @@ window.addEventListener('mousemove', e=>{
 window.addEventListener('mouseup', ()=>{
   if(!drag) return;
   const n=nodeById(drag.id);
-  if(n){ const i=Math.max(0,Math.min(data.lanes.length-1, Math.round((n.x+100-165)/260))); n.x=40+i*260+25; n.lane=data.lanes[i].id; }
+  if(n){ const i=Math.max(0,Math.min(data.lanes.length-1, Math.round((n.x+NODE_W/2-(LANE_X0+LANE_W/2))/STEP))); n.x=laneX(i)+NODE_OFFSET; n.lane=data.lanes[i].id; }
   drag=null; save(); render();
 });
 svg.addEventListener('keydown', e=>{
@@ -370,12 +370,12 @@ document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
 document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
   const id='n'+(Date.now()%100000);
-  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:65, y:820, note:'请填写节点说明。'});
+  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:1200, note:'请填写节点说明。'});
   selected=id; save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
 };
 document.getElementById('addDecision').onclick=()=>{
   const id='d'+(Date.now()%100000);
-  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:65, y:800, note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
+  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:1180, note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
   selected=id; save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
 };
 document.getElementById('reset').onclick=()=>{
