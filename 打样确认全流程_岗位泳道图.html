@@ -77,11 +77,11 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
   <div class="kicker" data-page-node-id="ziklBd8i2PEMKExFdGGiUM">SAMPLING WORKFLOW</div>
   <h1 data-page-node-id="LdqpgClZ5c0xALqlP39S54">打样确认全流程 · 按岗位泳道阅读</h1>
-  <p data-page-node-id="cMSCiSYgIeiUeJWkTm4144">沿泳道向下阅读各环节，跨泳道的连线表示岗位交接。当前仅放置节点，连线由你后续添加：可在右侧面板直接操作，也可在配置中填写。所有修改自动保存在本机浏览器。</p>
+  <p data-page-node-id="cMSCiSYgIeiUeJWkTm4144">沿泳道向下阅读各环节，跨泳道的连线表示岗位交接。可在右侧面板增删节点与连线，所有修改自动保存在本机浏览器。</p>
   <div class="facts" data-page-node-id="LgBCJEDJgIXPoBrdtwDZFh">
-    <span data-page-node-id="p0f2igKj02vas2PaHgshFt">泳道：业务部门 / QA / 采购跟单员 / QC</span>
-    <span data-page-node-id="JBthvx6LE0Is6tIBOWSRsD">节点：打样通知、买手确认样、QA样、测试样、签样、QA报告</span>
-    <span data-page-node-id="8UNzte6QMLhrJJAPIG1NBW">连线：待添加（已预留位置）</span>
+    <span data-page-node-id="p0f2igKj02vas2PaHgshFt">泳道：业务部门 / 我方QA / 对方QA / 采购跟单员 / QC</span>
+    <span data-page-node-id="JBthvx6LE0Is6tIBOWSRsD">节点：打样通知、买手确认样、QA样、测试样、签样、QA报告、客户QA反馈、签样收到后</span>
+    <span data-page-node-id="8UNzte6QMLhrJJAPIG1NBW">连线：2 条（可直接编辑）</span>
   </div>
 </div>
 
@@ -104,14 +104,14 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
       </div>
     </div>
     <div class="scroll" id="scroll" data-page-node-id="WqhJLFiDk6yfLUeIX2Q5wF">
-      <svg id="svg" viewBox="0 0 1120 1120" role="img" aria-label="打样确认全流程岗位泳道图" data-page-node-id="YnI0acSCaW4sk9b1ZUKbIg"></svg>
+      <svg id="svg" viewBox="0 0 1660 1430" role="img" aria-label="打样确认全流程岗位泳道图" data-page-node-id="YnI0acSCaW4sk9b1ZUKbIg"></svg>
     </div>
     <div class="legend" data-page-node-id="Ml6VMCO7mUX0hGnW2Ic4oD">
       <span data-page-node-id="XV6QIEiPB39J112ES4AOh4"><i data-page-node-id="YuFnoOKKQJVn1tCSKtokaX"></i>实线：正常流转</span>
       <span data-page-node-id="GKpEchJjiKZasJ5t26EfU5"><i class="ret" data-page-node-id="hqRn0WvJAJBEW9kM6ZQxEL"></i>橙色虚线：退回 / 返工</span>
       <span data-page-node-id="GSjrh5Cz1TaIifFzFeR3ge"><i class="acc" data-page-node-id="5IxXefyH8cjp9r7YEG5jFj"></i>青色：强调 / 完成</span>
       <span><b style="display:inline-block;width:12px;height:12px;background:#fff5e5;border:1px dashed #b76544;transform:rotate(45deg);vertical-align:middle;margin-right:8px"></b>菱形：判断节点（是 / 否分支）</span>
-      <span data-page-node-id="hw03qyweiDjrYZiF0QpzaZ">提示：连线尚未添加，可在右侧「连线」区新增。</span>
+      <span data-page-node-id="hw03qyweiDjrYZiF0QpzaZ">提示：拖动节点可改岗位/顺序，连线类型可在右侧修改。</span>
     </div>
   </section>
 
@@ -147,25 +147,32 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
    配置区：节点 / 泳道 / 连线都在这里。
    连线目前为空，可用右侧面板添加，或按下面示例取消注释填写。
    ============================================================ */
-const STORAGE_KEY = 'sampling-swimlane-v3';
+const STORAGE_KEY = 'sampling-swimlane-v4';
+
+/* 画布几何常量：泳道宽高、间距与节点居中偏移。改这里即可整体联动。 */
+const LANE_X0=40, LANE_W=300, LANE_GAP=20, STEP=LANE_W+LANE_GAP;
+const NODE_W=200, NODE_OFFSET=(LANE_W-NODE_W)/2;
+const RECT_Y=10, RECT_H=1400, VIEW_W=1660, VIEW_H=1430;
+const laneX=i=>LANE_X0+i*STEP;
 
 function defaultData(){
   return {
     lanes: [
       {id:'business', name:'业务部门', color:'#f0f8f6'},
-      {id:'qa',       name:'QA',       color:'#f5f2fa'},
+      {id:'qaOur',    name:'我方QA',   color:'#f5f2fa'},
+      {id:'qaClient', name:'对方QA',   color:'#f2f0fa'},
       {id:'merch',    name:'采购跟单员', color:'#fff8ee'},
       {id:'qc',       name:'QC',       color:'#f2f6fc'}
     ],
     nodes: [
-      {id:'n1', label:'打样通知',   lane:'merch',    x:585, y:110, sub:'设计稿·个数·交期', note:'采购跟单员发出打样通知，随附客户提供的打样设计稿及其他说明，明确打样个数与完成日期。'},
-      {id:'n2', label:'买手确认样', lane:'business', x:65,  y:210, sub:'款式/颜色/规格核对', note:'买手核对样衣款式、颜色、规格及辅料是否符合要求，确认后进入 QA 检验。'},
-      {id:'n3', label:'QA样',       lane:'qa',       x:325, y:310, sub:'spec·checklist·客户QA', note:'采购跟单员提供 spec，QA 提供 checklist。客户 QA 收到 QA样后若有反馈：①测试报告 ②样品修改意见（v1 版、v2 版），则返回 QA样重新开始；若通过测试，则成为测试样。'},
-      {id:'n4', label:'测试样',     lane:'qc',       x:845, y:530, sub:'测试并记录结果', note:'QC 对样衣进行测试并记录结果；通过测试的样衣转为测试样。'},
-      {id:'n5', label:'签样',       lane:'business', x:65,  y:510, sub:'样品/清单/包装/报告', note:'样衣签字封样，资料含样品个数、checklist、artwork（包装）及测试报告，作为生产与检验依据。'},
-      {id:'n6', label:'QA报告',     lane:'qa',       x:325, y:610, sub:'检验结果汇总归档', note:'QA 汇总检验与测试结果，出具 QA 报告并归档。'},
-      {id:'d1', label:'客户QA反馈？', lane:'qa',     x:325, y:430, type:'decision', sub:'有反馈/通过测试', note:'客户 QA 反馈判断：是（测试报告或 v1/v2 修改意见）→ 返回 QA样重做；否（通过测试）→ 转测试样。'},
-      {id:'d2', label:'签样收到后',  lane:'business', x:65,  y:810, sub:'签样有效期·测试有效期', note:'签样收到后登记并跟踪有效期：记录签样有效期与测试有效期，到期前提醒复检或重新签样。'}
+      {id:'n1', label:'打样通知',   lane:'merch',    x:1050, y:110, sub:'设计稿·个数·交期', note:'采购跟单员发出打样通知，随附客户提供的打样设计稿及其他说明，明确打样个数与完成日期。'},
+      {id:'n2', label:'买手确认样', lane:'business', x:90,   y:210, sub:'款式/颜色/规格核对', note:'买手核对样衣款式、颜色、规格及辅料是否符合要求，确认后进入 QA 检验。'},
+      {id:'n3', label:'QA样',       lane:'qaOur',    x:410,  y:310, sub:'spec·checklist·客户QA', note:'采购跟单员提供 spec，我方 QA 提供 checklist。客户 QA 收到 QA样后若有反馈：①测试报告 ②样品修改意见（v1 版、v2 版），则返回 QA样重新开始；若通过测试，则成为测试样。'},
+      {id:'n4', label:'测试样',     lane:'qc',       x:1370, y:530, sub:'测试并记录结果', note:'QC 对样衣进行测试并记录结果；通过测试的样衣转为测试样。'},
+      {id:'n5', label:'签样',       lane:'business', x:90,   y:510, sub:'样品/清单/包装/报告', note:'样衣签字封样，资料含样品个数、checklist、artwork（包装）及测试报告，作为生产与检验依据。'},
+      {id:'n6', label:'QA报告',     lane:'qaClient', x:730,  y:610, sub:'检验结果汇总归档', note:'对方 QA 汇总检验与测试结果，出具 QA 报告并归档。'},
+      {id:'d1', label:'客户QA反馈？', lane:'qaClient', x:730, y:430, type:'decision', sub:'有反馈/通过测试', note:'客户 QA 反馈判断：是（测试报告或 v1/v2 修改意见）→ 返回 QA样重做；否（通过测试）→ 转测试样。'},
+      {id:'d2', label:'签样收到后',  lane:'business', x:90,   y:810, sub:'签样有效期·测试有效期', note:'签样收到后登记并跟踪有效期：记录签样有效期与测试有效期，到期前提醒复检或重新签样。'}
     ],
     connections: [
       {from:'d1', to:'n3', label:'是（v1/v2修改意见）', type:'return'},
