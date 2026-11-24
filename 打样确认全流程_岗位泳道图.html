@@ -45,6 +45,12 @@ svg{width:100%;min-width:1080px;height:auto;display:block}
 .edge-hit{fill:none;stroke:transparent;stroke-width:14;pointer-events:stroke;cursor:pointer}
 .edge-handle{fill:#fff;stroke:#107c80;stroke-width:2;cursor:move}
 .edge-label:hover{fill:#107c80;text-decoration:underline}
+.side-pick{fill:#fff;stroke:#107c80;stroke-width:2;pointer-events:all;cursor:pointer}
+.side-pick.from{stroke:#107c80}
+.side-pick.to{stroke:#2e9e5b}
+.side-pick.chosen{fill:#107c80;stroke-width:3}
+.side-pick.to.chosen{fill:#2e9e5b}
+.side-pick:hover{fill:#e2f4ef;stroke-width:3}
 .lane-name{font-size:19px;font-weight:650;fill:#fff;font-family:inherit}
 .sticky-lanes{position:fixed;left:0;right:0;top:0;z-index:35;height:56px;overflow:hidden;background:#fff;box-shadow:0 5px 10px #19334a15;pointer-events:none}
 .sticky-lanes[hidden]{display:none}
@@ -78,7 +84,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
 <header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
   <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
-  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.5</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.6</div>
 </header>
 
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
@@ -100,7 +106,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <p id="subtitle" data-page-node-id="PQWDVKPMGGVT3wrtmHPCzL">点击节点查看说明；拖动节点可调整岗位与顺序。</p>
       </div>
       <div class="tools" data-page-node-id="xFXsZ0IYh2hiNXIIUu7PWO">
-        <button id="addEdge" title="依次点击两个节点建立连线" data-page-node-id="ayJqGUVbnnemP3QuozgMk4">＋ 添加连线</button>
+        <button id="addEdge" title="点起点→终点，再分别点两节点四周圆点定起止边；Esc 取消" data-page-node-id="ayJqGUVbnnemP3QuozgMk4">＋ 添加连线</button>
         <button id="reset" data-page-node-id="KuWQDB7rCKvv5ZcLZ4PaSm">恢复初始</button>
         <button id="export" data-page-node-id="Hz4fMct6qDfmhn9DRJpFVs">导出配置</button>
         <button id="importBtn" data-page-node-id="CvVfOjcj1HzF2mG9f972BG">导入配置</button>
@@ -158,7 +164,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
       <span data-page-node-id="GKpEchJjiKZasJ5t26EfU5"><i class="ret" data-page-node-id="hqRn0WvJAJBEW9kM6ZQxEL"></i>橙色虚线：退回 / 返工</span>
       <span data-page-node-id="GSjrh5Cz1TaIifFzFeR3ge"><i class="acc" data-page-node-id="5IxXefyH8cjp9r7YEG5jFj"></i>青色：强调 / 完成</span>
       <span><b style="display:inline-block;width:12px;height:12px;background:#fff5e5;border:1px dashed #b76544;transform:rotate(45deg);vertical-align:middle;margin-right:8px"></b>菱形：判断节点（是 / 否分支）</span>
-      <span data-page-node-id="hw03qyweiDjrYZiF0QpzaZ">提示：点连线显示拐点手柄；拖文字改标签位置，拖圆点改路径，双击可重置。</span>
+      <span data-page-node-id="hw03qyweiDjrYZiF0QpzaZ">提示：加线时点两节点后点青/绿圆点定起止边；点连线显示拐点，拖文字改标签，双击重置。</span>
     </div>
   </section>
 
@@ -214,7 +220,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
    配置区：节点 / 泳道 / 连线都在这里。
    连线目前为空，可用右侧面板添加，或按下面示例取消注释填写。
    ============================================================ */
-const STORAGE_KEY = 'sampling-swimlane-v10';
+const STORAGE_KEY = 'sampling-swimlane-v11';
 
 /* 画布几何常量：泳道宽高、间距与节点居中偏移。改这里即可整体联动。 */
 const LANE_X0=40, LANE_W=300, LANE_GAP=20, STEP=LANE_W+LANE_GAP;
@@ -270,7 +276,11 @@ function defaultData(){
 let data = load();
 let selected = null;
 let connectMode = false;
-let pendingFrom = null;
+let pendingFrom = null, pendingTo = null;
+let pendingFromSide = null, pendingToSide = null;
+let pickStage = 0;                  // 0选起点 1选终点 2选起点边 3选终点边
+const SIDE_NAME={top:'上',right:'右',bottom:'下',left:'左'};
+function resetPick(){ pendingFrom=pendingTo=pendingFromSide=pendingToSide=null; pickStage=0; }
 let zoom = 1;
 let editingEdge = null;             // 当前选中、显示可拖手柄的连线索引
 let edgeDrag = null;                // {kind:'label'|'point', ci, pi}
@@ -409,10 +419,23 @@ function render(){
       </g>`;
     }
   });
+  /* 加线选边阶段：在两个节点四边中点显示可点圆点（最上层） */
+  if(connectMode && pendingFrom && pendingTo){
+    [pendingFrom,pendingTo].forEach(id=>{
+      const n=nodeById(id); if(!n) return;
+      const isFrom=id===pendingFrom, chosen=isFrom?pendingFromSide:pendingToSide;
+      ['top','right','bottom','left'].forEach(side=>{
+        const p=anchorAt(n,side);
+        s+=`<circle class="side-pick ${isFrom?'from':'to'}${chosen===side?' chosen':''}" data-pick-id="${esc(id)}" data-side="${side}" cx="${p.x}" cy="${p.y}" r="7"/>`;
+      });
+    });
+  }
   svg.innerHTML = s;
-  document.getElementById('subtitle').textContent = connectMode
-    ? '添加连线中：请依次点击起点节点和终点节点。'
-    : '点击节点查看说明；拖动节点可调整岗位与顺序。';
+  document.getElementById('subtitle').textContent = !connectMode
+    ? '点击节点查看说明；拖动节点可调整岗位与顺序。'
+    : pickStage<=1 ? '添加连线中：请先点击起点节点，再点击终点节点。'
+    : pickStage===2 ? '请点击起点节点四周的青色圆点，确定起点边（Esc 取消）。'
+    : '请点击终点节点四周的绿色圆点，确定终点边（Esc 取消）。';
   renderPanels();
   if(typeof syncSticky==='function') syncSticky();
 }
@@ -502,8 +525,39 @@ function renderPanels(){
   };
 }
 
-/* 选中与拖动：连线标签 / 拐点手柄 / 节点（判断顺序：细节在前） */
+/* 选中与拖动：连线标签 / 拐点手柄 / 节点（判断顺序：细节在前）
+   加线模式置顶优先：圆点与节点先处理，避免被旧线标签/手柄/命中区拦截 */
 svg.addEventListener('mousedown', e=>{
+  if(connectMode){
+    const sp=e.target.closest('.side-pick');
+    if(sp){
+      const id=sp.dataset.pickId, side=sp.dataset.side;
+      if(pickStage===2 && id===pendingFrom){
+        pendingFromSide=side; pickStage=3;
+        setStatus('已选起点'+SIDE_NAME[side]+'边，请点终点节点的绿色圆点。'); render();
+      }else if(pickStage===3 && id===pendingTo){
+        pendingToSide=side;
+        data.connections.push({from:pendingFrom,to:pendingTo,
+          fromSide:pendingFromSide,toSide:pendingToSide,label:'',type:'normal'});
+        setConnect(false); save(); render();
+        setStatus('连线已添加（'+SIDE_NAME[pendingFromSide]+'→'+SIDE_NAME[side]+'边），可在右侧改类型与说明。');
+      }else{
+        setStatus('请点对应圆点：青色=起点节点，绿色=终点节点。');
+      }
+      e.preventDefault(); return;
+    }
+    const g=e.target.closest('.node');
+    if(g){
+      const id=g.dataset.id, lb=nodeById(id).label;
+      if(pickStage===0){ pendingFrom=id; pickStage=1; setStatus('已选起点：'+lb+'，请点击终点节点。'); }
+      else if(pickStage===1){
+        if(id===pendingFrom){ resetPick(); setStatus('请重新选择起点节点。'); }
+        else{ pendingTo=id; pickStage=2; setStatus('已选终点：'+lb+'。请点青色(起点)与绿色(终点)圆点定边，Esc 取消。'); }
+      }else{ setStatus('请点节点四周的圆点选边，Esc 取消。'); }
+      render(); e.preventDefault(); return;
+    }
+    resetPick(); render(); setStatus('已取消本次选择，请点击起点节点重新开始。'); e.preventDefault(); return;
+  }
   const lab=e.target.closest('.edge-label');
   if(lab){ edgeDrag={kind:'label',ci:+lab.dataset.ci}; e.preventDefault(); return; }
   const hd=e.target.closest('.edge-handle');
@@ -513,18 +567,8 @@ svg.addEventListener('mousedown', e=>{
 
   const g=e.target.closest('.node');
   if(!g){ if(editingEdge!==null){ editingEdge=null; render(); } return; }
-  const id=g.dataset.id;
-  if(connectMode){
-    if(!pendingFrom){ pendingFrom=id; setStatus('已选起点：'+nodeById(id).label+'，请点击终点节点。'); }
-    else if(pendingFrom===id){ pendingFrom=null; setStatus('请重新选择起点。'); }
-    else{
-      data.connections.push({from:pendingFrom,to:id,label:'',type:'normal'});
-      pendingFrom=null; setStatus('连线已添加，可在上方修改类型与说明。'); save();
-    }
-    render(); e.preventDefault(); return;
-  }
-  editingEdge=null; selected=id; render();
-  drag={id, moved:false}; e.preventDefault();
+  editingEdge=null; selected=g.dataset.id; render();
+  drag={id:g.dataset.id, moved:false}; e.preventDefault();
 });
 window.addEventListener('mousemove', e=>{
   if(edgeDrag){
@@ -569,7 +613,8 @@ svg.addEventListener('keydown', e=>{
 });
 
 /* 工具栏 */
-function setConnect(v){ connectMode=v; pendingFrom=null; document.getElementById('addEdge').classList.toggle('on',v); document.getElementById('addEdge2').classList.toggle('on',v); setStatus(v?'请依次点击起点与终点节点。':''); render(); }
+function setConnect(v){ connectMode=v; resetPick(); document.getElementById('addEdge').classList.toggle('on',v); document.getElementById('addEdge2').classList.toggle('on',v); setStatus(v?'请点击起点节点。':''); render(); }
+window.addEventListener('keydown',e=>{ if(e.key==='Escape'&&connectMode) setConnect(false); });
 document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
 document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
