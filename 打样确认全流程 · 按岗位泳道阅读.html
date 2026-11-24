@@ -28,6 +28,9 @@ button:hover{border-color:var(--teal);color:var(--teal)}
 button.on{background:var(--teal);border-color:var(--teal);color:#fff}
 button.danger:hover{border-color:#b76544;color:#b76544}
 .tools span{font-size:11px;color:var(--muted);min-width:38px;text-align:center}
+.lane-h{display:flex;gap:6px;align-items:center;margin:0!important;font-size:11px!important;color:var(--muted)!important;white-space:nowrap}
+.lane-h input{width:120px;accent-color:var(--teal);padding:0!important;border:0!important;background:transparent!important}
+.lane-h span{min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
 .scroll{overflow:auto;padding:8px 16px 16px;overscroll-behavior-x:contain}
 svg{width:100%;min-width:1080px;height:auto;display:block}
 .node{cursor:grab;outline:none}
@@ -84,7 +87,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
 <header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
   <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
-  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.6</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.7</div>
 </header>
 
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
@@ -113,69 +116,70 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <input type="file" id="importFile" accept="application/json,.json" hidden="" data-page-node-id="tcxqi4zbB4gVRNIUvRwQXi">
         <button data-zoom="minus" data-page-node-id="Byc0SeHHVFakvD7xfGm7y0">−</button><span class="zoom-label" data-page-node-id="GE4EjgLOu0pLs9pIq5GEf0">100%</span><button data-zoom="plus" data-page-node-id="ep7BuZ7obRYCa3po4PYEJr">＋</button>
         <button data-zoom="reset" data-page-node-id="X29e3WzCFg6k9rSI9M2tAx">适应</button>
+        <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="2600" step="20" value="1400"><span id="laneHVal">2100</span></label>
         <button data-fullscreen="" data-page-node-id="M1sy2gUR3rnFCAfCwCNmCq">全屏</button>
       </div>
     </div>
     <div class="scroll" id="scroll" data-page-node-id="WqhJLFiDk6yfLUeIX2Q5wF">
-      <svg id="svg" viewBox="0 0 1660 1430" role="img" aria-label="打样确认全流程岗位泳道图" data-page-node-id="YnI0acSCaW4sk9b1ZUKbIg" style="width: 100%;"><defs>
+      <svg id="svg" viewBox="0 0 1660 2130" role="img" aria-label="打样确认全流程岗位泳道图" data-page-node-id="YnI0acSCaW4sk9b1ZUKbIg" style="width: 100%;"><defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#597b8d"></path></marker>
     <marker id="arrRet" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#b76544"></path></marker>
     <marker id="arrAcc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#107c80"></path></marker>
-  </defs><rect x="40" y="10" width="300" height="1400" rx="10" fill="#f0f8f6" stroke="#dce5eb"></rect><rect x="40" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="190" y="42" dominant-baseline="central" text-anchor="middle">业务部门</text><rect x="360" y="10" width="300" height="1400" rx="10" fill="#f5f2fa" stroke="#dce5eb"></rect><rect x="360" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="510" y="42" dominant-baseline="central" text-anchor="middle">我方QA</text><rect x="680" y="10" width="300" height="1400" rx="10" fill="#f2f0fa" stroke="#dce5eb"></rect><rect x="680" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="830" y="42" dominant-baseline="central" text-anchor="middle">对方QA</text><rect x="1000" y="10" width="300" height="1400" rx="10" fill="#fff8ee" stroke="#dce5eb"></rect><rect x="1000" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="1150" y="42" dominant-baseline="central" text-anchor="middle">采购跟单员</text><rect x="1320" y="10" width="300" height="1400" rx="10" fill="#f2f6fc" stroke="#dce5eb"></rect><rect x="1320" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="1470" y="42" dominant-baseline="central" text-anchor="middle">QC</text><path class="edge " d="M 830 435.51123046875 L 830 474.7334899902344 L 830 474.7334899902344 L 830 513.9557495117188"></path><path class="edge-hit" data-ci="0" d="M 830 435.51123046875 L 830 474.7334899902344 L 830 474.7334899902344 L 830 513.9557495117188"></path><path class="edge return" d="M 830 613.9557495117188 L 830 566 L 674 566 L 674 316 L 510 316 L 510 330"></path><path class="edge-hit" data-ci="1" d="M 830 613.9557495117188 L 830 566 L 674 566 L 674 316 L 510 316 L 510 330"></path><text class="edge-label ret" data-ci="1" x="526" y="499.9778747558594" style="font-size:16px" text-anchor="middle">否，客户QA反馈测试要求和样品修改意见</text><path class="edge " d="M 1150 292.7619323730469 L 1150 311.38096618652344 L 510 311.38096618652344 L 510 330"></path><path class="edge-hit" data-ci="2" d="M 1150 292.7619323730469 L 1150 311.38096618652344 L 510 311.38096618652344 L 510 330"></path><path class="edge " d="M 630 388 L 670 388 L 710 386.51123046875"></path><path class="edge-hit" data-ci="3" d="M 630 388 L 670 388 L 710 386.51123046875"></path><path class="edge " d="M 510 285.5834197998047 L 510 307.79170989990234 L 510 307.79170989990234 L 510 330"></path><path class="edge-hit" data-ci="4" d="M 510 285.5834197998047 L 510 307.79170989990234 L 510 307.79170989990234 L 510 330"></path><path class="edge " d="M 830 613.9557495117188 L 830 640.1416015625 L 830 640.1416015625 L 830 666.3274536132812"></path><path class="edge-hit" data-ci="5" d="M 830 613.9557495117188 L 830 640.1416015625 L 830 640.1416015625 L 830 666.3274536132812"></path><text class="edge-label " data-ci="5" x="846" y="641.1416015625" style="font-size:21px" text-anchor="middle">是</text><path class="edge " d="M 710 706.3274536132812 L 670 706.3274536132812 L 630 707.2900390625"></path><path class="edge-hit" data-ci="6" d="M 710 706.3274536132812 L 670 706.3274536132812 L 630 707.2900390625"></path><path class="edge " d="M 510 747.2900390625 L 510 839.2388916015625 L 1030 839.2388916015625 L 1030 931.187744140625"></path><path class="edge-hit" data-ci="7" d="M 510 747.2900390625 L 510 839.2388916015625 L 1030 839.2388916015625 L 1030 931.187744140625"></path><path class="edge " d="M 630 707.2900390625 L 670 707.2900390625 L 710 706.3274536132812"></path><path class="edge-hit" data-ci="8" d="M 630 707.2900390625 L 670 707.2900390625 L 710 706.3274536132812"></path><path class="edge " d="M 1150 971.187744140625 L 1150 1011.6502685546875 L 510 1011.6502685546875 L 510 1052.11279296875"></path><path class="edge-hit" data-ci="9" d="M 1150 971.187744140625 L 1150 1011.6502685546875 L 510 1011.6502685546875 L 510 1052.11279296875"></path><path class="edge " d="M 510 1132.11279296875 L 510 1156.056396484375 L 510 1156.056396484375 L 510 1180"></path><path class="edge-hit" data-ci="10" d="M 510 1132.11279296875 L 510 1156.056396484375 L 510 1156.056396484375 L 510 1180"></path><g class="node" data-id="n1" tabindex="0">
-        <rect class="box" x="70" y="100" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="190" y="134" text-anchor="middle">打样通知</text>
-        <text class="sub" x="190" y="156" text-anchor="middle">打样设计稿+其他说明</text><text class="sub" x="190" y="174" text-anchor="middle">打样个数</text><text class="sub" x="190" y="192" text-anchor="middle">完成日期</text>
+  </defs><rect x="40" y="10" width="300" height="2100" rx="10" fill="#f0f8f6" stroke="#dce5eb"></rect><rect x="40" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="190" y="42" dominant-baseline="central" text-anchor="middle">业务部门</text><rect x="360" y="10" width="300" height="2100" rx="10" fill="#f5f2fa" stroke="#dce5eb"></rect><rect x="360" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="510" y="42" dominant-baseline="central" text-anchor="middle">我方QA</text><rect x="680" y="10" width="300" height="2100" rx="10" fill="#f2f0fa" stroke="#dce5eb"></rect><rect x="680" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="830" y="42" dominant-baseline="central" text-anchor="middle">对方QA</text><rect x="1000" y="10" width="300" height="2100" rx="10" fill="#fff8ee" stroke="#dce5eb"></rect><rect x="1000" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="1150" y="42" dominant-baseline="central" text-anchor="middle">采购跟单员</text><rect x="1320" y="10" width="300" height="2100" rx="10" fill="#f2f6fc" stroke="#dce5eb"></rect><rect x="1320" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" x="1470" y="42" dominant-baseline="central" text-anchor="middle">QC</text><path class="edge " d="M 830 434.02093981870127 L 830 490.68765496794435 L 830 490.68765496794435 L 830 547.3543701171875"></path><path class="edge-hit" data-ci="0" d="M 830 434.02093981870127 L 830 490.68765496794435 L 830 490.68765496794435 L 830 547.3543701171875"></path><path class="edge " d="M 1150 260.84495544433594 L 1150 278.84495544433594 L 1150 310.4164386066287 L 510 310.4164386066287 L 510 328.4164386066287"></path><path class="edge-hit" data-ci="1" d="M 1150 260.84495544433594 L 1150 278.84495544433594 L 1150 310.4164386066287 L 510 310.4164386066287 L 510 328.4164386066287"></path><path class="edge " d="M 630 386.4164386066287 L 648 386.4164386066287 L 648 385.02093981870127 L 692 385.02093981870127 L 710 385.02093981870127"></path><path class="edge-hit" data-ci="2" d="M 630 386.4164386066287 L 648 386.4164386066287 L 648 385.02093981870127 L 692 385.02093981870127 L 710 385.02093981870127"></path><path class="edge " d="M 510 274.4987197574212 L 510 292.4987197574212 L 510 310.4164386066287 L 510 328.4164386066287"></path><path class="edge-hit" data-ci="3" d="M 510 274.4987197574212 L 510 292.4987197574212 L 510 310.4164386066287 L 510 328.4164386066287"></path><path class="edge " d="M 830 647.3543701171875 L 830 665.3543701171875 L 830 728.9083251953125 L 830 746.9083251953125"></path><path class="edge-hit" data-ci="4" d="M 830 647.3543701171875 L 830 665.3543701171875 L 830 728.9083251953125 L 830 746.9083251953125"></path><text class="edge-label " data-ci="4" x="846" y="698.13134765625" style="font-size:21px" text-anchor="middle">是</text><path class="edge " d="M 710 786.9083251953125 L 692 786.9083251953125 L 648 786.9083251953125 L 630 786.9083251953125"></path><path class="edge-hit" data-ci="5" d="M 710 786.9083251953125 L 692 786.9083251953125 L 648 786.9083251953125 L 630 786.9083251953125"></path><path class="edge " d="M 510 826.9083251953125 L 510 844.9083251953125 L 510 929.6986694335938 L 1012 929.6986694335938 L 1030 929.6986694335938"></path><path class="edge-hit" data-ci="6" d="M 510 826.9083251953125 L 510 844.9083251953125 L 510 929.6986694335938 L 1012 929.6986694335938 L 1030 929.6986694335938"></path><path class="edge " d="M 630 786.9083251953125 L 648 786.9083251953125 L 692 786.9083251953125 L 710 786.9083251953125"></path><path class="edge-hit" data-ci="7" d="M 630 786.9083251953125 L 648 786.9083251953125 L 692 786.9083251953125 L 710 786.9083251953125"></path><path class="edge " d="M 1150 969.6986694335938 L 1150 987.6986694335938 L 1150 1014.9237060546875 L 510 1014.9237060546875 L 510 1032.9237060546875"></path><path class="edge-hit" data-ci="8" d="M 1150 969.6986694335938 L 1150 987.6986694335938 L 1150 1014.9237060546875 L 510 1014.9237060546875 L 510 1032.9237060546875"></path><path class="edge " d="M 510 1112.9237060546875 L 510 1130.9237060546875 L 510 1147.869384765625 L 510 1165.869384765625"></path><path class="edge-hit" data-ci="9" d="M 510 1112.9237060546875 L 510 1130.9237060546875 L 510 1147.869384765625 L 510 1165.869384765625"></path><path class="edge return" d="M 710 597.3543701171875 L 692 597.3543701171875 L 511 595 L 510 444.4164386066287"></path><path class="edge-hit" data-ci="10" d="M 710 597.3543701171875 L 692 597.3543701171875 L 511 595 L 510 444.4164386066287"></path><text class="edge-label ret" data-ci="10" x="610" y="535.8854043619081" style="font-size:10px" text-anchor="middle">否，客户QA反馈测试要求和样品修改意见</text><path class="edge return" d="M 390 1215.869384765625 L 372 1215.869384765625 L 372 929.6986694335938 L 1012 929.6986694335938 L 1030 929.6986694335938"></path><path class="edge-hit" data-ci="11" d="M 390 1215.869384765625 L 372 1215.869384765625 L 372 929.6986694335938 L 1012 929.6986694335938 L 1030 929.6986694335938"></path><text class="edge-label ret" data-ci="11" x="390" y="1158.7840270996094" style="font-size:10px" text-anchor="middle">未通过</text><g class="node" data-id="n1" tabindex="0">
+        <rect class="box" x="70" y="116.69724770642193" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="190" y="150.69724770642193" text-anchor="middle">打样通知</text>
+        <text class="sub" x="190" y="172.69724770642193" text-anchor="middle">打样设计稿+其他说明</text><text class="sub" x="190" y="190.69724770642193" text-anchor="middle">打样个数</text><text class="sub" x="190" y="208.69724770642193" text-anchor="middle">完成日期</text>
       </g><g class="node" data-id="n2" tabindex="0">
-        <rect class="box" x="70" y="220" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="190" y="254" text-anchor="middle">买手确认样</text>
-        <text class="sub" x="190" y="276" text-anchor="middle">款式/颜色/规格核对</text>
+        <rect class="box" x="70" y="258.45076800909726" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="190" y="292.45076800909726" text-anchor="middle">买手确认样</text>
+        <text class="sub" x="190" y="314.45076800909726" text-anchor="middle">款式/颜色/规格核对</text>
       </g><g class="node" data-id="n3" tabindex="0">
-        <rect class="box" x="390" y="330" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="510" y="364" text-anchor="middle">QA样</text>
-        <text class="sub" x="510" y="386" text-anchor="middle">spec（采购负责）</text><text class="sub" x="510" y="404" text-anchor="middle">checklist（我方QA负责）</text><text class="sub" x="510" y="422" text-anchor="middle">1/2批次</text>
+        <rect class="box" x="390" y="328.4164386066287" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="362.4164386066287" text-anchor="middle">QA样</text>
+        <text class="sub" x="510" y="384.4164386066287" text-anchor="middle">spec（采购负责）</text><text class="sub" x="510" y="402.4164386066287" text-anchor="middle">checklist（我方QA负责）</text><text class="sub" x="510" y="420.4164386066287" text-anchor="middle">1/2批次</text>
       </g><g class="node" data-id="nReceive" tabindex="0">
-        <rect class="box" x="710" y="337.51123046875" width="240" height="98" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="830" y="371.51123046875" text-anchor="middle">接收QA样</text>
-        <text class="sub" x="830" y="393.51123046875" text-anchor="middle">包含样品、spec、checklist</text><text class="sub" x="830" y="411.51123046875" text-anchor="middle">检查是否合格</text>
+        <rect class="box" x="710" y="336.02093981870127" width="240" height="98" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="830" y="370.02093981870127" text-anchor="middle">接收QA样</text>
+        <text class="sub" x="830" y="392.02093981870127" text-anchor="middle">包含样品、spec、checklist</text><text class="sub" x="830" y="410.02093981870127" text-anchor="middle">检查是否合格</text>
       </g><g class="node decision" data-id="dJudge" tabindex="0">
-        <polygon class="box" points="830,513.9557495117188 950,563.9557495117188 830,613.9557495117188 710,563.9557495117188" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
-        <text x="830" y="559.9557495117188" text-anchor="middle">是否合格</text>
-        <text class="sub" x="830" y="569.9557495117188" text-anchor="middle">合格/退回</text>
-      </g><g class="node selected" data-id="n4" tabindex="0">
-        <rect class="box" x="390" y="1052.11279296875" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="510" y="1086.11279296875" text-anchor="middle">进行测验样的测试</text>
-        <text class="sub" x="510" y="1108.11279296875" text-anchor="middle">与实验室对接</text>
+        <polygon class="box" points="830,547.3543701171875 950,597.3543701171875 830,647.3543701171875 710,597.3543701171875" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
+        <text x="830" y="593.3543701171875" text-anchor="middle">是否合格</text>
+        <text class="sub" x="830" y="603.3543701171875" text-anchor="middle">合格/退回</text>
+      </g><g class="node" data-id="n4" tabindex="0">
+        <rect class="box" x="390" y="1032.9237060546875" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="1066.9237060546875" text-anchor="middle">进行测验样的测试</text>
+        <text class="sub" x="510" y="1088.9237060546875" text-anchor="middle">与实验室对接</text>
       </g><g class="node" data-id="d2" tabindex="0">
-        <rect class="box" x="1350" y="400" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="1470" y="434" text-anchor="middle">签样收到后</text>
-        <text class="sub" x="1470" y="456" text-anchor="middle">签样有效期·测试有效期</text>
+        <rect class="box" x="1350" y="602.6642984014208" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1470" y="636.6642984014208" text-anchor="middle">签样收到后</text>
+        <text class="sub" x="1470" y="658.6642984014208" text-anchor="middle">签样有效期·测试有效期</text>
       </g><g class="node" data-id="n7785" tabindex="0">
-        <rect class="box" x="1350" y="520" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="1470" y="554" text-anchor="middle">QC验货</text>
+        <rect class="box" x="1350" y="797.2646536412079" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1470" y="831.2646536412079" text-anchor="middle">QC验货</text>
         
-      </g><g class="node" data-id="nSpec" tabindex="0">
-        <rect class="box" x="1030" y="176.76193237304688" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="1150" y="210.76193237304688" text-anchor="middle">提供QA样的spec</text>
-        <text class="sub" x="1150" y="232.76193237304688" text-anchor="middle">客户设计稿</text><text class="sub" x="1150" y="250.76193237304688" text-anchor="middle">规格/尺寸表</text><text class="sub" x="1150" y="268.7619323730469" text-anchor="middle">物料清单</text>
+      </g><g class="node selected" data-id="nSpec" tabindex="0">
+        <rect class="box" x="1030" y="144.84495544433594" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="178.84495544433594" text-anchor="middle">提供QA样的spec</text>
+        <text class="sub" x="1150" y="200.84495544433594" text-anchor="middle">客户设计稿</text><text class="sub" x="1150" y="218.84495544433594" text-anchor="middle">规格/尺寸表</text><text class="sub" x="1150" y="236.84495544433594" text-anchor="middle">物料清单</text>
       </g><g class="node" data-id="n17034" tabindex="0">
-        <rect class="box" x="390" y="205.5834197998047" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="510" y="239.5834197998047" text-anchor="middle">checklist</text>
+        <rect class="box" x="390" y="194.4987197574212" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="228.4987197574212" text-anchor="middle">checklist</text>
         
       </g><g class="node" data-id="n55542" tabindex="0">
-        <rect class="box" x="710" y="666.3274536132812" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="830" y="700.3274536132812" text-anchor="middle">确定下一步测试样的样品数量</text>
-        <text class="sub" x="830" y="722.3274536132812" text-anchor="middle">与我方QA对接确定</text>
+        <rect class="box" x="710" y="746.9083251953125" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="830" y="780.9083251953125" text-anchor="middle">确定下一步测试样的样品数量</text>
+        <text class="sub" x="830" y="802.9083251953125" text-anchor="middle">与我方QA对接确定</text>
       </g><g class="node" data-id="n28880" tabindex="0">
-        <rect class="box" x="390" y="667.2900390625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="510" y="701.2900390625" text-anchor="middle">确定测试样样品数量</text>
-        <text class="sub" x="510" y="723.2900390625" text-anchor="middle">与对方QA对接确定</text>
+        <rect class="box" x="390" y="746.9083251953125" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="780.9083251953125" text-anchor="middle">确定测试样样品数量</text>
+        <text class="sub" x="510" y="802.9083251953125" text-anchor="middle">与对方QA对接确定</text>
       </g><g class="node" data-id="n12112" tabindex="0">
-        <rect class="box" x="1030" y="891.187744140625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
-        <text x="1150" y="925.187744140625" text-anchor="middle">采购对应数量的测试样样品</text>
-        <text class="sub" x="1150" y="947.187744140625" text-anchor="middle">提供给我方QA</text>
+        <rect class="box" x="1030" y="889.6986694335938" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="923.6986694335938" text-anchor="middle">采购对应数量的测试样样品</text>
+        <text class="sub" x="1150" y="945.6986694335938" text-anchor="middle">提供给我方QA</text>
       </g><g class="node decision" data-id="d86934" tabindex="0">
-        <polygon class="box" points="510,1180 630,1230 510,1280 390,1230" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
-        <text x="510" y="1226" text-anchor="middle">是否通过？</text>
+        <polygon class="box" points="510,1165.869384765625 630,1215.869384765625 510,1265.869384765625 390,1215.869384765625" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
+        <text x="510" y="1211.869384765625" text-anchor="middle">是否通过？</text>
         
       </g></svg>
     </div>
@@ -200,16 +204,16 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="0" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="0" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="0" data-v="是" style="padding:3px 7px">是</button><button data-branch="0" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="0" style="padding:3px 7px">＋拐点</button><button data-list-points="0" style="padding:3px 7px">删拐点</button><button data-reset-edge="0" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="0" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">是否合格 → QA样</span>
+        <div class="row"><span class="nm">提供QA样的spec → QA样</span>
         <select data-ci="1" data-field="type" style="width:76px;padding:3px">
-          <option value="normal">实线</option>
-          <option value="return" selected="">退回</option>
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
           <option value="accent">强调</option>
         </select>
         <button class="danger" data-del-edge="1" style="padding:3px 7px">删</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="1" data-field="label" value="否，客户QA反馈测试要求和样品修改意见" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="1" data-v="是" style="padding:3px 7px">是</button><button data-branch="1" data-v="否" style="padding:3px 7px">否</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="1" style="padding:3px 7px">＋拐点</button><button data-list-points="1" style="padding:3px 7px">删拐点</button><button data-reset-edge="1" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="1" data-field="labelSize" value="16" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">提供QA样的spec → QA样</span>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="1" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="1" data-v="是" style="padding:3px 7px">是</button><button data-branch="1" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="1" style="padding:3px 7px">＋拐点</button><button data-list-points="1" style="padding:3px 7px">删拐点</button><button data-reset-edge="1" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="1" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row"><span class="nm">QA样 → 接收QA样</span>
         <select data-ci="2" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -218,7 +222,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="2" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="2" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="2" data-v="是" style="padding:3px 7px">是</button><button data-branch="2" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="2" style="padding:3px 7px">＋拐点</button><button data-list-points="2" style="padding:3px 7px">删拐点</button><button data-reset-edge="2" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="2" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">QA样 → 接收QA样</span>
+        <div class="row"><span class="nm">checklist → QA样</span>
         <select data-ci="3" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -227,25 +231,25 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="3" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="3" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="3" data-v="是" style="padding:3px 7px">是</button><button data-branch="3" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="3" style="padding:3px 7px">＋拐点</button><button data-list-points="3" style="padding:3px 7px">删拐点</button><button data-reset-edge="3" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="3" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">checklist → QA样</span>
+        <div class="row"><span class="nm">是否合格 → 确定下一步测试样的样品数量</span>
         <select data-ci="4" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
           <option value="accent">强调</option>
         </select>
         <button class="danger" data-del-edge="4" style="padding:3px 7px">删</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="4" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="4" data-v="是" style="padding:3px 7px">是</button><button data-branch="4" data-v="否" style="padding:3px 7px">否</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="4" style="padding:3px 7px">＋拐点</button><button data-list-points="4" style="padding:3px 7px">删拐点</button><button data-reset-edge="4" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="4" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">是否合格 → 确定下一步测试样的样品数量</span>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="4" data-field="label" value="是" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="4" data-v="是" style="padding:3px 7px">是</button><button data-branch="4" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="4" style="padding:3px 7px">＋拐点</button><button data-list-points="4" style="padding:3px 7px">删拐点</button><button data-reset-edge="4" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="4" data-field="labelSize" value="21" style="width:54px;padding:3px 6px"></div>
+        <div class="row"><span class="nm">确定下一步测试样的样品数量 → 确定测试样样品数量</span>
         <select data-ci="5" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
           <option value="accent">强调</option>
         </select>
         <button class="danger" data-del-edge="5" style="padding:3px 7px">删</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="5" data-field="label" value="是" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="5" data-v="是" style="padding:3px 7px">是</button><button data-branch="5" data-v="否" style="padding:3px 7px">否</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="5" style="padding:3px 7px">＋拐点</button><button data-list-points="5" style="padding:3px 7px">删拐点</button><button data-reset-edge="5" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="5" data-field="labelSize" value="21" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">确定下一步测试样的样品数量 → 确定测试样样品数量</span>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="5" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="5" data-v="是" style="padding:3px 7px">是</button><button data-branch="5" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="5" style="padding:3px 7px">＋拐点</button><button data-list-points="5" style="padding:3px 7px">删拐点</button><button data-reset-edge="5" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="5" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row"><span class="nm">确定测试样样品数量 → 采购对应数量的测试样样品</span>
         <select data-ci="6" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -254,7 +258,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="6" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="6" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="6" data-v="是" style="padding:3px 7px">是</button><button data-branch="6" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="6" style="padding:3px 7px">＋拐点</button><button data-list-points="6" style="padding:3px 7px">删拐点</button><button data-reset-edge="6" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="6" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">确定测试样样品数量 → 采购对应数量的测试样样品</span>
+        <div class="row"><span class="nm">确定测试样样品数量 → 确定下一步测试样的样品数量</span>
         <select data-ci="7" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -263,7 +267,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="7" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="7" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="7" data-v="是" style="padding:3px 7px">是</button><button data-branch="7" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="7" style="padding:3px 7px">＋拐点</button><button data-list-points="7" style="padding:3px 7px">删拐点</button><button data-reset-edge="7" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="7" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">确定测试样样品数量 → 确定下一步测试样的样品数量</span>
+        <div class="row"><span class="nm">采购对应数量的测试样样品 → 进行测验样的测试</span>
         <select data-ci="8" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -272,7 +276,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="8" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="8" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="8" data-v="是" style="padding:3px 7px">是</button><button data-branch="8" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="8" style="padding:3px 7px">＋拐点</button><button data-list-points="8" style="padding:3px 7px">删拐点</button><button data-reset-edge="8" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="8" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">采购对应数量的测试样样品 → 进行测验样的测试</span>
+        <div class="row"><span class="nm">进行测验样的测试 → 是否通过？</span>
         <select data-ci="9" data-field="type" style="width:76px;padding:3px">
           <option value="normal" selected="">实线</option>
           <option value="return">退回</option>
@@ -281,17 +285,26 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button class="danger" data-del-edge="9" style="padding:3px 7px">删</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="9" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="9" data-v="是" style="padding:3px 7px">是</button><button data-branch="9" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="9" style="padding:3px 7px">＋拐点</button><button data-list-points="9" style="padding:3px 7px">删拐点</button><button data-reset-edge="9" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="9" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
-        <div class="row"><span class="nm">进行测验样的测试 → 是否通过？</span>
+        <div class="row"><span class="nm">是否合格 → QA样</span>
         <select data-ci="10" data-field="type" style="width:76px;padding:3px">
-          <option value="normal" selected="">实线</option>
-          <option value="return">退回</option>
+          <option value="normal">实线</option>
+          <option value="return" selected="">退回</option>
           <option value="accent">强调</option>
         </select>
         <button class="danger" data-del-edge="10" style="padding:3px 7px">删</button></div>
-        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="10" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="10" data-v="是" style="padding:3px 7px">是</button><button data-branch="10" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="10" data-field="label" value="否，客户QA反馈测试要求和样品修改意见" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="10" data-v="是" style="padding:3px 7px">是</button><button data-branch="10" data-v="否" style="padding:3px 7px">否</button></div>
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="10" style="padding:3px 7px">＋拐点</button><button data-list-points="10" style="padding:3px 7px">删拐点</button><button data-reset-edge="10" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="10" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row"><span class="nm">是否通过？ → 采购对应数量的测试样样品</span>
+        <select data-ci="11" data-field="type" style="width:76px;padding:3px">
+          <option value="normal">实线</option>
+          <option value="return" selected="">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="11" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="11" data-field="label" value="未通过" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="11" data-v="是" style="padding:3px 7px">是</button><button data-branch="11" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="11" style="padding:3px 7px">＋拐点</button><button data-list-points="11" style="padding:3px 7px">删拐点</button><button data-reset-edge="11" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="11" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
         </div>
-      <div class="status" id="status" data-page-node-id="34kTUUgLE1HWiDw2nJDi3J">连线已选中：拖动小圆点改拐点，拖动文字改标签位置。</div>
+      <div class="status" id="status" data-page-node-id="34kTUUgLE1HWiDw2nJDi3J">连线已添加（undefined→左边），可在右侧改类型与说明。</div>
     </div>
     <div class="sec" data-page-node-id="5KHet5HRNcLn5kXMSW3E4F">
       <h3>节点 <span style="display:flex;gap:5px"><button id="addNode">＋ 新增步骤</button><button id="addDecision">＋ 判断框</button></span></h3>
@@ -299,12 +312,14 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
     </div>
     <div class="sec" id="editorSec" data-page-node-id="WtBilwhFVWGT50eSLaLhgD">
       <h3 data-page-node-id="fTzi2XBdhhwO1NhXghdZLs">选中节点</h3>
-      <div id="nodeEditor" data-page-node-id="OtQx76Yt82SHCHFfOAUVu7"><label>节点名称</label><input id="edLabel" value="进行测验样的测试">
+      <div id="nodeEditor" data-page-node-id="OtQx76Yt82SHCHFfOAUVu7"><label>节点名称</label><input id="edLabel" value="提供QA样的spec">
     <label>节点类型</label><select id="edType"><option value="step" selected="">普通步骤（方框）</option><option value="decision">判断节点（菱形 · 是/否）</option></select>
-    <label>所属岗位（泳道）</label><select id="edLane"><option value="business">业务部门</option><option value="qaOur" selected="">我方QA</option><option value="qaClient">对方QA</option><option value="merch">采购跟单员</option><option value="qc">QC</option></select>
-    <label>副标题行数</label><select id="edSubRows"><option value="1" selected="">1 行</option><option value="2">2 行</option><option value="3">3 行</option><option value="4">4 行</option></select>
-    <label>副标题内容（每行一条，节点框会自动增高）</label><textarea id="edSub" rows="1" placeholder="例如：设计稿·个数·交期">与实验室对接</textarea>
-    <label>节点说明</label><textarea id="edNote">我方 QA 与实验室对接安排样品测试并记录结果。</textarea>
+    <label>所属岗位（泳道）</label><select id="edLane"><option value="business">业务部门</option><option value="qaOur">我方QA</option><option value="qaClient">对方QA</option><option value="merch" selected="">采购跟单员</option><option value="qc">QC</option></select>
+    <label>副标题行数</label><select id="edSubRows"><option value="1">1 行</option><option value="2">2 行</option><option value="3" selected="">3 行</option><option value="4">4 行</option></select>
+    <label>副标题内容（每行一条，节点框会自动增高）</label><textarea id="edSub" rows="3" placeholder="例如：设计稿·个数·交期">客户设计稿
+规格/尺寸表
+物料清单</textarea>
+    <label>节点说明</label><textarea id="edNote">采购跟单员依据客户设计稿整理并提供 QA样 spec（规格、尺寸、物料等），作为我方 QA 编制 checklist 及对方 QA 检验的依据。</textarea>
     <div class="actions"><button id="edApply">保存修改</button></div></div>
     </div>
     <div class="sec" data-page-node-id="M2ul1v5Ct8UoMfj7wWtSlh">
@@ -332,13 +347,15 @@ const LANE_X0=40, LANE_W=300, LANE_GAP=20, STEP=LANE_W+LANE_GAP;
 const NODE_W=240, NODE_OFFSET=(LANE_W-NODE_W)/2;
 const NODE_H=80, DECISION_H=100, SUB_LINE_H=18, SUB_MAX_LINES=4, HEADER_H=64, STICKY_H=56;
 /* sub 支持多行：字符串用 \n 换行，或直接用数组；节点高度随实际行数自动增长 */
-const RECT_Y=10, RECT_H=1400, VIEW_W=1660, VIEW_H=1430;
+const RECT_Y=10, VIEW_W=1660;
+let RECT_H=1400, VIEW_H=1430;   /* 由 data.view.laneH 驱动，见 applyView() */
 const laneX=i=>LANE_X0+i*STEP;
 
 /* 默认配置＝用户当前图（另存为快照）固化，并应用本次需求。
    注意：旧版 localStorage(v4) 已随 STORAGE_KEY 升级自动失效。 */
 function defaultData(){
   return {
+    view:{laneH:1400},
     lanes: [
       {id:'business', name:'业务部门', color:'#f0f8f6'},
       {id:'qaOur',    name:'我方QA',   color:'#f5f2fa'},
@@ -376,7 +393,8 @@ function defaultData(){
 }
 /* 节点 type：不填 = 普通步骤（圆角方框）；'decision' = 判断节点（菱形，支持是/否分支）
    连线 type：normal（实线） / return（橙色虚线） / accent（青色强调）；label 可填「是」「否」等分支文字
-   连线可选字段：labelDx/labelDy（标签偏移）、points（自定义拐点数组）；不填则走默认路径，可拖动调整 */
+   连线可选字段：labelDx/labelDy（标签偏移）、points（自定义拐点数组）、fromSide/toSide（起止边）、fixed（固定底/顶锚点）
+   data.view.laneH 控制泳道高度；不填这些字段时走默认路径/锚点，旧配置完全兼容 */
 
 let data = load();
 let selected = null;
@@ -392,14 +410,27 @@ let edgeDrag = null;                // {kind:'label'|'point', ci, pi}
 let drag = null;                    // 节点拖动状态
 let pointListFor = null;            // 展开拐点列表的连线索引
 
+function normalize(d){
+  if(!d) return d;
+  if(!d.view || typeof d.view!=='object') d.view={};
+  const h=Number(d.view.laneH);
+  d.view.laneH=Number.isFinite(h)?Math.max(500,Math.min(2600,h)):1400;
+  return d;
+}
 function load(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw){ const d = JSON.parse(raw); if(d && d.lanes && d.nodes && d.connections) return d; }
+    if(raw){ const d = JSON.parse(raw); if(d && d.lanes && d.nodes && d.connections) return normalize(d); }
   }catch(e){}
   return defaultData();
 }
 function save(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){} }
+function applyView(){
+  RECT_H=data.view.laneH; VIEW_H=RECT_Y+RECT_H+20;
+  svg.setAttribute('viewBox',`0 0 ${VIEW_W} ${VIEW_H}`);
+  const r=document.getElementById('laneH'); if(r) r.value=RECT_H;
+  const v=document.getElementById('laneHVal'); if(v) v.textContent=RECT_H;
+}
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function laneOf(id){ return data.lanes.find(l=>l.id===id) || data.lanes[0]; }
 function nodeById(id){ return data.nodes.find(n=>n.id===id); }
@@ -420,33 +451,46 @@ function setStatus(t){ document.getElementById('status').textContent = t||''; }
 const svg = document.getElementById('svg');
 function pt(e){ const p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
 
-/* 连线几何：默认走泳道内近路；points/labelDx/labelDy 可覆盖并自由拖动
-   锚点：默认按方向自动选离对方最近的顶点/边中点；fixed:true 或自定义 points 的旧线保持底/顶锚点 */
-function anchorAt(n, side, other){
+/* 连线几何：points/labelDx/labelDy 可覆盖并自由拖动
+   锚点：fixed:true 固定底→顶；其余优先 fromSide/toSide（含已有 points 时也不变），无 side 按最近边自动选 */
+function anchorPoints(n){
   const cx=ndCx(n), h=ndH(n), cy=n.y+h/2;
-  const v={top:{x:cx,y:n.y}, right:{x:n.x+NODE_W,y:cy},
-           bottom:{x:cx,y:n.y+h}, left:{x:n.x,y:cy}};
-  if(side && v[side]) return v[side];
+  return {top:{x:cx,y:n.y}, right:{x:n.x+NODE_W,y:cy},
+          bottom:{x:cx,y:n.y+h}, left:{x:n.x,y:cy}};
+}
+function autoSide(n,other){
+  const v=anchorPoints(n);
   const o=other?{x:ndCx(other),y:other.y+ndH(other)/2}:null;
-  if(!o) return v.bottom;
+  if(!o) return 'bottom';
   let best='bottom', bd=Infinity;
   for(const k in v){ const d=Math.hypot(v[k].x-o.x,v[k].y-o.y); if(d<bd){bd=d;best=k;} }
-  return v[best];
+  return best;
+}
+function anchorAt(n, side, other){
+  const v=anchorPoints(n);
+  return (side && v[side]) ? v[side] : v[autoSide(n,other)];
+}
+function ensureSides(c){
+  const a=nodeById(c.from), b=nodeById(c.to); if(!a||!b||c.fixed===true) return;
+  if(!c.fromSide) c.fromSide=autoSide(a,b);
+  if(!c.toSide) c.toSide=autoSide(b,a);
 }
 function edgeAnchors(c){
   const a=nodeById(c.from), b=nodeById(c.to);
   if(!a||!b) return null;
-  const keep = c.fixed===true || (Array.isArray(c.points)&&c.points.length>0);
-  const s = keep?null:anchorAt(a,c.fromSide,b), t = keep?null:anchorAt(b,c.toSide,a);
-  return {sx:s?s.x:ndCx(a), sy:s?s.y:ndBottom(a), tx:t?t.x:ndCx(b), ty:t?t.y:ndTop(b), a, b};
+  if(c.fixed===true){
+    return {sx:ndCx(a), sy:ndBottom(a), tx:ndCx(b), ty:ndTop(b), a, b};
+  }
+  const s=anchorAt(a,c.fromSide,b), t=anchorAt(b,c.toSide,a);
+  return {sx:s.x, sy:s.y, tx:t.x, ty:t.y, a, b};
 }
-function defaultBends(c,an){
+/* 旧走线（fixed / 无 side 的线），保持原有外观不变 */
+function legacyDefaultBends(c,an){
   const {sx,sy,tx,ty}=an;
-  if(Math.abs(ty-sy)<4) return [{x:(sx+tx)/2,y:sy}];  /* 水平直线 */
+  if(Math.abs(ty-sy)<4) return [{x:(sx+tx)/2,y:sy}];
   const up=c.type==='return'||ty<=sy;
   if(!up){ const m=(sy+ty)/2; return [{x:sx,y:m},{x:tx,y:m}]; }
   if(Math.abs(tx-sx)<1){
-    /* 同列 return：在该泳道内贴近节点绕行，不再绕画布边缘 */
     const right=tx+NODE_W/2+14;
     const j=right<=VIEW_W-20?right:tx-NODE_W/2-14;
     const y1=sy+18, y2=ty-18;
@@ -454,6 +498,30 @@ function defaultBends(c,an){
   }
   const ox=tx<=sx?18:VIEW_W-18, y1=sy+22, y2=ty-22;
   return [{x:sx,y:y1},{x:ox,y:y1},{x:ox,y:y2},{x:tx,y:y2}];
+}
+/* 新走线：选定边后走最短正交路径，优先直线，最多一次折点 */
+function shortestBends(an){
+  const {sx,sy,tx,ty}=an, G=18;
+  const off=(x,y,side)=> side==='top'?{x,y:y-G} : side==='right'?{x:x+G,y}
+                        : side==='bottom'?{x,y:y+G} : {x:x-G,y};
+  const aSide=an.aSide, bSide=an.bSide;
+  const P=off(sx,sy,aSide), Q=off(tx,ty,bSide);
+  if(Math.abs(P.y-Q.y)<1 || Math.abs(P.x-Q.x)<1) return [P,Q];
+  const c1={x:P.x,y:Q.y}, c2={x:Q.x,y:P.y};
+  const inside=p=>{
+    const inNode=n=> p.x>n.x-4 && p.x<n.x+NODE_W+4 && p.y>n.y-4 && p.y<n.y+ndH(n)+4;
+    return inNode(an.a)||inNode(an.b);
+  };
+  if(!inside(c1)) return [P,c1,Q];
+  if(!inside(c2)) return [P,c2,Q];
+  const my=(P.y+Q.y)/2;
+  return [P,{x:P.x,y:my},{x:Q.x,y:my},Q];
+}
+function defaultBends(c,an){
+  if(c.fromSide && c.toSide && c.fixed!==true){
+    return shortestBends({...an, aSide:c.fromSide, bSide:c.toSide});
+  }
+  return legacyDefaultBends(c,an);
 }
 function edgeGeom(c){
   const an=edgeAnchors(c); if(!an) return null;
@@ -564,7 +632,7 @@ function renderPanels(){
     }).join('');
     el.querySelectorAll('[data-del-edge]').forEach(b=>b.onclick=()=>{ data.connections.splice(+b.dataset.delEdge,1); pointListFor=null; save(); render(); });
     el.querySelectorAll('[data-list-points]').forEach(b=>b.onclick=()=>{
-      const i=+b.dataset.listPoints, c=data.connections[i], g=edgeGeom(c); if(!g) return;
+      const i=+b.dataset.listPoints, c=data.connections[i]; ensureSides(c); const g=edgeGeom(c); if(!g) return;
       if(!Array.isArray(c.points)||!c.points.length) c.points=g.bends.map(q=>({x:q.x,y:q.y}));
       pointListFor=pointListFor===i?null:i; editingEdge=i; save(); render();
     });
@@ -575,7 +643,7 @@ function renderPanels(){
     });
     el.querySelectorAll('[data-branch]').forEach(b=>b.onclick=()=>{ data.connections[+b.dataset.branch].label=b.dataset.v; save(); render(); });
     el.querySelectorAll('[data-add-point]').forEach(b=>b.onclick=()=>{
-      const i=+b.dataset.addPoint, c=data.connections[i], g=edgeGeom(c); if(!g) return;
+      const i=+b.dataset.addPoint, c=data.connections[i]; ensureSides(c); const g=edgeGeom(c); if(!g) return;
       if(!Array.isArray(c.points)||!c.points.length) c.points=g.bends.map(q=>({x:q.x,y:q.y}));
       let best=0,len=-1;
       for(let k=0;k<c.points.length-1;k++){
@@ -678,6 +746,7 @@ svg.addEventListener('mousedown', e=>{
 window.addEventListener('mousemove', e=>{
   if(edgeDrag){
     const c=data.connections[edgeDrag.ci]; if(!c) return;
+    if(edgeDrag.kind==='point') ensureSides(c);
     const p=pt(e), g=edgeGeom(c); if(!g) return;
     if(edgeDrag.kind==='label'){
       c.labelDx=Math.round(p.x-g.base.x); c.labelDy=Math.round(p.y-g.base.y);
@@ -724,17 +793,17 @@ document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
 document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
   const id='n'+(Date.now()%100000);
-  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:1200, note:'请填写节点说明。'});
+  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(RECT_Y+RECT_H-130-NODE_H, Math.min(1200,RECT_Y+RECT_H-130-NODE_H))), note:'请填写节点说明。'});
   selected=id; save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
 };
 document.getElementById('addDecision').onclick=()=>{
   const id='d'+(Date.now()%100000);
-  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:1180, note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
+  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(RECT_Y+RECT_H-130-DECISION_H, Math.min(1180,RECT_Y+RECT_H-130-DECISION_H))), note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
   selected=id; save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
 };
 document.getElementById('reset').onclick=()=>{
   if(!confirm('恢复初始配置？当前修改将被清除。')) return;
-  data=defaultData(); selected=null; pointListFor=null; editingEdge=null; setConnect(false); save(); render();
+  data=defaultData(); selected=null; pointListFor=null; editingEdge=null; setConnect(false); applyView(); save(); render();
 };
 document.getElementById('export').onclick=()=>{
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -743,8 +812,25 @@ document.getElementById('export').onclick=()=>{
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
 document.getElementById('importFile').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=d; selected=null; pointListFor=null; editingEdge=null; save(); render(); setStatus('配置已导入。'); }catch(err){ setStatus('导入失败：文件格式不正确。'); } }; r.readAsText(f); e.target.value='';
+  const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; applyView(); save(); render(); setStatus('配置已导入。'); }catch(err){ setStatus('导入失败：文件格式不正确。'); } }; r.readAsText(f); e.target.value='';
 };
+/* 泳道高度滑块：按比例重映射节点与拐点的 y（保留小数，往返无累积误差） */
+document.getElementById('laneH').addEventListener('input',e=>{
+  const oldH=data.view.laneH, newH=+e.target.value;
+  if(newH===oldH) return;
+  const top=RECT_Y+HEADER_H;                 /* 表头下沿，映射原点 */
+  const f=(y,reserve)=>{
+    const lo=top, hiOld=RECT_Y+oldH-reserve, hiNew=RECT_Y+newH-reserve;
+    if(hiOld<=lo) return y;
+    const t=Math.max(0,Math.min(1,(y-lo)/(hiOld-lo)));
+    return lo+t*(hiNew-lo);
+  };
+  data.nodes.forEach(n=>{ n.y=Math.max(65, f(n.y,130+ndH(n))); });
+  data.connections.forEach(c=>{ (c.points||[]).forEach(p=>{ p.y=f(p.y,130); }); });
+  data.view.laneH=newH; applyView(); save(); render();
+  document.getElementById('laneHVal').textContent=newH;
+  setStatus('泳道高度已调整为 '+newH+'，节点位置已按比例重排。');
+});
 document.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{
   if(b.dataset.zoom==='reset') zoom=1; else zoom=Math.max(.8,Math.min(2.2, zoom+(b.dataset.zoom==='plus'?.2:-.2)));
   svg.style.width=(zoom*100)+'%'; document.querySelector('.zoom-label').textContent=Math.round(zoom*100)+'%';
@@ -758,7 +844,7 @@ const ct=document.getElementById('configText');
 document.querySelector('details').addEventListener('toggle',e=>{ if(e.target.open) ct.value=JSON.stringify(data,null,2); });
 document.getElementById('fillConfig').onclick=()=>{ ct.value=JSON.stringify(data,null,2); };
 document.getElementById('applyConfig').onclick=()=>{
-  try{ const d=JSON.parse(ct.value); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=d; selected=null; pointListFor=null; editingEdge=null; save(); render(); setStatus('配置已应用。'); }
+  try{ const d=JSON.parse(ct.value); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; applyView(); save(); render(); setStatus('配置已应用。'); }
   catch(e){ setStatus('应用失败：请检查 JSON 格式。'); }
 };
 
@@ -811,9 +897,10 @@ window.addEventListener('resize',scheduleSticky);
 new ResizeObserver(scheduleSticky).observe(svg);
 document.addEventListener('fullscreenchange',scheduleSticky);
 
+applyView();  /* 初始化泳道高度与 viewBox */
 ct.value=JSON.stringify(data,null,2);  /* 覆盖另存为时残留的旧配置快照 */
 render();
-</script><div class="sticky-lanes" aria-hidden="true"><div class="sticky-lanes-inner"><div style="left: 72.5275px; width: 191.178px;">业务部门</div><div style="left: 280.718px; width: 191.178px;">我方QA</div><div style="left: 488.908px; width: 191.178px;">对方QA</div><div style="left: 697.098px; width: 191.178px;">采购跟单员</div><div style="left: 905.289px; width: 191.178px;">QC</div></div></div>
+</script><div class="sticky-lanes" aria-hidden="true" hidden=""><div class="sticky-lanes-inner"><div style="left: 72.5256px; width: 191.179px;">业务部门</div><div style="left: 280.717px; width: 191.179px;">我方QA</div><div style="left: 488.908px; width: 191.179px;">对方QA</div><div style="left: 697.099px; width: 191.179px;">采购跟单员</div><div style="left: 905.29px; width: 191.179px;">QC</div></div></div><div class="sticky-lanes" aria-hidden="true"><div class="sticky-lanes-inner"><div style="left: 72.5275px; width: 191.178px;">业务部门</div><div style="left: 280.718px; width: 191.178px;">我方QA</div><div style="left: 488.908px; width: 191.178px;">对方QA</div><div style="left: 697.098px; width: 191.178px;">采购跟单员</div><div style="left: 905.289px; width: 191.178px;">QC</div></div></div>
 
 
 </body></html>
