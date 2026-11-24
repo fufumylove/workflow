@@ -78,7 +78,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
 <header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
   <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
-  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.3</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.4</div>
 </header>
 
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
@@ -214,7 +214,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
    配置区：节点 / 泳道 / 连线都在这里。
    连线目前为空，可用右侧面板添加，或按下面示例取消注释填写。
    ============================================================ */
-const STORAGE_KEY = 'sampling-swimlane-v8';
+const STORAGE_KEY = 'sampling-swimlane-v9';
 
 /* 画布几何常量：泳道宽高、间距与节点居中偏移。改这里即可整体联动。 */
 const LANE_X0=40, LANE_W=300, LANE_GAP=20, STEP=LANE_W+LANE_GAP;
@@ -238,17 +238,22 @@ function defaultData(){
     nodes: [
       {id:'n1', label:'打样通知', lane:'business', x:70, y:100, sub:['打样设计稿+其他说明','打样个数','完成日期'], note:'采购跟单员发出打样通知，随附客户打样设计稿及说明，明确打样个数与完成日期。'},
       {id:'n2', label:'买手确认样', lane:'business', x:70, y:220, sub:'款式/颜色/规格核对', note:'买手核对样衣款式、颜色、规格及辅料，确认后进入 QA 检验。'},
-      {id:'n3', label:'QA样', lane:'qaOur', x:390, y:330, sub:['spec（采购负责）','checklist（我方QA负责）','1/2批次'], note:'采购跟单员提供 spec，我方 QA 提供 checklist。客户 QA 收到 QA样后若有反馈：①测试报告 ②样品修改意见（v1 版、v2 版），则返回 QA样重新开始；若通过测试，则成为测试样。'},
-      {id:'d1', label:'客户QA是否反馈？', lane:'qaOur', x:390, y:450, type:'decision', sub:'有反馈/通过测试', note:'客户 QA 反馈判断：是（测试报告或 v1/v2 修改意见）→ 返回 QA样重做；否（通过测试）→ 转测试样。'},
-      {id:'n4', label:'测试样', lane:'qaOur', x:390, y:610, sub:'测试并记录结果', note:'由我方 QA 与实验室对接，安排样衣测试并记录结果；测试通过的样衣转为测试样。'},
+      {id:'n3', label:'QA样', lane:'qaOur', x:390, y:330, sub:['spec（采购负责）','checklist（我方QA负责）','1/2批次'], note:'采购跟单员提供 spec、我方 QA 提供 checklist，按 1/2 批次制作 QA样并寄送对方 QA；收到退回意见后按测试要求与样品修改意见重做。'},
+      {id:'nReceive', label:'接收QA样', lane:'qaClient', x:710, y:330, sub:'检查是否合格', note:'对方 QA 接收我方寄送的 QA样，对照 spec 与 checklist 检查样衣是否合格并反馈结论。'},
+      {id:'dJudge', label:'是否合格', lane:'qaClient', x:710, y:450, type:'decision', sub:'合格/退回', note:'对方 QA 判定：合格（是）→转测试样由我方 QA 安排测试；不合格（否）→退回 QA样，附测试要求与样品修改意见（v1/v2 版）重做。'},
+      {id:'n4', label:'测试样', lane:'qaOur', x:390, y:610, sub:'测试并记录结果', note:'我方 QA 与实验室对接安排样衣测试并记录结果。'},
       {id:'n5', label:'我方签样', lane:'qaOur', x:390, y:896.47, sub:'样品/清单/包装/报告', note:'我方 QA 与对方 QA 共同对接签样，核对样品、清单、包装及测试报告后签字封样；双方同步确认，作为生产与验货依据。'},
       {id:'nSignClient', label:'对方签样', lane:'qaOur', x:390, y:1090.14, sub:'样品/清单/包装/报告', note:'对方 QA 与我方 QA 共同对接签样，确认样品与资料后由对方 QA 回签；双方各留存签样记录，作为后续 QC 验货依据。'},
       {id:'d2', label:'签样收到后', lane:'qc', x:1350, y:400, sub:'签样有效期·测试有效期', note:'签样收到后登记并跟踪有效期：记录签样有效期与测试有效期，到期前提醒复检或重新签样。'},
       {id:'n7785', label:'QC验货', lane:'qc', x:1350, y:520, sub:'', note:'请填写节点说明。'}
     ],
     connections: [
-      {from:'d1', to:'n3', label:'是，提供测试要求+样品修改意见', type:'return'},
-      {from:'d1', to:'n4', label:'否（通过测试）', type:'normal'}
+      {from:'n3', to:'nReceive', label:'送对方QA', type:'normal', labelSize:11,
+       points:[{x:510,y:462},{x:666,y:462},{x:666,y:306},{x:830,y:306}], labelDx:-974,labelDy:76},
+      {from:'nReceive', to:'dJudge', label:'', type:'normal'},
+      {from:'dJudge', to:'n4', label:'是', type:'normal', labelDx:-50},
+      {from:'dJudge', to:'n3', label:'1.测试要求 2.样品修改意见', type:'return', labelSize:10,
+       points:[{x:830,y:566},{x:674,y:566},{x:674,y:316},{x:510,y:316}], labelDx:494,labelDy:-145}
       /* 更多连线示例：
       {from:'n5', to:'nSignClient', label:'双方对接', type:'accent'},
       {from:'n5', to:'d2', label:'签样完成', type:'normal'}
