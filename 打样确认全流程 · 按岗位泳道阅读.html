@@ -87,7 +87,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
 <header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
   <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
-  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.7</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.8</div>
 </header>
 
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
@@ -851,6 +851,7 @@ document.getElementById('applyConfig').onclick=()=>{
 /* 泳道头吸顶：表头滚出视口且图仍可见时，在窗口顶部显示对齐的泳道名 */
 let stickyHead=null, stickyInner=null, stickyFrame=0;
 function initSticky(){
+  document.querySelectorAll('.sticky-lanes').forEach(el=>el.remove());  /* 清理已存在的残留 */
   stickyHead=document.createElement('div');
   stickyHead.className='sticky-lanes'; stickyHead.hidden=true;
   stickyHead.setAttribute('aria-hidden','true');
@@ -896,11 +897,16 @@ window.addEventListener('scroll',scheduleSticky,true);
 window.addEventListener('resize',scheduleSticky);
 new ResizeObserver(scheduleSticky).observe(svg);
 document.addEventListener('fullscreenchange',scheduleSticky);
+/* 兜底：脚本执行时其后的节点尚未解析，DOMContentLoaded 时再清一次另存为残留 */
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.sticky-lanes').forEach(el=>{ if(el!==stickyHead) el.remove(); });
+  scheduleSticky();
+});
 
 applyView();  /* 初始化泳道高度与 viewBox */
 ct.value=JSON.stringify(data,null,2);  /* 覆盖另存为时残留的旧配置快照 */
 render();
-</script><div class="sticky-lanes" aria-hidden="true" hidden=""><div class="sticky-lanes-inner"><div style="left: 72.5256px; width: 191.179px;">业务部门</div><div style="left: 280.717px; width: 191.179px;">我方QA</div><div style="left: 488.908px; width: 191.179px;">对方QA</div><div style="left: 697.099px; width: 191.179px;">采购跟单员</div><div style="left: 905.29px; width: 191.179px;">QC</div></div></div><div class="sticky-lanes" aria-hidden="true"><div class="sticky-lanes-inner"><div style="left: 72.5275px; width: 191.178px;">业务部门</div><div style="left: 280.718px; width: 191.178px;">我方QA</div><div style="left: 488.908px; width: 191.178px;">对方QA</div><div style="left: 697.098px; width: 191.178px;">采购跟单员</div><div style="left: 905.289px; width: 191.178px;">QC</div></div></div>
+</script>
 
 
 </body></html>
