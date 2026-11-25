@@ -92,12 +92,34 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 @media(max-width:1050px){.workspace{grid-template-columns:1fr}.panel{position:static;max-height:none}}
 .workspace.panel-collapsed{grid-template-columns:minmax(0,1fr)}
 .workspace.panel-collapsed #panel{display:none}
+/* 节点说明抽屉（右下角 fixed） */
+.note-drawer{position:fixed;right:24px;bottom:24px;width:calc(100% - 32px);max-width:470px;min-width:260px;background:#fff;box-shadow:0 12px 60px #19334a33;border:1px solid #b9d8d2;border-top:4px solid #107c80;border-radius:12px;padding:20px 22px;z-index:60}
+.note-drawer[hidden]{display:none}
+.note-drawer h3{padding-right:24px;font-size:17px;margin:0}
+.note-drawer p{font-size:13px;line-height:1.9;margin:10px 0 0;color:#33485a;white-space:pre-wrap}
+.note-drawer button{position:absolute;right:9px;top:8px;padding:2px 9px;font-size:18px;background:transparent;border:0;cursor:pointer}
+.lane-name{cursor:pointer}
+.lane-name:hover{fill:#b9e6df}
+/* 折叠式操作指南 */
+.help-guide{max-width:1500px;margin:0 auto 40px;padding:0 28px}
+.help-guide summary{cursor:pointer;font-size:13px;color:var(--teal);font-weight:600;background:#eaf6f4;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.help-body{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 18px 14px 40px;font-size:12px;line-height:1.9}
+.help-body .keys{color:var(--muted);margin:10px 0 0}
+@media(max-width:520px){.note-drawer{right:12px;bottom:12px;max-width:calc(100% - 24px)}}
+@media print{
+ @page{size:A3 landscape;margin:12mm}
+ body{background:#fff}
+ .tools,.panel,.note-drawer,.sticky-lanes,.facts,.legend,.search-hits,.help-guide,.bar p,#nodeEditor{display:none!important}
+ .workspace,.hero,.card{display:block!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important}
+ .scroll{overflow:visible!important;padding:0!important}
+ svg,.scroll svg{width:100%!important;min-width:0!important;height:auto!important;transform:none!important;break-inside:avoid;page-break-inside:avoid}
+}
 </style>
 </head>
 <body>
 <header class="site-head">
   <div class="brand">打样确认 · 全流程泳道图</div>
-  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.2</div>
+  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.3</div>
 </header>
 
 <div class="hero">
@@ -121,7 +143,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button id="reset">恢复初始</button>
         <button id="undoBtn" title="Ctrl+Z 撤销" disabled="">↶ 撤销</button><button id="redoBtn" title="Ctrl+Y 重做" disabled="">↷ 重做</button>
         <button id="export">导出配置</button>
-        <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button>
+        <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button><button id="printBtn" title="打印完整泳道图（A3 横向）">打印</button>
         <button id="importBtn">导入配置</button>
         <input type="file" id="importFile" accept="application/json,.json" hidden="">
         <button data-zoom="minus">−</button><span class="zoom-label">100%</span><button data-zoom="plus">＋</button>
@@ -172,6 +194,22 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
     </div>
   </aside>
 </main>
+
+<aside id="noteDrawer" class="note-drawer" hidden aria-live="polite">
+  <button id="noteClose" aria-label="关闭说明">×</button>
+  <h3 id="noteTitle"></h3><p id="noteBody"></p>
+</aside>
+<details class="help-guide"><summary>使用说明 / 操作步骤（点击展开）</summary><div class="help-body"><ol>
+<li>查看说明：单击节点，右下抽屉显示名称与说明；Tab 聚焦后按 Enter 亦可。</li>
+<li>编辑节点：双击节点，右侧字段改名称/类型/岗位/副标题/说明，自动保存。</li>
+<li>移动节点：拖动吸附到最近泳道；方向键 1px、Shift+方向键 10px。</li>
+<li>加线 5 步：①点「＋添加连线」②点起点节点③点终点节点④点起点青色圆点⑤点终点绿色圆点（Esc 取消）。</li>
+<li>连线：单击选中后可改类型/分支文字/拐点/字号，双击文字改名。</li>
+<li>撤销重做：Ctrl+Z / Ctrl+Y，最多 60 步。</li>
+<li>搜索：右上输入名称/副标题/说明，回车定位首个匹配。</li>
+<li>导出与打印：SVG / PNG / JSON 配置 /「打印」输出整图。</li>
+<li>其他：全屏、缩放、泳道高度、网格吸附、收起侧栏、恢复初始。</li>
+</ol><p class="keys">快捷键：Tab 遍历 · Enter/空格 看说明 · Esc 关抽屉/退出加线 · Ctrl+Z 撤销 · Ctrl+Y 重做 · 方向键微调</p></div></details>
 
 <script>
 /* ============================================================
@@ -341,6 +379,37 @@ function scrollToEdgeRow(i){
 const svg = document.getElementById('svg');
 function pt(e){ const p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
 
+/* 节点说明抽屉 */
+const drawer=document.getElementById('noteDrawer');
+function showNoteContent(t,b){
+  document.getElementById('noteTitle').textContent=t;
+  document.getElementById('noteBody').textContent=b;
+  drawer.hidden=false;
+}
+function showNote(id){
+  const n=nodeById(id); if(!n||!drawer) return;
+  const note=(n.note||'').trim();
+  const empty=!note||/^请填写节点说明。?$/.test(note);
+  let body=empty?'暂无说明，可在右侧「节点说明」中补充。':note;
+  const sub=subLines(n);
+  if(sub.length) body+='\n要点：'+sub.join(' · ');
+  showNoteContent((n.type==='decision'?'判断 · ':'')+n.label,body);
+}
+function hideNote(){ if(drawer) drawer.hidden=true; }
+function showLaneNote(id){
+  const l=laneOf(id); if(!l) return;
+  const ns=data.nodes.filter(n=>n.lane===id);
+  const body=ns.length
+    ? '本岗位共负责 '+ns.length+' 个环节：'+ns.map(n=>n.label).join(' → ')+'。职责要点：'+ns.map(n=>n.note&&!/^请填写/.test(n.note)?n.note.trim():'').filter(Boolean).join(' ')
+    : '本泳道暂无节点，可在右侧面板新增并指定岗位。';
+  showNoteContent('岗位职责 · '+l.name,body);
+}
+if(document.getElementById('noteClose')) document.getElementById('noteClose').onclick=hideNote;
+document.addEventListener('fullscreenchange',()=>{
+  const root=document.fullscreenElement||document.body;
+  if(drawer&&drawer.parentNode!==root) root.appendChild(drawer);
+});
+
 /* 连线几何：points/labelDx/labelDy 可覆盖并自由拖动
    锚点：fixed:true 固定底→顶；其余优先 fromSide/toSide（含已有 points 时也不变），无 side 按最近边自动选 */
 function anchorPoints(n){
@@ -447,7 +516,7 @@ function render(){
     const x=laneX(i);
     s += `<rect x="${x}" y="${RECT_Y}" width="${LANE_W}" height="${RECT_H}" rx="10" fill="${esc(l.color)}" stroke="#dce5eb"/>`;
     s += `<rect x="${x}" y="${RECT_Y}" width="${LANE_W}" height="${HEADER_H}" rx="9" fill="#19334a"/>`;
-    s += `<text class="lane-name" x="${x+LANE_W/2}" y="${RECT_Y+HEADER_H/2}" dominant-baseline="central" text-anchor="middle">${esc(l.name)}</text>`;
+    s += `<text class="lane-name" data-lane="${esc(l.id)}" x="${x+LANE_W/2}" y="${RECT_Y+HEADER_H/2}" dominant-baseline="central" text-anchor="middle">${esc(l.name)}</text>`;
   });
 
   data.connections.forEach((c,i)=>{
@@ -469,13 +538,13 @@ function render(){
     if(n.type==='decision'){
       const h=ndH(n), cx=n.x+NODE_W/2, cy=n.y+h/2;
       const pts=`${cx},${n.y} ${n.x+NODE_W},${cy} ${cx},${n.y+h} ${n.x},${cy}`;
-      s += `<g class="node decision${sel}${pend}" data-id="${esc(n.id)}" tabindex="0">
+      s += `<g class="node decision${sel}${pend}" data-id="${esc(n.id)}" tabindex="0" role="button" aria-label="${esc(n.label)}：${esc(String(n.note||'').slice(0,60))}">
         <polygon class="box" points="${pts}" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"/>
         <text x="${cx}" y="${cy-4}" text-anchor="middle">${esc(n.label)}</text>
         ${subText}
       </g>`;
     }else{
-      s += `<g class="node${sel}${pend}" data-id="${esc(n.id)}" tabindex="0">
+      s += `<g class="node${sel}${pend}" data-id="${esc(n.id)}" tabindex="0" role="button" aria-label="${esc(n.label)}：${esc(String(n.note||'').slice(0,60))}">
         <rect class="box" x="${n.x}" y="${n.y}" width="${NODE_W}" height="${ndH(n)}" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"/>
         <text x="${n.x+NODE_W/2}" y="${n.y+34}" text-anchor="middle">${esc(n.label)}</text>
         ${subText}
@@ -628,6 +697,8 @@ svg.addEventListener('mousedown', e=>{
     }
     resetPick(); render(); setStatus('已取消本次选择，请点击起点节点重新开始。'); e.preventDefault(); return;
   }
+  const laneName=e.target.closest('.lane-name');
+  if(laneName){ showLaneNote(laneName.dataset.lane); e.preventDefault(); return; }
   const lab=e.target.closest('.edge-label');
   if(lab){ edgeDrag={kind:'label',ci:+lab.dataset.ci}; e.preventDefault(); return; }
   const hd=e.target.closest('.edge-handle');
@@ -639,6 +710,7 @@ svg.addEventListener('mousedown', e=>{
   if(!g){ if(editingEdge!==null){ editingEdge=null; render(); } return; }
   editingEdge=null;
   if(selected!==g.dataset.id){ selected=g.dataset.id; render(); }  /* 仅在首次选中时重建，避免打断双击 */
+  showNote(g.dataset.id);   /* 单击即显示说明抽屉；不 render，保住双击与拖动 */
   drag={id:g.dataset.id, moved:false}; e.preventDefault();
 });
 window.addEventListener('mousemove', e=>{
@@ -697,12 +769,20 @@ svg.addEventListener('dblclick', e=>{
 });
 svg.addEventListener('keydown', e=>{
   const g=e.target.closest('.node'); if(!g) return;
-  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selected=g.dataset.id; render(); }
+  if(e.key==='Enter'||e.key===' '){
+    e.preventDefault(); const id=g.dataset.id;
+    selected=id; render(); showNote(id);
+    const ng=svg.querySelector('.node[data-id="'+CSS.escape(id)+'"]'); if(ng) ng.focus();
+  }
 });
 
 /* 工具栏 */
 function setConnect(v){ connectMode=v; resetPick(); document.getElementById('addEdge').classList.toggle('on',v); document.getElementById('addEdge2').classList.toggle('on',v); setStatus(v?'请点击起点节点。':''); render(); }
-window.addEventListener('keydown',e=>{ if(e.key==='Escape'&&connectMode) setConnect(false); });
+window.addEventListener('keydown',e=>{
+  if(e.key!=='Escape') return;
+  if(drawer&&!drawer.hidden){ hideNote(); return; }   /* Esc 优先关说明抽屉 */
+  if(connectMode) setConnect(false);
+});
 document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
 document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
@@ -761,6 +841,7 @@ document.getElementById('exportPng').onclick=()=>{
   img.onerror=()=>{ URL.revokeObjectURL(url); setStatus('PNG 导出失败：图片解析出错。'); };
   img.src=url;
 };
+document.getElementById('printBtn').onclick=()=>{ hideNote(); window.print(); };
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
 document.getElementById('importFile').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
