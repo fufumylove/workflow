@@ -39,7 +39,8 @@ button.danger:hover{border-color:#b76544;color:#b76544}
 .search-hits>div{padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap}
 .search-hits>div:hover{background:var(--pale)}
 .scroll{overflow:auto;padding:8px 16px 16px;overscroll-behavior-x:contain}
-svg{width:100%;min-width:1080px;height:auto;display:block}
+svg{width:100%;min-width:1080px;height:auto;display:block;transition:width .12s ease}
+svg.zoomable{min-width:0}
 .node{cursor:grab;outline:none}
 .node:active{cursor:grabbing}
 .node:hover rect.box,.node.selected rect.box,.node:hover polygon.box,.node.selected polygon.box{stroke:var(--teal);stroke-width:2.5;fill:#e2f4ef}
@@ -96,7 +97,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body>
 <header class="site-head">
   <div class="brand">打样确认 · 全流程泳道图</div>
-  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.1</div>
+  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.2</div>
 </header>
 
 <div class="hero">
@@ -105,8 +106,6 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
   <p>沿泳道向下阅读各环节，跨泳道的连线表示岗位交接。可在右侧面板增删节点与连线，所有修改自动保存在本机浏览器。</p>
   <div class="facts">
     <span>泳道：业务部门 / 我方QA / 对方QA / 采购跟单员 / QC</span>
-    <span>节点：打样通知、买手确认样、QA样、提供QA样的spec、接收QA样、是否合格、测试样、我方签样、对方签样、签样收到后、QC验货</span>
-    <span>连线：5 条（可直接编辑）</span>
   </div>
 </div>
 
@@ -125,7 +124,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button>
         <button id="importBtn">导入配置</button>
         <input type="file" id="importFile" accept="application/json,.json" hidden="">
-        <button data-zoom="minus">−</button><span class="zoom-label">180%</span><button data-zoom="plus">＋</button>
+        <button data-zoom="minus">−</button><span class="zoom-label">100%</span><button data-zoom="plus">＋</button>
         <button data-zoom="reset">适应</button>
         <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="2600" step="20" value="1400"><span id="laneHVal">2600</span></label>
         <input id="nodeSearch" placeholder="搜索节点…" title="输入名称/副标题/说明，回车定位">
@@ -136,7 +135,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
       </div>
     </div>
     <div class="scroll" id="scroll">
-      <svg id="svg" viewBox="0 0 1660 2630" role="img" aria-label="打样确认全流程岗位泳道图" style="width: 180%;"></svg>
+      <svg id="svg" viewBox="0 0 1660 2630" role="img" aria-label="打样确认全流程岗位泳道图"></svg>
     </div>
     <div class="legend">
       <span><i></i>实线：正常流转</span>
@@ -330,6 +329,14 @@ function ndCx(n){ return n.x+NODE_W/2; }
 function ndTop(n){ return n.y; }
 function ndBottom(n){ return n.y+ndH(n); }
 function setStatus(t){ document.getElementById('status').textContent = t||''; }
+/* 画布选中连线后，把右侧连线列表滚动到对应条目 */
+function scrollToEdgeRow(i){
+  const panel=document.getElementById('panel');
+  const row=document.querySelector('#edgeList [data-edge-row="'+i+'"]');
+  if(!panel||!row||panel.offsetParent===null) return;   /* 面板收起时不滚 */
+  const pr=panel.getBoundingClientRect(), rr=row.getBoundingClientRect();
+  panel.scrollTop += (rr.top-pr.top) - Math.max(40,(panel.clientHeight-rr.height)/2);
+}
 
 const svg = document.getElementById('svg');
 function pt(e){ const p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
@@ -502,7 +509,7 @@ function renderPanels(){
   else{
     el.innerHTML = data.connections.map((c,i)=>{
       const a=nodeById(c.from), b=nodeById(c.to);
-      return `<div class="row"><span class="nm">${esc(a?a.label:c.from)} → ${esc(b?b.label:c.to)}</span>
+      return `<div class="row" data-edge-row="${i}"><span class="nm">${esc(a?a.label:c.from)} → ${esc(b?b.label:c.to)}</span>
         <select data-ci="${i}" data-field="type" style="width:76px;padding:3px">
           <option value="normal"${c.type==='normal'?' selected':''}>实线</option>
           <option value="return"${c.type==='return'?' selected':''}>退回</option>
@@ -626,7 +633,7 @@ svg.addEventListener('mousedown', e=>{
   const hd=e.target.closest('.edge-handle');
   if(hd){ edgeDrag={kind:'point',ci:+hd.dataset.ci,pi:+hd.dataset.pi}; e.preventDefault(); return; }
   const hit=e.target.closest('.edge-hit');
-  if(hit){ editingEdge=+hit.dataset.ci; render(); setStatus('连线已选中：拖动小圆点改拐点，拖动文字改标签位置。'); e.preventDefault(); return; }
+  if(hit){ editingEdge=+hit.dataset.ci; render(); scrollToEdgeRow(editingEdge); setStatus('连线已选中：右侧已定位到该连线，可改类型与说明。'); e.preventDefault(); return; }
 
   const g=e.target.closest('.node');
   if(!g){ if(editingEdge!==null){ editingEdge=null; render(); } return; }
@@ -776,10 +783,23 @@ document.getElementById('laneH').addEventListener('input',e=>{
   setStatus('泳道高度已调整为 '+newH+'（节点位置不变）。');
 });
 document.getElementById('laneH').addEventListener('change',()=>{ if(typeof snapshot==='function') snapshot(); });
+/* 缩放：初值与 SVG 实际宽度同步；用 applyZoom 统一更新，去掉 min-width 限制保证缩小可见 */
+function applyZoom(){
+  zoom=Math.round(zoom*100)/100;
+  svg.classList.add('zoomable');
+  svg.style.width=(zoom*100)+'%';
+  const lb=document.querySelector('.zoom-label'); if(lb) lb.textContent=Math.round(zoom*100)+'%';
+}
 document.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{
-  if(b.dataset.zoom==='reset') zoom=1; else zoom=Math.max(.8,Math.min(2.2, zoom+(b.dataset.zoom==='plus'?.2:-.2)));
-  svg.style.width=(zoom*100)+'%'; document.querySelector('.zoom-label').textContent=Math.round(zoom*100)+'%';
+  const before=zoom;
+  if(b.dataset.zoom==='reset') zoom=1;
+  else zoom=Math.max(.5,Math.min(3, zoom+(b.dataset.zoom==='plus'?.2:-.2)));
+  applyZoom();
+  if(zoom===before) setStatus(b.dataset.zoom==='plus'?'已达最大缩放':'已达最小缩放');
+  else setStatus('缩放：'+Math.round(zoom*100)+'%');
+  if(typeof scheduleSticky==='function') scheduleSticky();
 });
+applyZoom();  /* 初始化：zoom=1 → 100%，与标签一致 */
 /* 撤销/重做快捷键（输入框内保留浏览器原生文本撤销） */
 window.addEventListener('keydown',e=>{
   const t=e.target, tag=(t&&t.tagName||'').toLowerCase();
