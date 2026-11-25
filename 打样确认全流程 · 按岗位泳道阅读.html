@@ -106,20 +106,17 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 .help-body{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 18px 14px 40px;font-size:12px;line-height:1.9}
 .help-body .keys{color:var(--muted);margin:10px 0 0}
 @media(max-width:520px){.note-drawer{right:12px;bottom:12px;max-width:calc(100% - 24px)}}
-@media print{
- @page{size:A3 landscape;margin:12mm}
- body{background:#fff}
- .tools,.panel,.note-drawer,.sticky-lanes,.facts,.legend,.search-hits,.help-guide,.bar p,#nodeEditor{display:none!important}
- .workspace,.hero,.card{display:block!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important}
- .scroll{overflow:visible!important;padding:0!important}
- svg,.scroll svg{width:100%!important;min-width:0!important;height:auto!important;transform:none!important;break-inside:avoid;page-break-inside:avoid}
-}
+/* 全屏：#card 固定视口高度成 flex 列，由 .scroll 独立纵向滚动 */
+#card:fullscreen{display:flex;flex-direction:column;height:100vh;width:100vw;border-radius:0;overflow:hidden}
+#card:fullscreen .bar{flex:0 0 auto;padding-top:72px}   /* 给吸顶泳道条让位，避免遮工具栏 */
+#card:fullscreen .scroll{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
+#card:fullscreen .legend{flex:0 0 auto}
 </style>
 </head>
 <body>
 <header class="site-head">
   <div class="brand">打样确认 · 全流程泳道图</div>
-  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.3</div>
+  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.4</div>
 </header>
 
 <div class="hero">
@@ -143,12 +140,12 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <button id="reset">恢复初始</button>
         <button id="undoBtn" title="Ctrl+Z 撤销">↶ 撤销</button><button id="redoBtn" title="Ctrl+Y 重做" disabled="">↷ 重做</button>
         <button id="export">导出配置</button>
-        <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button><button id="printBtn" title="打印完整泳道图（A3 横向）">打印</button>
+        <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button>
         <button id="importBtn">导入配置</button>
         <input type="file" id="importFile" accept="application/json,.json" hidden="">
         <button data-zoom="minus">−</button><span class="zoom-label">100%</span><button data-zoom="plus">＋</button>
         <button data-zoom="reset">适应</button>
-        <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="2600" step="20" value="1400"><span id="laneHVal">2600</span></label>
+        <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="4000" step="20" value="1400"><span id="laneHVal">1400</span></label>
         <input id="nodeSearch" placeholder="搜索节点…" title="输入名称/副标题/说明，回车定位">
         <div id="searchHits" class="search-hits" hidden=""></div>
         <button id="snapToggle" class="" title="网格吸附：拖动与微调对齐到 10px 网格">网格吸附</button>
@@ -505,10 +502,9 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
   </aside>
 </main>
 
-<aside id="noteDrawer" class="note-drawer" aria-live="polite">
+<aside id="noteDrawer" class="note-drawer" aria-live="polite" hidden="">
   <button id="noteClose" aria-label="关闭说明">×</button>
-  <h3 id="noteTitle">确定下一步测试样数量</h3><p id="noteBody">暂无说明，可在右侧「节点说明」中补充。
-要点：与我方QA对接确定</p>
+  <h3 id="noteTitle"></h3><p id="noteBody"></p>
 </aside>
 <details class="help-guide" open=""><summary>使用说明 / 操作步骤（点击展开）</summary><div class="help-body"><ol>
 <li>查看说明：单击节点，右下抽屉显示名称与说明；Tab 聚焦后按 Enter 亦可。</li>
@@ -518,7 +514,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <li>连线：单击选中后可改类型/分支文字/拐点/字号，双击文字改名。</li>
 <li>撤销重做：Ctrl+Z / Ctrl+Y，最多 60 步。</li>
 <li>搜索：右上输入名称/副标题/说明，回车定位首个匹配。</li>
-<li>导出与打印：SVG / PNG / JSON 配置 /「打印」输出整图。</li>
+<li>导出：SVG / PNG / JSON 配置。</li>
 <li>其他：全屏、缩放、泳道高度、网格吸附、收起侧栏、恢复初始。</li>
 </ol><p class="keys">快捷键：Tab 遍历 · Enter/空格 看说明 · Esc 关抽屉/退出加线 · Ctrl+Z 撤销 · Ctrl+Y 重做 · 方向键微调</p></div></details>
 
@@ -536,7 +532,7 @@ const NODE_H=80, DECISION_H=100, SUB_LINE_H=18, SUB_MAX_LINES=4, HEADER_H=64, ST
 /* sub 支持多行：字符串用 \n 换行，或直接用数组；节点高度随实际行数自动增长 */
 const RECT_Y=10, VIEW_W=1660;
 let RECT_H=1400, VIEW_H=1430;   /* 由 data.view.laneH 驱动，见 applyView() */
-const CANVAS_BOTTOM=RECT_Y+2600;  /* 与泳道高度滑块 max 对齐，节点可拖到此范围内 */
+const CANVAS_BOTTOM=RECT_Y+4000;  /* 与泳道高度滑块 max 对齐，节点可拖到此范围内 */
 const laneX=i=>LANE_X0+i*STEP;
 
 /* 默认配置＝用户当前图（另存为快照）固化，并应用本次需求。
@@ -638,7 +634,7 @@ function normalize(d){
   d.connections=d.connections.filter(c=>c&&ids.has(c.from)&&ids.has(c.to));
   if(!d.view||typeof d.view!=='object') d.view={};
   const h=Number(d.view.laneH);
-  d.view.laneH=Number.isFinite(h)?Math.max(500,Math.min(2600,h)):1400;
+  d.view.laneH=Number.isFinite(h)?Math.max(500,Math.min(4000,h)):1400;
   return d;
 }
 function load(){
@@ -701,10 +697,7 @@ function showNote(id){
   const n=nodeById(id); if(!n||!drawer) return;
   const note=(n.note||'').trim();
   const empty=!note||/^请填写节点说明。?$/.test(note);
-  let body=empty?'暂无说明，可在右侧「节点说明」中补充。':note;
-  const sub=subLines(n);
-  if(sub.length) body+='\n要点：'+sub.join(' · ');
-  showNoteContent((n.type==='decision'?'判断 · ':'')+n.label,body);
+  showNoteContent((n.type==='decision'?'判断 · ':'')+n.label, empty?'暂无说明，可在右侧「节点说明」中补充。':note);
 }
 function hideNote(){ if(drawer) drawer.hidden=true; }
 function showLaneNote(id){
@@ -1098,12 +1091,12 @@ document.getElementById('addEdge').onclick=()=>setConnect(!connectMode);
 document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
   const id='n'+(Date.now()%100000);
-  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(1200,CANVAS_BOTTOM-20-NODE_H)), note:'请填写节点说明。'});
+  data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(2000,CANVAS_BOTTOM-20-NODE_H)), note:'请填写节点说明。'});
   selected=id; snapshot(); applyView(); save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
 };
 document.getElementById('addDecision').onclick=()=>{
   const id='d'+(Date.now()%100000);
-  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(1180,CANVAS_BOTTOM-20-DECISION_H)), note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
+  data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(1980,CANVAS_BOTTOM-20-DECISION_H)), note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
   selected=id; snapshot(); applyView(); save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
 };
 document.getElementById('reset').onclick=()=>{
@@ -1152,7 +1145,6 @@ document.getElementById('exportPng').onclick=()=>{
   img.onerror=()=>{ URL.revokeObjectURL(url); setStatus('PNG 导出失败：图片解析出错。'); };
   img.src=url;
 };
-document.getElementById('printBtn').onclick=()=>{ hideNote(); window.print(); };
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
 document.getElementById('importFile').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
