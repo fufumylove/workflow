@@ -31,6 +31,13 @@ button.danger:hover{border-color:#b76544;color:#b76544}
 .lane-h{display:flex;gap:6px;align-items:center;margin:0!important;font-size:11px!important;color:var(--muted)!important;white-space:nowrap}
 .lane-h input{width:120px;accent-color:var(--teal);padding:0!important;border:0!important;background:transparent!important}
 .lane-h span{min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
+.tools{position:relative;flex-wrap:wrap}
+.tools button:disabled{opacity:.4;cursor:not-allowed}
+#nodeSearch{width:150px;flex:0 0 150px;padding:4px 8px}
+.search-hits{position:absolute;top:100%;left:0;z-index:20;background:#fff;border:1px solid var(--line);box-shadow:0 4px 12px #19334a20;border-radius:6px;min-width:220px;max-height:240px;overflow:auto;padding:4px 0}
+.search-hits[hidden]{display:none}
+.search-hits>div{padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap}
+.search-hits>div:hover{background:var(--pale)}
 .scroll{overflow:auto;padding:8px 16px 16px;overscroll-behavior-x:contain}
 svg{width:100%;min-width:1080px;height:auto;display:block}
 .node{cursor:grab;outline:none}
@@ -87,7 +94,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <body data-page-node-id="yGBiYZOvZEoQ6rcglkKiv5">
 <header class="site-head" data-page-node-id="r5Yyy3fC9ftpHkk6pYggim">
   <div class="brand" data-page-node-id="beHQ6vp1RlItpREzGNGFEY">打样确认 · 全流程泳道图</div>
-  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V3.9</div>
+  <div class="version" data-page-node-id="DyiW4QS6oGg9YoKqiDSyAw">按岗位泳道阅读 · 可编辑版 · V4.0</div>
 </header>
 
 <div class="hero" data-page-node-id="k6N0lygUHhcQ9gWHVr3LUZ">
@@ -111,12 +118,16 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
       <div class="tools" data-page-node-id="xFXsZ0IYh2hiNXIIUu7PWO">
         <button id="addEdge" title="点起点→终点，再分别点两节点四周圆点定起止边；Esc 取消" data-page-node-id="ayJqGUVbnnemP3QuozgMk4" class="">＋ 添加连线</button>
         <button id="reset" data-page-node-id="KuWQDB7rCKvv5ZcLZ4PaSm">恢复初始</button>
+        <button id="undoBtn" title="Ctrl+Z 撤销" disabled="">↶ 撤销</button><button id="redoBtn" title="Ctrl+Y 重做" disabled="">↷ 重做</button>
         <button id="export" data-page-node-id="Hz4fMct6qDfmhn9DRJpFVs">导出配置</button>
+        <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button>
         <button id="importBtn" data-page-node-id="CvVfOjcj1HzF2mG9f972BG">导入配置</button>
         <input type="file" id="importFile" accept="application/json,.json" hidden="" data-page-node-id="tcxqi4zbB4gVRNIUvRwQXi">
         <button data-zoom="minus" data-page-node-id="Byc0SeHHVFakvD7xfGm7y0">−</button><span class="zoom-label" data-page-node-id="GE4EjgLOu0pLs9pIq5GEf0">180%</span><button data-zoom="plus" data-page-node-id="ep7BuZ7obRYCa3po4PYEJr">＋</button>
         <button data-zoom="reset" data-page-node-id="X29e3WzCFg6k9rSI9M2tAx">适应</button>
         <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="2600" step="20" value="1400"><span id="laneHVal">2600</span></label>
+        <input id="nodeSearch" placeholder="搜索节点…" title="输入名称/副标题/说明，回车定位">
+        <div id="searchHits" class="search-hits" hidden=""></div>
         <button data-fullscreen="" data-page-node-id="M1sy2gUR3rnFCAfCwCNmCq">全屏</button>
       </div>
     </div>
@@ -535,6 +546,28 @@ let editingEdge = null;             // 当前选中、显示可拖手柄的连�
 let edgeDrag = null;                // {kind:'label'|'point', ci, pi}
 let drag = null;                    // 节点拖动状态
 let pointListFor = null;            // 展开拐点列表的连线索引
+/* 撤销/重做：保存 data 的 JSON 快照栈 */
+const HISTORY_MAX=60;
+let history=[], historyIndex=-1;
+function snapshot(){
+  history=history.slice(0,historyIndex+1);
+  history.push(JSON.stringify(data));
+  if(history.length>HISTORY_MAX) history.shift();
+  historyIndex=history.length-1;
+  updateHistoryButtons();
+}
+function updateHistoryButtons(){
+  const u=document.getElementById('undoBtn'), r=document.getElementById('redoBtn');
+  if(u) u.disabled=historyIndex<=0;
+  if(r) r.disabled=historyIndex>=history.length-1;
+}
+function restoreHistory(){
+  data=JSON.parse(history[historyIndex]);
+  selected=null; pointListFor=null; editingEdge=null;
+  applyView(); save(); render(); updateHistoryButtons();
+}
+function undo(){ if(historyIndex<=0) return; historyIndex--; restoreHistory(); setStatus('已撤销。'); }
+function redo(){ if(historyIndex>=history.length-1) return; historyIndex++; restoreHistory(); setStatus('已重做。'); }
 
 function normalize(d){
   if(!d) return d;
@@ -760,18 +793,18 @@ function renderPanels(){
         <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="${i}" style="padding:3px 7px">＋拐点</button><button data-list-points="${i}" style="padding:3px 7px">删拐点</button><button data-reset-edge="${i}" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="${i}" data-field="labelSize" value="${Number.isFinite(c.labelSize)?c.labelSize:10}" style="width:54px;padding:3px 6px"></div>
         ${pointListFor===i?`<div style="padding:0 0 6px 18px;display:flex;gap:4px;flex-wrap:wrap">${(c.points||[]).map((p,k)=>`<button class="danger" data-del-point="${i}" data-pi="${k}" style="padding:2px 6px">#${k+1}(${Math.round(p.x)},${Math.round(p.y)})</button>`).join('')||'<span class="empty">无拐点</span>'}</div>`:''}`;
     }).join('');
-    el.querySelectorAll('[data-del-edge]').forEach(b=>b.onclick=()=>{ data.connections.splice(+b.dataset.delEdge,1); pointListFor=null; save(); render(); });
+    el.querySelectorAll('[data-del-edge]').forEach(b=>b.onclick=()=>{ data.connections.splice(+b.dataset.delEdge,1); pointListFor=null; snapshot(); save(); render(); });
     el.querySelectorAll('[data-list-points]').forEach(b=>b.onclick=()=>{
       const i=+b.dataset.listPoints, c=data.connections[i]; ensureSides(c); const g=edgeGeom(c); if(!g) return;
       if(!Array.isArray(c.points)||!c.points.length) c.points=g.bends.map(q=>({x:q.x,y:q.y}));
-      pointListFor=pointListFor===i?null:i; editingEdge=i; save(); render();
+      pointListFor=pointListFor===i?null:i; editingEdge=i; snapshot(); save(); render();
     });
     el.querySelectorAll('[data-del-point]').forEach(b=>b.onclick=()=>{
       const c=data.connections[+b.dataset.delPoint]; if(!c||!c.points) return;
       c.points.splice(+b.dataset.pi,1); if(!c.points.length) delete c.points;
-      save(); render(); setStatus('拐点已删除。');
+      snapshot(); save(); render(); setStatus('拐点已删除。');
     });
-    el.querySelectorAll('[data-branch]').forEach(b=>b.onclick=()=>{ data.connections[+b.dataset.branch].label=b.dataset.v; save(); render(); });
+    el.querySelectorAll('[data-branch]').forEach(b=>b.onclick=()=>{ data.connections[+b.dataset.branch].label=b.dataset.v; snapshot(); save(); render(); });
     el.querySelectorAll('[data-add-point]').forEach(b=>b.onclick=()=>{
       const i=+b.dataset.addPoint, c=data.connections[i]; ensureSides(c); const g=edgeGeom(c); if(!g) return;
       if(!Array.isArray(c.points)||!c.points.length) c.points=g.bends.map(q=>({x:q.x,y:q.y}));
@@ -782,13 +815,13 @@ function renderPanels(){
       }
       const p=c.points[best],q=c.points[best+1]||p;
       c.points.splice(best+1,0,{x:Math.round((p.x+q.x)/2),y:Math.round((p.y+q.y)/2)});
-      editingEdge=i; save(); render(); setStatus('已添加拐点，可拖动小圆点调整路径。');
+      editingEdge=i; snapshot(); save(); render(); setStatus('已添加拐点，可拖动小圆点调整路径。');
     });
     el.querySelectorAll('[data-reset-edge]').forEach(b=>b.onclick=()=>{
       const c=data.connections[+b.dataset.resetEdge]; if(!c) return;
-      delete c.points; delete c.labelDx; delete c.labelDy; pointListFor=null; save(); render(); setStatus('连线位置已重置。');
+      delete c.points; delete c.labelDx; delete c.labelDy; pointListFor=null; snapshot(); save(); render(); setStatus('连线位置已重置。');
     });
-    el.querySelectorAll('[data-ci]').forEach(x=>x.onchange=()=>{ const c=data.connections[+x.dataset.ci]; c[x.dataset.field]=(x.dataset.field==='labelSize')?(+x.value||10):x.value; save(); render(); });
+    el.querySelectorAll('[data-ci]').forEach(x=>x.onchange=()=>{ const c=data.connections[+x.dataset.ci]; c[x.dataset.field]=(x.dataset.field==='labelSize')?(+x.value||10):x.value; snapshot(); save(); render(); });
   }
 
   const nl=document.getElementById('nodeList');
@@ -799,7 +832,7 @@ function renderPanels(){
     data.nodes=data.nodes.filter(n=>n.id!==id);
     data.connections=data.connections.filter(c=>c.from!==id&&c.to!==id);
     if(selected===id) selected=null;
-    save(); render();
+    snapshot(); save(); render();
   });
 
   const ed=document.getElementById('nodeEditor');
@@ -811,20 +844,27 @@ function renderPanels(){
     <label>副标题行数</label><select id="edSubRows">${[1,2,3,4].map(k=>`<option value="${k}"${k===Math.max(1,subLines(n).length)?' selected':''}>${k} 行</option>`).join('')}</select>
     <label>副标题内容（每行一条，节点框会自动增高）</label><textarea id="edSub" rows="${Math.max(1,subLines(n).length)}" placeholder="例如：设计稿·个数·交期">${esc(subLines(n).join('\n'))}</textarea>
     <label>节点说明</label><textarea id="edNote">${esc(n.note||'')}</textarea>
-    <div class="actions"><button id="edApply">保存修改</button></div>`;
-  document.getElementById('edApply').onclick=()=>{
-    n.label=document.getElementById('edLabel').value.trim()||n.label;
+    <div class="actions" style="color:var(--muted);font-size:11px">字段改动后自动保存，无需点按钮。</div>`;
+  const commitNodeEdit=()=>{
+    const cur=nodeById(selected); if(!cur) return;
+    const ae=document.activeElement, fid=ae&&ae.id, keep=fid&&fid.indexOf('ed')===0;
+    const sel=(ae&&ae.selectionStart!=null)?[ae.selectionStart,ae.selectionEnd]:null;
+    cur.label=document.getElementById('edLabel').value.trim()||cur.label;
     const t=document.getElementById('edType').value;
-    if(t==='decision') n.type='decision'; else delete n.type;
-    n.lane=document.getElementById('edLane').value;
-    const l=data.lanes.findIndex(x=>x.id===n.lane); n.x=laneX(l)+NODE_OFFSET;
+    if(t==='decision') cur.type='decision'; else delete cur.type;
+    cur.lane=document.getElementById('edLane').value;
+    const l=data.lanes.findIndex(x=>x.id===cur.lane); cur.x=laneX(l)+NODE_OFFSET;
     const maxRows=+document.getElementById('edSubRows').value;
-    n.sub=document.getElementById('edSub').value.split('\n').map(s=>s.trim()).filter(s=>s!=='').slice(0,maxRows);
-    n.note=document.getElementById('edNote').value;
-    save(); render();
+    cur.sub=document.getElementById('edSub').value.split('\n').map(s=>s.trim()).filter(s=>s!=='').slice(0,maxRows);
+    cur.note=document.getElementById('edNote').value;
+    if(typeof snapshot==='function') snapshot(); save(); render();
+    if(keep){ const el=document.getElementById(fid); if(el){ el.focus(); if(sel) try{el.setSelectionRange(sel[0],sel[1]);}catch(err){} } }
+    setStatus('已自动保存：'+cur.label);
   };
+  ['edLabel','edType','edLane','edSub','edNote'].forEach(id=>{ const el=document.getElementById(id); if(el) el.onchange=commitNodeEdit; });
   document.getElementById('edSubRows').onchange=e=>{
     document.getElementById('edSub').rows=+e.target.value;
+    commitNodeEdit();
   };
 }
 
@@ -842,7 +882,7 @@ svg.addEventListener('mousedown', e=>{
         pendingToSide=side;
         data.connections.push({from:pendingFrom,to:pendingTo,
           fromSide:pendingFromSide,toSide:pendingToSide,label:'',type:'normal'});
-        setConnect(false); save(); render();
+        setConnect(false); snapshot(); save(); render();
         setStatus('连线已添加（'+SIDE_NAME[pendingFromSide]+'→'+SIDE_NAME[side]+'边），可在右侧改类型与说明。');
       }else{
         setStatus('请点对应圆点：青色=起点节点，绿色=终点节点。');
@@ -870,7 +910,8 @@ svg.addEventListener('mousedown', e=>{
 
   const g=e.target.closest('.node');
   if(!g){ if(editingEdge!==null){ editingEdge=null; render(); } return; }
-  editingEdge=null; selected=g.dataset.id; render();
+  editingEdge=null;
+  if(selected!==g.dataset.id){ selected=g.dataset.id; render(); }  /* 仅在首次选中时重建，避免打断双击 */
   drag={id:g.dataset.id, moved:false}; e.preventDefault();
 });
 window.addEventListener('mousemove', e=>{
@@ -891,23 +932,31 @@ window.addEventListener('mousemove', e=>{
   const p=pt(e); n.x=Math.max(45,Math.min(VIEW_W-45-NODE_W,p.x-NODE_W/2)); n.y=Math.max(65,Math.min(CANVAS_BOTTOM-20-ndH(n),p.y-ndH(n)/2)); drag.moved=true; applyView(); render();
 });
 window.addEventListener('mouseup', ()=>{
-  if(edgeDrag){ edgeDrag=null; save(); render(); return; }
+  if(edgeDrag){ edgeDrag=null; if(typeof snapshot==='function') snapshot(); save(); render(); return; }
   if(!drag) return;
+  if(!drag.moved){ drag=null; return; }   /* 纯点击（含双击）不重建 DOM，保证 dblclick 可命中节点 */
   const n=nodeById(drag.id);
   if(n){ const i=Math.max(0,Math.min(data.lanes.length-1, Math.round((n.x+NODE_W/2-(LANE_X0+LANE_W/2))/STEP))); n.x=laneX(i)+NODE_OFFSET; n.lane=data.lanes[i].id; }
-  drag=null; save(); render();
+  drag=null; if(typeof snapshot==='function') snapshot(); save(); render();
 });
 svg.addEventListener('dblclick', e=>{
+  const nd=e.target.closest('.node');
+  if(nd){
+    selected=nd.dataset.id; render();
+    const el=document.getElementById('edLabel');
+    if(el){ el.focus(); el.select(); }
+    setStatus('节点已选中，右侧字段可直接编辑（改完自动保存）。'); e.preventDefault(); return;
+  }
   const hd=e.target.closest('.edge-handle');
   if(hd){
     const c=data.connections[+hd.dataset.ci];
-    if(c&&Array.isArray(c.points)){ c.points.splice(+hd.dataset.pi,1); if(!c.points.length) delete c.points; save(); render(); setStatus('拐点已删除。'); }
+    if(c&&Array.isArray(c.points)){ c.points.splice(+hd.dataset.pi,1); if(!c.points.length) delete c.points; snapshot(); save(); render(); setStatus('拐点已删除。'); }
     e.preventDefault(); return;
   }
   const lab=e.target.closest('.edge-label');
   if(lab){
     const c=data.connections[+lab.dataset.ci];
-    if(c){ delete c.labelDx; delete c.labelDy; save(); render(); setStatus('标签位置已重置。'); }
+    if(c){ delete c.labelDx; delete c.labelDy; snapshot(); save(); render(); setStatus('标签位置已重置。'); }
     e.preventDefault();
   }
 });
@@ -924,25 +973,63 @@ document.getElementById('addEdge2').onclick=()=>setConnect(!connectMode);
 document.getElementById('addNode').onclick=()=>{
   const id='n'+(Date.now()%100000);
   data.nodes.push({id, label:'新步骤', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(1200,CANVAS_BOTTOM-20-NODE_H)), note:'请填写节点说明。'});
-  selected=id; applyView(); save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
+  selected=id; snapshot(); applyView(); save(); render(); setStatus('已新增步骤，请在右侧编辑名称与岗位。');
 };
 document.getElementById('addDecision').onclick=()=>{
   const id='d'+(Date.now()%100000);
   data.nodes.push({id, label:'是否通过？', type:'decision', sub:'', lane:data.lanes[0].id, x:laneX(0)+NODE_OFFSET, y:Math.max(65,Math.min(1180,CANVAS_BOTTOM-20-DECISION_H)), note:'判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。'});
-  selected=id; applyView(); save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
+  selected=id; snapshot(); applyView(); save(); render(); setStatus('已新增判断框，可在右侧改名称，并为它的连线标注是/否。');
 };
 document.getElementById('reset').onclick=()=>{
   if(!confirm('恢复初始配置？当前修改将被清除。')) return;
-  data=defaultData(); selected=null; pointListFor=null; editingEdge=null; setConnect(false); applyView(); save(); render();
+  data=defaultData(); selected=null; pointListFor=null; editingEdge=null; setConnect(false); snapshot(); applyView(); save(); render();
 };
 document.getElementById('export').onclick=()=>{
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='打样确认流程配置.json'; a.click(); URL.revokeObjectURL(a.href);
 };
+/* 导出图片：克隆 SVG 并内联样式，去掉交互元素 */
+function exportSvgNode(){
+  const c=svg.cloneNode(true);
+  c.removeAttribute('style');
+  c.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  c.setAttribute('width',VIEW_W); c.setAttribute('height',VIEW_H);
+  c.setAttribute('viewBox',`0 0 ${VIEW_W} ${VIEW_H}`);
+  c.querySelectorAll('.node.selected,.node.decision.selected').forEach(el=>el.classList.remove('selected'));
+  c.querySelectorAll('.edge-hit,.edge-handle,.side-pick').forEach(el=>el.remove());
+  const st=document.createElementNS('http://www.w3.org/2000/svg','style');
+  st.textContent=Array.from(document.querySelectorAll('style')).map(x=>x.textContent).join('\n')
+    +'\nsvg{font-family:system-ui,"Microsoft YaHei",sans-serif}';
+  c.insertBefore(st,c.firstChild);
+  return c;
+}
+function downloadBlob(blob,name){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+document.getElementById('exportSvg').onclick=()=>{
+  const xml=new XMLSerializer().serializeToString(exportSvgNode());
+  downloadBlob(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}),'打样确认全流程泳道图.svg');
+  setStatus('SVG 已导出。');
+};
+document.getElementById('exportPng').onclick=()=>{
+  const xml=new XMLSerializer().serializeToString(exportSvgNode());
+  const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));
+  const img=new Image();
+  img.onload=()=>{
+    const k=2, cv=document.createElement('canvas');
+    cv.width=Math.ceil(VIEW_W*k); cv.height=Math.ceil(VIEW_H*k);
+    const x=cv.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,cv.width,cv.height);
+    x.drawImage(img,0,0,cv.width,cv.height); URL.revokeObjectURL(url);
+    cv.toBlob(b=>{ if(b){ downloadBlob(b,'打样确认全流程泳道图.png'); setStatus('PNG 已导出（2 倍高清）。'); } else setStatus('PNG 导出失败。'); },'image/png');
+  };
+  img.onerror=()=>{ URL.revokeObjectURL(url); setStatus('PNG 导出失败：图片解析出错。'); };
+  img.src=url;
+};
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
 document.getElementById('importFile').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; applyView(); save(); render(); setStatus('配置已导入。'); }catch(err){ setStatus('导入失败：文件格式不正确。'); } }; r.readAsText(f); e.target.value='';
+  const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; snapshot(); applyView(); save(); render(); setStatus('配置已导入。'); }catch(err){ setStatus('导入失败：文件格式不正确。'); } }; r.readAsText(f); e.target.value='';
 };
 /* 泳道高度滑块：只改泳道背景高度，节点/拐点 y 不变，底部空白随高度增减 */
 document.getElementById('laneH').addEventListener('input',e=>{
@@ -952,10 +1039,41 @@ document.getElementById('laneH').addEventListener('input',e=>{
   applyView(); save(); render();
   setStatus('泳道高度已调整为 '+newH+'（节点位置不变）。');
 });
+document.getElementById('laneH').addEventListener('change',()=>{ if(typeof snapshot==='function') snapshot(); });
 document.querySelectorAll('[data-zoom]').forEach(b=>b.onclick=()=>{
   if(b.dataset.zoom==='reset') zoom=1; else zoom=Math.max(.8,Math.min(2.2, zoom+(b.dataset.zoom==='plus'?.2:-.2)));
   svg.style.width=(zoom*100)+'%'; document.querySelector('.zoom-label').textContent=Math.round(zoom*100)+'%';
 });
+/* 撤销/重做快捷键（输入框内保留浏览器原生文本撤销） */
+window.addEventListener('keydown',e=>{
+  const t=e.target, tag=(t&&t.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='textarea'||(t&&t.isContentEditable)) return;
+  if(!(e.ctrlKey||e.metaKey)) return;
+  const k=e.key.toLowerCase();
+  if(k==='z'&&!e.shiftKey){ e.preventDefault(); undo(); }
+  else if(k==='y'||(k==='z'&&e.shiftKey)){ e.preventDefault(); redo(); }
+});
+document.getElementById('undoBtn').onclick=undo;
+document.getElementById('redoBtn').onclick=redo;
+/* 搜索定位节点 */
+const si=document.getElementById('nodeSearch'), hits=document.getElementById('searchHits');
+let hitList=[];
+function runSearch(){
+  const q=si.value.trim().toLowerCase();
+  hitList=q?data.nodes.filter(n=>[n.label,n.sub,n.note].some(v=>String(v||'').toLowerCase().includes(q))):[];
+  hits.innerHTML=q?(hitList.length?hitList.map((n,i)=>`<div data-hit="${i}">${esc(n.label)} · ${esc(laneOf(n.lane).name)}</div>`).join(''):'<div class="empty">无匹配节点</div>'):'';
+  hits.hidden=!q;
+  setStatus(q?`找到 ${hitList.length} 个匹配节点，回车定位第一个`:'');
+}
+function locateHit(id){
+  selected=id; render(); hits.hidden=true;
+  const g=svg.querySelector('.node[data-id="'+CSS.escape(id)+'"]');
+  if(g&&g.scrollIntoView) g.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+  setStatus('已定位：'+(nodeById(id)?nodeById(id).label:id));
+}
+si.addEventListener('input',runSearch);
+si.addEventListener('keydown',e=>{ if(e.key==='Enter'&&hitList.length){ e.preventDefault(); locateHit(hitList[0].id); } });
+hits.addEventListener('click',e=>{ const d=e.target.closest('[data-hit]'); if(d&&hitList[+d.dataset.hit]) locateHit(hitList[+d.dataset.hit].id); });
 document.querySelector('[data-fullscreen]').onclick=async()=>{
   try{ if(document.fullscreenElement) await document.exitFullscreen(); else await document.getElementById('card').requestFullscreen(); }catch(e){}
 };
@@ -965,7 +1083,7 @@ const ct=document.getElementById('configText');
 document.querySelector('details').addEventListener('toggle',e=>{ if(e.target.open) ct.value=JSON.stringify(data,null,2); });
 document.getElementById('fillConfig').onclick=()=>{ ct.value=JSON.stringify(data,null,2); };
 document.getElementById('applyConfig').onclick=()=>{
-  try{ const d=JSON.parse(ct.value); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; applyView(); save(); render(); setStatus('配置已应用。'); }
+  try{ const d=JSON.parse(ct.value); if(!d.lanes||!d.nodes||!d.connections) throw 0; data=normalize(d); selected=null; pointListFor=null; editingEdge=null; snapshot(); applyView(); save(); render(); setStatus('配置已应用。'); }
   catch(e){ setStatus('应用失败：请检查 JSON 格式。'); }
 };
 
@@ -1025,6 +1143,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 applyView();  /* 初始化泳道高度与 viewBox */
+snapshot();   /* 撤销栈基线 */
 ct.value=JSON.stringify(data,null,2);  /* 覆盖另存为时残留的旧配置快照 */
 render();
 </script>
