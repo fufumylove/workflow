@@ -66,7 +66,7 @@ svg.zoomable{min-width:0}
 .sticky-lanes{position:fixed;left:0;right:0;top:0;z-index:35;height:56px;overflow:hidden;background:#fff;box-shadow:0 5px 10px #19334a15;pointer-events:none}
 .sticky-lanes[hidden]{display:none}
 .sticky-lanes-inner{position:relative;height:56px;width:100%}
-.sticky-lanes-inner>div{position:absolute;top:0;height:56px;display:flex;align-items:center;justify-content:center;background:#19334a;color:#fff;border-radius:7px;font-size:19px;font-weight:650;white-space:nowrap;font-family:inherit}
+.sticky-lanes-inner>div{position:absolute;top:0;height:56px;display:flex;align-items:center;justify-content:center;background:#19334a;color:#fff;border-radius:7px;font-size:13px;font-weight:650;white-space:nowrap;font-family:inherit}
 .legend{border-top:1px solid #edf0f2;padding:10px 18px;color:var(--muted);font-size:12px;display:flex;gap:20px;flex-wrap:wrap}
 .legend i{display:inline-block;width:22px;height:0;border-top:2px solid #597b8d;vertical-align:middle;margin-right:6px}
 .legend i.ret{border-top:2px dashed #b76544}
@@ -106,17 +106,12 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 .help-body{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 18px 14px 40px;font-size:12px;line-height:1.9}
 .help-body .keys{color:var(--muted);margin:10px 0 0}
 @media(max-width:520px){.note-drawer{right:12px;bottom:12px;max-width:calc(100% - 24px)}}
-/* 全屏：#card 固定视口高度成 flex 列，由 .scroll 独立纵向滚动 */
-#card:fullscreen{display:flex;flex-direction:column;height:100vh;width:100vw;border-radius:0;overflow:hidden}
-#card:fullscreen .bar{flex:0 0 auto;padding-top:72px}   /* 给吸顶泳道条让位，避免遮工具栏 */
-#card:fullscreen .scroll{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
-#card:fullscreen .legend{flex:0 0 auto}
 </style>
 </head>
 <body>
 <header class="site-head">
   <div class="brand">打样确认 · 全流程泳道图</div>
-  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.4</div>
+  <div class="version">按岗位泳道阅读 · 可编辑版 · V4.5</div>
 </header>
 
 <div class="hero">
@@ -150,7 +145,6 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <div id="searchHits" class="search-hits" hidden=""></div>
         <button id="snapToggle" class="" title="网格吸附：拖动与微调对齐到 10px 网格">网格吸附</button>
         <button id="panelToggle" title="收起侧栏">收起侧栏</button>
-        <button data-fullscreen="">全屏</button>
       </div>
     </div>
     <div class="scroll" id="scroll">
@@ -515,7 +509,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
 <li>撤销重做：Ctrl+Z / Ctrl+Y，最多 60 步。</li>
 <li>搜索：右上输入名称/副标题/说明，回车定位首个匹配。</li>
 <li>导出：SVG / PNG / JSON 配置。</li>
-<li>其他：全屏、缩放、泳道高度、网格吸附、收起侧栏、恢复初始。</li>
+<li>其他：缩放、泳道高度、网格吸附、收起侧栏、恢复初始。</li>
 </ol><p class="keys">快捷键：Tab 遍历 · Enter/空格 看说明 · Esc 关抽屉/退出加线 · Ctrl+Z 撤销 · Ctrl+Y 重做 · 方向键微调</p></div></details>
 
 <script>
@@ -709,10 +703,6 @@ function showLaneNote(id){
   showNoteContent('岗位职责 · '+l.name,body);
 }
 if(document.getElementById('noteClose')) document.getElementById('noteClose').onclick=hideNote;
-document.addEventListener('fullscreenchange',()=>{
-  const root=document.fullscreenElement||document.body;
-  if(drawer&&drawer.parentNode!==root) root.appendChild(drawer);
-});
 
 /* 连线几何：points/labelDx/labelDy 可覆盖并自由拖动
    锚点：fixed:true 固定底→顶；其余优先 fromSide/toSide（含已有 points 时也不变），无 side 按最近边自动选 */
@@ -1229,9 +1219,6 @@ function locateHit(id){
 si.addEventListener('input',runSearch);
 si.addEventListener('keydown',e=>{ if(e.key==='Enter'&&hitList.length){ e.preventDefault(); locateHit(hitList[0].id); } });
 hits.addEventListener('click',e=>{ const d=e.target.closest('[data-hit]'); if(d&&hitList[+d.dataset.hit]) locateHit(hitList[+d.dataset.hit].id); });
-document.querySelector('[data-fullscreen]').onclick=async()=>{
-  try{ if(document.fullscreenElement) await document.exitFullscreen(); else await document.getElementById('card').requestFullscreen(); }catch(e){}
-};
 
 /* JSON 直接编辑 */
 const ct=document.getElementById('configText');
@@ -1269,8 +1256,6 @@ function syncSticky(){
 function alignSticky(){
   stickyFrame=0;
   if(!stickyHead) return;
-  const root=document.fullscreenElement||document.body;
-  if(stickyHead.parentNode!==root) root.appendChild(stickyHead);
   const surface=document.getElementById('scroll').getBoundingClientRect();
   const graph=svg.getBoundingClientRect();
   const m=svg.getScreenCTM();
@@ -1316,7 +1301,6 @@ initSticky();
 window.addEventListener('scroll',scheduleSticky,true);
 window.addEventListener('resize',scheduleSticky);
 new ResizeObserver(scheduleSticky).observe(svg);
-document.addEventListener('fullscreenchange',scheduleSticky);
 /* 兜底：脚本执行时其后的节点尚未解析，DOMContentLoaded 时再清一次另存为残留 */
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.sticky-lanes').forEach(el=>{ if(el!==stickyHead) el.remove(); });
