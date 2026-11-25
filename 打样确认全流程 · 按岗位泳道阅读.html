@@ -141,7 +141,7 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
       <div class="tools">
         <button id="addEdge" title="点起点→终点，再分别点两节点四周圆点定起止边；Esc 取消" class="">＋ 添加连线</button>
         <button id="reset">恢复初始</button>
-        <button id="undoBtn" title="Ctrl+Z 撤销" disabled="">↶ 撤销</button><button id="redoBtn" title="Ctrl+Y 重做" disabled="">↷ 重做</button>
+        <button id="undoBtn" title="Ctrl+Z 撤销">↶ 撤销</button><button id="redoBtn" title="Ctrl+Y 重做" disabled="">↷ 重做</button>
         <button id="export">导出配置</button>
         <button id="exportSvg" title="导出可编辑矢量图">导出 SVG</button><button id="exportPng" title="导出高清图片">导出 PNG</button><button id="printBtn" title="打印完整泳道图（A3 横向）">打印</button>
         <button id="importBtn">导入配置</button>
@@ -151,13 +151,101 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
         <label class="lane-h">泳道高度<input id="laneH" type="range" min="500" max="2600" step="20" value="1400"><span id="laneHVal">2600</span></label>
         <input id="nodeSearch" placeholder="搜索节点…" title="输入名称/副标题/说明，回车定位">
         <div id="searchHits" class="search-hits" hidden=""></div>
-        <button id="snapToggle" class="on" title="网格吸附：拖动与微调对齐到 10px 网格">网格吸附</button>
+        <button id="snapToggle" class="" title="网格吸附：拖动与微调对齐到 10px 网格">网格吸附</button>
         <button id="panelToggle" title="收起侧栏">收起侧栏</button>
         <button data-fullscreen="">全屏</button>
       </div>
     </div>
     <div class="scroll" id="scroll">
-      <svg id="svg" viewBox="0 0 1660 2630" role="img" aria-label="打样确认全流程岗位泳道图"></svg>
+      <svg id="svg" viewBox="0 0 1660 2630" role="img" aria-label="打样确认全流程岗位泳道图" class="zoomable" style="width: 100%;"><defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#597b8d"></path></marker>
+    <marker id="arrRet" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#b76544"></path></marker>
+    <marker id="arrAcc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#107c80"></path></marker>
+  </defs><rect x="40" y="10" width="300" height="2600" rx="10" fill="#f0f8f6" stroke="#dce5eb"></rect><rect x="40" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" data-lane="business" x="190" y="42" dominant-baseline="central" text-anchor="middle">业务部门</text><rect x="360" y="10" width="300" height="2600" rx="10" fill="#f5f2fa" stroke="#dce5eb"></rect><rect x="360" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" data-lane="qaOur" x="510" y="42" dominant-baseline="central" text-anchor="middle">我方QA</text><rect x="680" y="10" width="300" height="2600" rx="10" fill="#f2f0fa" stroke="#dce5eb"></rect><rect x="680" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" data-lane="qaClient" x="830" y="42" dominant-baseline="central" text-anchor="middle">对方QA</text><rect x="1000" y="10" width="300" height="2600" rx="10" fill="#fff8ee" stroke="#dce5eb"></rect><rect x="1000" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" data-lane="merch" x="1150" y="42" dominant-baseline="central" text-anchor="middle">采购跟单员</text><rect x="1320" y="10" width="300" height="2600" rx="10" fill="#f2f6fc" stroke="#dce5eb"></rect><rect x="1320" y="10" width="300" height="64" rx="9" fill="#19334a"></rect><text class="lane-name" data-lane="qc" x="1470" y="42" dominant-baseline="central" text-anchor="middle">QC</text><path class="edge " d="M 830 506.48248291015625 L 830 595.9999694824219 L 830 595.9999694824219 L 830 685.5174560546875"></path><path class="edge-hit" data-ci="0" d="M 830 506.48248291015625 L 830 595.9999694824219 L 830 595.9999694824219 L 830 685.5174560546875"></path><path class="edge " d="M 1150 227.8779754638672 L 1150 335.83521109838176 L 1151 373.1720881427073 L 510 372.4354413890603 L 510 399.4824829101562"></path><path class="edge-hit" data-ci="1" d="M 1150 227.8779754638672 L 1150 335.83521109838176 L 1151 373.1720881427073 L 510 372.4354413890603 L 510 399.4824829101562"></path><path class="edge " d="M 630 457.4824829101562 L 648 457.4824829101562 L 692 457.48248291015625 L 710 457.48248291015625"></path><path class="edge-hit" data-ci="2" d="M 630 457.4824829101562 L 648 457.4824829101562 L 692 457.48248291015625 L 710 457.48248291015625"></path><path class="edge " d="M 510 229.15109252929688 L 510 247.15109252929688 L 510 381.4824829101562 L 510 399.4824829101562"></path><path class="edge-hit" data-ci="3" d="M 510 229.15109252929688 L 510 247.15109252929688 L 510 381.4824829101562 L 510 399.4824829101562"></path><path class="edge " d="M 830 785.5174560546875 L 830 803.5174560546875 L 830 856.0343017578125 L 830 874.0343017578125"></path><path class="edge-hit" data-ci="4" d="M 830 785.5174560546875 L 830 803.5174560546875 L 830 856.0343017578125 L 830 874.0343017578125"></path><text class="edge-label " data-ci="4" x="846" y="830.77587890625" style="font-size:21px" text-anchor="middle">是</text><path class="edge " d="M 710 914.0343017578125 L 692 914.0343017578125 L 648 913.7578125 L 630 913.7578125"></path><path class="edge-hit" data-ci="5" d="M 710 914.0343017578125 L 692 914.0343017578125 L 648 913.7578125 L 630 913.7578125"></path><path class="edge " d="M 510 953.7578125 L 510 971.7578125 L 510 1159.1373291015625 L 1012 1159.1373291015625 L 1030 1159.1373291015625"></path><path class="edge-hit" data-ci="6" d="M 510 953.7578125 L 510 971.7578125 L 510 1159.1373291015625 L 1012 1159.1373291015625 L 1030 1159.1373291015625"></path><path class="edge " d="M 630 913.7578125 L 648 913.7578125 L 692 914.0343017578125 L 710 914.0343017578125"></path><path class="edge-hit" data-ci="7" d="M 630 913.7578125 L 648 913.7578125 L 692 914.0343017578125 L 710 914.0343017578125"></path><path class="edge " d="M 1150 1199.1373291015625 L 1150 1217.1373291015625 L 1150 1277.498652948085 L 510 1277.498652948085 L 510 1295.498652948085"></path><path class="edge-hit" data-ci="8" d="M 1150 1199.1373291015625 L 1150 1217.1373291015625 L 1150 1277.498652948085 L 510 1277.498652948085 L 510 1295.498652948085"></path><path class="edge " d="M 510 1375.498652948085 L 510 1393.498652948085 L 510 1450.158804689663 L 510 1468.158804689663"></path><path class="edge-hit" data-ci="9" d="M 510 1375.498652948085 L 510 1393.498652948085 L 510 1450.158804689663 L 510 1468.158804689663"></path><path class="edge return" d="M 710 735.5174560546875 L 692 734.6456529391149 L 508 734 L 510 515.4824829101562"></path><path class="edge-hit" data-ci="10" d="M 710 735.5174560546875 L 692 734.6456529391149 L 508 734 L 510 515.4824829101562"></path><text class="edge-label ret" data-ci="10" x="605" y="629.4999694824219" style="font-size:10px" text-anchor="middle">否：客户QA反馈测试要求和样品修改意见</text><path class="edge return" d="M 390 1518.158804689663 L 375 1516.8426023084994 L 378 1158.3410283315843 L 1008 1158.3410283315843 L 1030 1159.1373291015625"></path><path class="edge-hit" data-ci="11" d="M 390 1518.158804689663 L 375 1516.8426023084994 L 378 1158.3410283315843 L 1008 1158.3410283315843 L 1030 1159.1373291015625"></path><text class="edge-label ret" data-ci="11" x="390" y="1424.6480668956128" style="font-size:10px" text-anchor="middle">未通过</text><path class="edge " d="M 630 1739.2276333227087 L 648 1739.2276333227087 L 692 1739.7813542878903 L 710 1739.7813542878903"></path><path class="edge-hit" data-ci="12" d="M 630 1739.2276333227087 L 648 1739.2276333227087 L 692 1739.7813542878903 L 710 1739.7813542878903"></path><path class="edge " d="M 710 1739.7813542878903 L 692 1739.7813542878903 L 648 1739.2276333227087 L 630 1739.2276333227087"></path><path class="edge-hit" data-ci="13" d="M 710 1739.7813542878903 L 692 1739.7813542878903 L 648 1739.2276333227087 L 630 1739.2276333227087"></path><path class="edge " d="M 510 1568.158804689663 L 510 1586.158804689663 L 510 1681.2276333227087 L 510 1699.2276333227087"></path><path class="edge-hit" data-ci="14" d="M 510 1568.158804689663 L 510 1586.158804689663 L 510 1681.2276333227087 L 510 1699.2276333227087"></path><text class="edge-label " data-ci="14" x="510" y="1627.6932190061857" style="font-size:18px" text-anchor="middle">是</text><path class="edge " d="M 510 1568.158804689663 L 510 1586.158804689663 L 372 1586.158804689663 L 372 1965.7017822265625 L 390 1965.7017822265625"></path><path class="edge-hit" data-ci="15" d="M 510 1568.158804689663 L 510 1586.158804689663 L 372 1586.158804689663 L 372 1965.7017822265625 L 390 1965.7017822265625"></path><path class="edge " d="M 510 2005.7017822265625 L 510 2023.7017822265625 L 510 2037.639404296875 L 510 2055.639404296875"></path><path class="edge-hit" data-ci="16" d="M 510 2005.7017822265625 L 510 2023.7017822265625 L 510 2037.639404296875 L 510 2055.639404296875"></path><path class="edge " d="M 510 1779.2276333227087 L 510 1797.2276333227087 L 510 1850.1414794921875 L 1012 1850.1414794921875 L 1030 1850.1414794921875"></path><path class="edge-hit" data-ci="17" d="M 510 1779.2276333227087 L 510 1797.2276333227087 L 510 1850.1414794921875 L 1012 1850.1414794921875 L 1030 1850.1414794921875"></path><path class="edge " d="M 1150 1890.1414794921875 L 1150 1908.1414794921875 L 1150 2131.17724609375 L 1150 2149.17724609375"></path><path class="edge-hit" data-ci="18" d="M 1150 1890.1414794921875 L 1150 1908.1414794921875 L 1150 2131.17724609375 L 1150 2149.17724609375"></path><path class="edge " d="M 1030 2189.17724609375 L 1012 2189.17724609375 L 511 2191 L 510 2272.31689453125"></path><path class="edge-hit" data-ci="19" d="M 1030 2189.17724609375 L 1012 2189.17724609375 L 511 2191 L 510 2272.31689453125"></path><path class="edge " d="M 1270 2189.17724609375 L 1288 2189.17724609375 L 1470 2189 L 1470 2272.156494140625"></path><path class="edge-hit" data-ci="20" d="M 1270 2189.17724609375 L 1288 2189.17724609375 L 1470 2189 L 1470 2272.156494140625"></path><path class="edge " d="M 510 2370.31689453125 L 510 2388.31689453125 L 510 2444.6884765625 L 510 2462.6884765625"></path><path class="edge-hit" data-ci="21" d="M 510 2370.31689453125 L 510 2388.31689453125 L 510 2444.6884765625 L 510 2462.6884765625"></path><path class="edge " d="M 190 244.62385321100902 L 190 262.623853211009 L 190 290.957550048828 L 190 308.957550048828"></path><path class="edge-hit" data-ci="22" d="M 190 244.62385321100902 L 190 262.623853211009 L 190 290.957550048828 L 190 308.957550048828"></path><path class="edge " d="M 190 388.957550048828 L 190 406.957550048828 L 190 457.4824829101562 L 372 457.4824829101562 L 390 457.4824829101562"></path><path class="edge-hit" data-ci="23" d="M 190 388.957550048828 L 190 406.957550048828 L 190 457.4824829101562 L 372 457.4824829101562 L 390 457.4824829101562"></path><text class="edge-label " data-ci="23" x="278" y="446.2200164794921" style="font-size:10px" text-anchor="middle">QA确认</text><g class="node" data-id="n1" tabindex="0" role="button" aria-label="打样通知：采购跟单员发出打样通知，随附客户打样设计稿及说明，明确打样个数与完成日期。">
+        <rect class="box" x="70" y="128.62385321100902" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="190" y="162.62385321100902" text-anchor="middle">打样通知</text>
+        <text class="sub" x="190" y="184.62385321100902" text-anchor="middle">打样设计稿+其他说明</text><text class="sub" x="190" y="202.62385321100902" text-anchor="middle">打样个数</text><text class="sub" x="190" y="220.62385321100902" text-anchor="middle">完成日期</text>
+      </g><g class="node" data-id="n2" tabindex="0" role="button" aria-label="买手确认样：买手核对样衣款式、颜色、规格及辅料，确认后进入 QA 检验。">
+        <rect class="box" x="70" y="308.957550048828" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="190" y="342.957550048828" text-anchor="middle">买手确认样</text>
+        <text class="sub" x="190" y="364.957550048828" text-anchor="middle">款式/颜色/规格核对</text>
+      </g><g class="node" data-id="n3" tabindex="0" role="button" aria-label="QA样：采购跟单员提供 spec、我方 QA 提供 checklist，按 1/2 批次制作 QA样并寄送对方 QA；收到退回意">
+        <rect class="box" x="390" y="399.4824829101562" width="240" height="116" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="433.4824829101562" text-anchor="middle">QA样</text>
+        <text class="sub" x="510" y="455.4824829101562" text-anchor="middle">spec（采购负责）</text><text class="sub" x="510" y="473.4824829101562" text-anchor="middle">checklist（我方QA负责）</text><text class="sub" x="510" y="491.4824829101562" text-anchor="middle">批次数量</text>
+      </g><g class="node" data-id="nReceive" tabindex="0" role="button" aria-label="接收QA样：对方 QA 接收我方寄送的 QA样，对照 spec 与 checklist 检查样衣是否合格并反馈结论。">
+        <rect class="box" x="710" y="408.48248291015625" width="240" height="98" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="830" y="442.48248291015625" text-anchor="middle">接收QA样</text>
+        <text class="sub" x="830" y="464.48248291015625" text-anchor="middle">包含样品、spec、checklist</text><text class="sub" x="830" y="482.48248291015625" text-anchor="middle">检查是否合格</text>
+      </g><g class="node decision" data-id="dJudge" tabindex="0" role="button" aria-label="是否合格：对方 QA 判定：合格（是）→转测试样由我方 QA 安排测试；不合格（否）→退回 QA样，附测试要求与样品修改意见（v1">
+        <polygon class="box" points="830,685.5174560546875 950,735.5174560546875 830,785.5174560546875 710,735.5174560546875" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
+        <text x="830" y="731.5174560546875" text-anchor="middle">是否合格</text>
+        <text class="sub" x="830" y="741.5174560546875" text-anchor="middle">合格/退回</text>
+      </g><g class="node" data-id="n4" tabindex="0" role="button" aria-label="进行测验样的测试：我方 QA 与实验室对接安排样品测试并记录结果。">
+        <rect class="box" x="390" y="1295.498652948085" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="1329.498652948085" text-anchor="middle">进行测验样的测试</text>
+        <text class="sub" x="510" y="1351.498652948085" text-anchor="middle">与实验室对接</text>
+      </g><g class="node" data-id="nSpec" tabindex="0" role="button" aria-label="提供spec：采购跟单员依据客户设计稿整理并提供 QA样 spec（规格、尺寸、物料等）">
+        <rect class="box" x="1030" y="147.8779754638672" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="181.8779754638672" text-anchor="middle">提供spec</text>
+        
+      </g><g class="node" data-id="n17034" tabindex="0" role="button" aria-label="checklist：请填写节点说明。">
+        <rect class="box" x="390" y="149.15109252929688" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="183.15109252929688" text-anchor="middle">checklist</text>
+        
+      </g><g class="node selected" data-id="n55542" tabindex="0" role="button" aria-label="确定下一步测试样数量：">
+        <rect class="box" x="710" y="874.0343017578125" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="830" y="908.0343017578125" text-anchor="middle">确定下一步测试样数量</text>
+        <text class="sub" x="830" y="930.0343017578125" text-anchor="middle">与我方QA对接确定</text>
+      </g><g class="node" data-id="n28880" tabindex="0" role="button" aria-label="确定测试样数量：请填写节点说明。">
+        <rect class="box" x="390" y="873.7578125" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="907.7578125" text-anchor="middle">确定测试样数量</text>
+        <text class="sub" x="510" y="929.7578125" text-anchor="middle">与对方QA对接确定</text>
+      </g><g class="node" data-id="n12112" tabindex="0" role="button" aria-label="采购对应数量的测试样样品：提供给我方QA">
+        <rect class="box" x="1030" y="1119.1373291015625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="1153.1373291015625" text-anchor="middle">采购对应数量的测试样样品</text>
+        <text class="sub" x="1150" y="1175.1373291015625" text-anchor="middle">提供给我方QA</text>
+      </g><g class="node decision" data-id="d86934" tabindex="0" role="button" aria-label="是否通过？：判断节点：是 → 继续下一步；否 → 退回修改。可将连线的 label 设为「是」或「否」。">
+        <polygon class="box" points="510,1468.158804689663 630,1518.158804689663 510,1568.158804689663 390,1518.158804689663" fill="#fff5e5" stroke="#b76544" stroke-width="1.5"></polygon>
+        <text x="510" y="1514.158804689663" text-anchor="middle">是否通过？</text>
+        
+      </g><g class="node" data-id="n45054" tabindex="0" role="button" aria-label="确定签样个数：请填写节点说明。">
+        <rect class="box" x="390" y="1699.2276333227087" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="1733.2276333227087" text-anchor="middle">确定签样个数</text>
+        <text class="sub" x="510" y="1755.2276333227087" text-anchor="middle">与对方QA对接</text>
+      </g><g class="node" data-id="n17577" tabindex="0" role="button" aria-label="确定签样个数：请填写节点说明。">
+        <rect class="box" x="710" y="1699.7813542878903" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="830" y="1733.7813542878903" text-anchor="middle">确定签样个数</text>
+        
+      </g><g class="node" data-id="n67578" tabindex="0" role="button" aria-label="采购签样：请填写节点说明。">
+        <rect class="box" x="1030" y="1810.1414794921875" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="1844.1414794921875" text-anchor="middle">采购签样</text>
+        <text class="sub" x="1150" y="1866.1414794921875" text-anchor="middle">数量由双方QA确定</text>
+      </g><g class="node" data-id="n32832" tabindex="0" role="button" aria-label="接收测试报告：实验室提供测试报告">
+        <rect class="box" x="390" y="1925.7017822265625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="1959.7017822265625" text-anchor="middle">接收测试报告</text>
+        <text class="sub" x="510" y="1981.7017822265625" text-anchor="middle">实验室提供测试报告</text>
+      </g><g class="node" data-id="n21299" tabindex="0" role="button" aria-label="上传信息：请填写节点说明。">
+        <rect class="box" x="390" y="2055.639404296875" width="240" height="98" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="2089.639404296875" text-anchor="middle">上传信息</text>
+        <text class="sub" x="510" y="2111.639404296875" text-anchor="middle">checklist/artwork/测试报告</text><text class="sub" x="510" y="2129.639404296875" text-anchor="middle">上传到我系统和对方DSS</text>
+      </g><g class="node" data-id="n4657" tabindex="0" role="button" aria-label="签样收到后：请填写节点说明。">
+        <rect class="box" x="1030" y="2149.17724609375" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1150" y="2183.17724609375" text-anchor="middle">签样收到后</text>
+        <text class="sub" x="1150" y="2205.17724609375" text-anchor="middle">签样入库</text>
+      </g><g class="node" data-id="n87508" tabindex="0" role="button" aria-label="记录签样有效期/测试有效期：请填写节点说明。">
+        <rect class="box" x="390" y="2272.31689453125" width="240" height="98" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="2306.31689453125" text-anchor="middle">记录签样有效期/测试有效期</text>
+        <text class="sub" x="510" y="2328.31689453125" text-anchor="middle">签样有效期：1年</text><text class="sub" x="510" y="2346.31689453125" text-anchor="middle">测试有效期：2年</text>
+      </g><g class="node" data-id="n29720" tabindex="0" role="button" aria-label="QC验货：请填写节点说明。">
+        <rect class="box" x="1350" y="2272.156494140625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="1470" y="2306.156494140625" text-anchor="middle">QC验货</text>
+        <text class="sub" x="1470" y="2328.156494140625" text-anchor="middle">签样list：1.领用记录2.归还记录</text>
+      </g><g class="node" data-id="n98836" tabindex="0" role="button" aria-label="有效期提前45天通知QA：请填写节点说明。">
+        <rect class="box" x="390" y="2462.6884765625" width="240" height="80" rx="10" fill="#fff" stroke="#19334a" stroke-width="1"></rect>
+        <text x="510" y="2496.6884765625" text-anchor="middle">有效期提前45天通知QA</text>
+        
+      </g></svg>
     </div>
     <div class="legend">
       <span><i></i>实线：正常流转</span>
@@ -171,16 +259,238 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
   <aside class="card panel" id="panel">
     <div class="sec">
       <h3>连线 <button id="addEdge2" class="">＋ 添加</button></h3>
-      <div id="edgeList"></div>
-      <div class="status" id="status">连线已选中：拖动小圆点改拐点，拖动文字改标签位置。</div>
+      <div id="edgeList"><div class="row" data-edge-row="0"><span class="nm">接收QA样 → 是否合格</span>
+        <select data-ci="0" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="0" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="0" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="0" data-v="是" style="padding:3px 7px">是</button><button data-branch="0" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="0" style="padding:3px 7px">＋拐点</button><button data-list-points="0" style="padding:3px 7px">删拐点</button><button data-reset-edge="0" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="0" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="1"><span class="nm">提供spec → QA样</span>
+        <select data-ci="1" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="1" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="1" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="1" data-v="是" style="padding:3px 7px">是</button><button data-branch="1" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="1" style="padding:3px 7px">＋拐点</button><button data-list-points="1" style="padding:3px 7px">删拐点</button><button data-reset-edge="1" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="1" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="2"><span class="nm">QA样 → 接收QA样</span>
+        <select data-ci="2" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="2" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="2" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="2" data-v="是" style="padding:3px 7px">是</button><button data-branch="2" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="2" style="padding:3px 7px">＋拐点</button><button data-list-points="2" style="padding:3px 7px">删拐点</button><button data-reset-edge="2" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="2" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="3"><span class="nm">checklist → QA样</span>
+        <select data-ci="3" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="3" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="3" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="3" data-v="是" style="padding:3px 7px">是</button><button data-branch="3" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="3" style="padding:3px 7px">＋拐点</button><button data-list-points="3" style="padding:3px 7px">删拐点</button><button data-reset-edge="3" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="3" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="4"><span class="nm">是否合格 → 确定下一步测试样数量</span>
+        <select data-ci="4" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="4" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="4" data-field="label" value="是" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="4" data-v="是" style="padding:3px 7px">是</button><button data-branch="4" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="4" style="padding:3px 7px">＋拐点</button><button data-list-points="4" style="padding:3px 7px">删拐点</button><button data-reset-edge="4" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="4" data-field="labelSize" value="21" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="5"><span class="nm">确定下一步测试样数量 → 确定测试样数量</span>
+        <select data-ci="5" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="5" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="5" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="5" data-v="是" style="padding:3px 7px">是</button><button data-branch="5" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="5" style="padding:3px 7px">＋拐点</button><button data-list-points="5" style="padding:3px 7px">删拐点</button><button data-reset-edge="5" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="5" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="6"><span class="nm">确定测试样数量 → 采购对应数量的测试样样品</span>
+        <select data-ci="6" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="6" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="6" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="6" data-v="是" style="padding:3px 7px">是</button><button data-branch="6" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="6" style="padding:3px 7px">＋拐点</button><button data-list-points="6" style="padding:3px 7px">删拐点</button><button data-reset-edge="6" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="6" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="7"><span class="nm">确定测试样数量 → 确定下一步测试样数量</span>
+        <select data-ci="7" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="7" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="7" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="7" data-v="是" style="padding:3px 7px">是</button><button data-branch="7" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="7" style="padding:3px 7px">＋拐点</button><button data-list-points="7" style="padding:3px 7px">删拐点</button><button data-reset-edge="7" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="7" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="8"><span class="nm">采购对应数量的测试样样品 → 进行测验样的测试</span>
+        <select data-ci="8" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="8" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="8" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="8" data-v="是" style="padding:3px 7px">是</button><button data-branch="8" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="8" style="padding:3px 7px">＋拐点</button><button data-list-points="8" style="padding:3px 7px">删拐点</button><button data-reset-edge="8" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="8" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="9"><span class="nm">进行测验样的测试 → 是否通过？</span>
+        <select data-ci="9" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="9" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="9" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="9" data-v="是" style="padding:3px 7px">是</button><button data-branch="9" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="9" style="padding:3px 7px">＋拐点</button><button data-list-points="9" style="padding:3px 7px">删拐点</button><button data-reset-edge="9" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="9" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="10"><span class="nm">是否合格 → QA样</span>
+        <select data-ci="10" data-field="type" style="width:76px;padding:3px">
+          <option value="normal">实线</option>
+          <option value="return" selected="">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="10" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="10" data-field="label" value="否：客户QA反馈测试要求和样品修改意见" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="10" data-v="是" style="padding:3px 7px">是</button><button data-branch="10" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="10" style="padding:3px 7px">＋拐点</button><button data-list-points="10" style="padding:3px 7px">删拐点</button><button data-reset-edge="10" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="10" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="11"><span class="nm">是否通过？ → 采购对应数量的测试样样品</span>
+        <select data-ci="11" data-field="type" style="width:76px;padding:3px">
+          <option value="normal">实线</option>
+          <option value="return" selected="">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="11" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="11" data-field="label" value="未通过" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="11" data-v="是" style="padding:3px 7px">是</button><button data-branch="11" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="11" style="padding:3px 7px">＋拐点</button><button data-list-points="11" style="padding:3px 7px">删拐点</button><button data-reset-edge="11" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="11" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="12"><span class="nm">确定签样个数 → 确定签样个数</span>
+        <select data-ci="12" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="12" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="12" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="12" data-v="是" style="padding:3px 7px">是</button><button data-branch="12" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="12" style="padding:3px 7px">＋拐点</button><button data-list-points="12" style="padding:3px 7px">删拐点</button><button data-reset-edge="12" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="12" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="13"><span class="nm">确定签样个数 → 确定签样个数</span>
+        <select data-ci="13" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="13" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="13" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="13" data-v="是" style="padding:3px 7px">是</button><button data-branch="13" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="13" style="padding:3px 7px">＋拐点</button><button data-list-points="13" style="padding:3px 7px">删拐点</button><button data-reset-edge="13" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="13" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="14"><span class="nm">是否通过？ → 确定签样个数</span>
+        <select data-ci="14" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="14" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="14" data-field="label" value="是" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="14" data-v="是" style="padding:3px 7px">是</button><button data-branch="14" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="14" style="padding:3px 7px">＋拐点</button><button data-list-points="14" style="padding:3px 7px">删拐点</button><button data-reset-edge="14" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="14" data-field="labelSize" value="18" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="15"><span class="nm">是否通过？ → 接收测试报告</span>
+        <select data-ci="15" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="15" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="15" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="15" data-v="是" style="padding:3px 7px">是</button><button data-branch="15" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="15" style="padding:3px 7px">＋拐点</button><button data-list-points="15" style="padding:3px 7px">删拐点</button><button data-reset-edge="15" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="15" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="16"><span class="nm">接收测试报告 → 上传信息</span>
+        <select data-ci="16" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="16" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="16" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="16" data-v="是" style="padding:3px 7px">是</button><button data-branch="16" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="16" style="padding:3px 7px">＋拐点</button><button data-list-points="16" style="padding:3px 7px">删拐点</button><button data-reset-edge="16" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="16" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="17"><span class="nm">确定签样个数 → 采购签样</span>
+        <select data-ci="17" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="17" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="17" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="17" data-v="是" style="padding:3px 7px">是</button><button data-branch="17" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="17" style="padding:3px 7px">＋拐点</button><button data-list-points="17" style="padding:3px 7px">删拐点</button><button data-reset-edge="17" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="17" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="18"><span class="nm">采购签样 → 签样收到后</span>
+        <select data-ci="18" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="18" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="18" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="18" data-v="是" style="padding:3px 7px">是</button><button data-branch="18" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="18" style="padding:3px 7px">＋拐点</button><button data-list-points="18" style="padding:3px 7px">删拐点</button><button data-reset-edge="18" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="18" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="19"><span class="nm">签样收到后 → 记录签样有效期/测试有效期</span>
+        <select data-ci="19" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="19" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="19" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="19" data-v="是" style="padding:3px 7px">是</button><button data-branch="19" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="19" style="padding:3px 7px">＋拐点</button><button data-list-points="19" style="padding:3px 7px">删拐点</button><button data-reset-edge="19" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="19" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="20"><span class="nm">签样收到后 → QC验货</span>
+        <select data-ci="20" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="20" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="20" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="20" data-v="是" style="padding:3px 7px">是</button><button data-branch="20" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="20" style="padding:3px 7px">＋拐点</button><button data-list-points="20" style="padding:3px 7px">删拐点</button><button data-reset-edge="20" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="20" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="21"><span class="nm">记录签样有效期/测试有效期 → 有效期提前45天通知QA</span>
+        <select data-ci="21" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="21" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="21" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="21" data-v="是" style="padding:3px 7px">是</button><button data-branch="21" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="21" style="padding:3px 7px">＋拐点</button><button data-list-points="21" style="padding:3px 7px">删拐点</button><button data-reset-edge="21" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="21" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="22"><span class="nm">打样通知 → 买手确认样</span>
+        <select data-ci="22" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="22" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="22" data-field="label" value="" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="22" data-v="是" style="padding:3px 7px">是</button><button data-branch="22" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="22" style="padding:3px 7px">＋拐点</button><button data-list-points="22" style="padding:3px 7px">删拐点</button><button data-reset-edge="22" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="22" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        <div class="row" data-edge-row="23"><span class="nm">买手确认样 → QA样</span>
+        <select data-ci="23" data-field="type" style="width:76px;padding:3px">
+          <option value="normal" selected="">实线</option>
+          <option value="return">退回</option>
+          <option value="accent">强调</option>
+        </select>
+        <button class="danger" data-del-edge="23" style="padding:3px 7px">删</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center"><input data-ci="23" data-field="label" value="QA确认" placeholder="分支：是 / 否 / 说明" style="padding:4px 7px"><button data-branch="23" data-v="是" style="padding:3px 7px">是</button><button data-branch="23" data-v="否" style="padding:3px 7px">否</button></div>
+        <div style="padding:0 0 6px 2px;display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button data-add-point="23" style="padding:3px 7px">＋拐点</button><button data-list-points="23" style="padding:3px 7px">删拐点</button><button data-reset-edge="23" style="padding:3px 7px">重置位置</button><span style="font-size:11px;color:#607283">字号</span><input type="number" min="8" max="24" step="1" data-ci="23" data-field="labelSize" value="10" style="width:54px;padding:3px 6px"></div>
+        </div>
+      <div class="status" id="status">已自动保存：采购对应数量的测试样样品</div>
     </div>
     <div class="sec">
       <h3>节点 <span style="display:flex;gap:5px"><button id="addNode">＋ 新增步骤</button><button id="addDecision">＋ 判断框</button></span></h3>
-      <div id="nodeList"></div>
+      <div id="nodeList"><div class="row"><span class="nm" data-pick="n1">打样通知</span><span class="tag">业务部门</span><button class="danger" data-del-node="n1" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n2">买手确认样</span><span class="tag">业务部门</span><button class="danger" data-del-node="n2" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n3">QA样</span><span class="tag">我方QA</span><button class="danger" data-del-node="n3" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="nReceive">接收QA样</span><span class="tag">对方QA</span><button class="danger" data-del-node="nReceive" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="dJudge">是否合格</span><span class="tag">判断 · 对方QA</span><button class="danger" data-del-node="dJudge" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n4">进行测验样的测试</span><span class="tag">我方QA</span><button class="danger" data-del-node="n4" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="nSpec">提供spec</span><span class="tag">采购跟单员</span><button class="danger" data-del-node="nSpec" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n17034">checklist</span><span class="tag">我方QA</span><button class="danger" data-del-node="n17034" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n55542">确定下一步测试样数量</span><span class="tag">对方QA</span><button class="danger" data-del-node="n55542" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n28880">确定测试样数量</span><span class="tag">我方QA</span><button class="danger" data-del-node="n28880" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n12112">采购对应数量的测试样样品</span><span class="tag">采购跟单员</span><button class="danger" data-del-node="n12112" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="d86934">是否通过？</span><span class="tag">判断 · 我方QA</span><button class="danger" data-del-node="d86934" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n45054">确定签样个数</span><span class="tag">我方QA</span><button class="danger" data-del-node="n45054" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n17577">确定签样个数</span><span class="tag">对方QA</span><button class="danger" data-del-node="n17577" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n67578">采购签样</span><span class="tag">采购跟单员</span><button class="danger" data-del-node="n67578" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n32832">接收测试报告</span><span class="tag">我方QA</span><button class="danger" data-del-node="n32832" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n21299">上传信息</span><span class="tag">我方QA</span><button class="danger" data-del-node="n21299" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n4657">签样收到后</span><span class="tag">采购跟单员</span><button class="danger" data-del-node="n4657" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n87508">记录签样有效期/测试有效期</span><span class="tag">我方QA</span><button class="danger" data-del-node="n87508" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n29720">QC验货</span><span class="tag">QC</span><button class="danger" data-del-node="n29720" style="padding:3px 7px">删</button></div><div class="row"><span class="nm" data-pick="n98836">有效期提前45天通知QA</span><span class="tag">我方QA</span><button class="danger" data-del-node="n98836" style="padding:3px 7px">删</button></div></div>
     </div>
     <div class="sec" id="editorSec">
       <h3>选中节点</h3>
-      <div id="nodeEditor"></div>
+      <div id="nodeEditor"><label>节点名称</label><input id="edLabel" value="确定下一步测试样数量">
+    <label>节点类型</label><select id="edType"><option value="step" selected="">普通步骤（方框）</option><option value="decision">判断节点（菱形 · 是/否）</option></select>
+    <label>所属岗位（泳道）</label><select id="edLane"><option value="business">业务部门</option><option value="qaOur">我方QA</option><option value="qaClient" selected="">对方QA</option><option value="merch">采购跟单员</option><option value="qc">QC</option></select>
+    <label>副标题行数</label><select id="edSubRows"><option value="1" selected="">1 行</option><option value="2">2 行</option><option value="3">3 行</option><option value="4">4 行</option></select>
+    <label>副标题内容（每行一条，节点框会自动增高）</label><textarea id="edSub" rows="1" placeholder="例如：设计稿·个数·交期">与我方QA对接确定</textarea>
+    <label>节点说明</label><textarea id="edNote"></textarea>
+    <div class="actions" style="color:var(--muted);font-size:11px">字段改动后自动保存，无需点按钮。</div></div>
     </div>
     <div class="sec">
       <details open="">
@@ -195,11 +505,12 @@ details textarea{min-height:150px;font-family:Consolas,Monaco,monospace;font-siz
   </aside>
 </main>
 
-<aside id="noteDrawer" class="note-drawer" hidden aria-live="polite">
+<aside id="noteDrawer" class="note-drawer" aria-live="polite">
   <button id="noteClose" aria-label="关闭说明">×</button>
-  <h3 id="noteTitle"></h3><p id="noteBody"></p>
+  <h3 id="noteTitle">确定下一步测试样数量</h3><p id="noteBody">暂无说明，可在右侧「节点说明」中补充。
+要点：与我方QA对接确定</p>
 </aside>
-<details class="help-guide"><summary>使用说明 / 操作步骤（点击展开）</summary><div class="help-body"><ol>
+<details class="help-guide" open=""><summary>使用说明 / 操作步骤（点击展开）</summary><div class="help-body"><ol>
 <li>查看说明：单击节点，右下抽屉显示名称与说明；Tab 聚焦后按 Enter 亦可。</li>
 <li>编辑节点：双击节点，右侧字段改名称/类型/岗位/副标题/说明，自动保存。</li>
 <li>移动节点：拖动吸附到最近泳道；方向键 1px、Shift+方向键 10px。</li>
@@ -1025,7 +1336,7 @@ applyView();  /* 初始化泳道高度与 viewBox */
 snapshot();   /* 撤销栈基线 */
 ct.value=JSON.stringify(data,null,2);  /* 覆盖另存为时残留的旧配置快照 */
 render();
-</script>
+</script><div class="sticky-lanes" aria-hidden="true"><div class="sticky-lanes-inner"><div style="left: 62.696px; width: 117.464px;">业务部门</div><div style="left: 192.258px; width: 117.464px;">我方QA</div><div style="left: 321.819px; width: 117.464px;">对方QA</div><div style="left: 451.381px; width: 117.464px;">采购跟单员</div><div style="left: 580.943px; width: 117.464px;">QC</div></div></div>
 
 
 </body></html>
